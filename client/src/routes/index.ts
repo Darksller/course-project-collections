@@ -1,24 +1,33 @@
-// import { Router, Route, RootRoute, NotFoundRoute } from '@tanstack/react-router'
+import { App } from '@/App'
+import { Collections } from '@/pages/Collections'
+import { Home } from '@/pages/Home'
+import { Users } from '@/pages/Users'
+import { RootRoute, Route, Router } from '@tanstack/react-router'
 
-// const rootRoute = new RootRoute()
-// const indexRoute = new Route({ getParentRoute: () => rootRoute, path: '/' })
+const rootRoute = new RootRoute({ component: App })
 
-// // Just an example of routing
-// // const blogRoute = new Route({ getParentRoute: () => rootRoute, path: 'blog' })
-// // const blogIndexRoute = new Route({ getParentRoute: () => blogRoute, path: '/' })
-// // const routeConfig = rootRoute.addChildren([
-// // 	indexRoute,
-// // 	blogRoute.addChildren([blogIndexRoute]),
-// // ])
+const indexRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/',
+	component: Home,
+})
 
-// const routeTree = rootRoute.addChildren([rootRoute, indexRoute])
+const collectionsRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/collections',
+	component: Collections,
+})
 
-// const notFoundRoute = new NotFoundRoute({
-// 	getParentRoute: () => rootRoute,
-// 	component: () => <></>,
-// })
+const usersRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/users',
+	component: Users,
+})
 
-// const router = new Router({
-// 	routeTree,
-// 	notFoundRoute,
-// })
+const routeTree = rootRoute.addChildren([
+	indexRoute,
+	collectionsRoute,
+	usersRoute,
+])
+
+export const router = new Router({ routeTree })

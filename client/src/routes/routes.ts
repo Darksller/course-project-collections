@@ -6,11 +6,11 @@ export const routes: TRoute[] = [
 		label: 'Home',
 	},
 	{
-		href: '/',
+		href: '/collections',
 		label: 'Collections',
 	},
 	{
-		href: '/',
+		href: '/users',
 		label: 'Users',
 	},
 ]

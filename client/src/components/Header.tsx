@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { Button } from './ui/button'
 import { HamburgerMenuIcon, MoonIcon, SunIcon } from '@radix-ui/react-icons'
 import { ProfileButton } from './ui/profile-button'
@@ -6,6 +5,7 @@ import { useTheme } from './ThemeProvider'
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet'
 import { Navigation } from './Navigation'
 import SearchBar from './ui/search-bar'
+import { Link } from '@tanstack/react-router'
 
 export function Header() {
 	const { theme, setTheme } = useTheme()
@@ -27,10 +27,15 @@ export function Header() {
 								<SearchBar className='mt-4 sm:hidden' />
 							</SheetContent>
 						</Sheet>
-						<Link to={'/'} className='ml-2'>
-							<h1 className='text-2xl font-bold'>GrapeVault</h1>
+						<Link
+							to={'/'}
+							className='ml-2 flex transition-all duration-600 hover:tracking-widest max-w-28 '
+						>
+							<h1 className='text-2xl font-bold drop-shadow-light dark:drop-shadow-dark'>
+								GrapeVault
+							</h1>
+							<img src='logo.svg' className='w-[30px] h-[30px] ml-1 ' />
 						</Link>
-						<img src='logo.svg' className='w-[30px] h-[30px] ml-1' />
 					</div>
 					<Navigation className='mx-6 items-center space-x-4 lg:space-x-6 lg:block hidden ' />
 
@@ -42,8 +47,8 @@ export function Header() {
 							aria-label='Toggle Theme'
 							onClick={switchTheme}
 						>
-							<SunIcon className='absolute h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
-							<MoonIcon className='absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />
+							<SunIcon className='absolute h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 hover:text-yellow-500 ' />
+							<MoonIcon className='absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 hover:text-blue-500' />
 							<span className='sr-only'>Toggle Theme</span>
 						</Button>
 						<ProfileButton />

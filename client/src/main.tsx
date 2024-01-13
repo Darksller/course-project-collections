@@ -1,13 +1,11 @@
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { App } from './App.tsx'
 import '@/styles/global.css'
 import { ThemeProvider } from './components/ThemeProvider.tsx'
+import { RouterProvider } from '@tanstack/react-router'
+import { router } from './routes/index.ts'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-	<Router>
-		<ThemeProvider defaultTheme='dark'>
-			<App />
-		</ThemeProvider>
-	</Router>
+	<ThemeProvider defaultTheme='dark'>
+		<RouterProvider router={router} />
+	</ThemeProvider>
 )

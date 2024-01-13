@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
-import { routes } from '@/constants/routes'
+import { routes } from '@/routes/routes'
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
+import { Link } from '@tanstack/react-router'
 
 type NavProps = React.DetailedHTMLProps<
 	React.HTMLAttributes<HTMLElement>,
