@@ -13,18 +13,16 @@ export default function ItemCard() {
         </div> */}
         <div className="grid h-[95px] grid-cols-2 rounded-md text-xs font-bold  group-hover:border-l-[1px] group-hover:border-r-[1px] group-hover:border-t-[1px]">
           <div className="z-[-1] max-h-[47.5px] min-h-[47.5px] truncate text-wrap border-b-[1px] border-r-[1px] p-1">
-            Автор: Григорий Автор: Григорий Автор: Григорий Автор: Григорий
-            Автор: Григорий Автор: Григорий Автор: Григорий Автор: Григорий
-            Автор: Григорий Автор: Григорий Автор: Григорий
+            Автор: <div>Григорий Автор </div>
           </div>
           <div className="z-[-1] max-h-[47.5px] min-h-[47.5px] truncate text-wrap border-b-[1px]  p-1">
-            Дата: 22.22.2022
+            Дата: <div>22.22.2022</div>
           </div>
           <div className="z-[-1] max-h-[47.5px] min-h-[47.5px] truncate text-wrap border-r-[1px] p-1">
-            Кол-во 213
+            Кол-во <div>213</div>
           </div>
           <div className="z-[-1] max-h-[47.5px] min-h-[47.5px] truncate text-wrap p-1">
-            Том: 4
+            Том: <div>4</div>
           </div>
         </div>
         <div className="mx-[-5px] border-t-[1px] border-solid border-gray-300" />
