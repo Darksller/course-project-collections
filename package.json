@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "react-tagcloud": "^2.3.3"
-  },
-  "devDependencies": {
-    "@types/react-tagcloud": "^2.3.1"
-  }
-}

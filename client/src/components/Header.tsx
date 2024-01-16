@@ -15,26 +15,30 @@ export function Header() {
 
   return (
     <HeaderScroll>
-      <header className="bg-gray-400/70 py-2 text-pink-600/100 shadow-2xl backdrop-blur dark:bg-pink-600/50 dark:text-white">
+      <header className="bg-white/60 py-2 text-pink-600/100 shadow-2xl backdrop-blur dark:bg-pink-600/50 dark:text-white">
         <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
             <Sheet>
               <SheetTrigger>
                 <HamburgerMenuIcon className="h-6 w-6 lg:hidden" />
               </SheetTrigger>
-              <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-                <Navigation className="mt-3 flex flex-col gap-2" />
-                <SearchBar className="mt-4 sm:hidden" />
+              <SheetContent
+                side="left"
+                className="w-[300px] bg-white/60  text-pink-500 backdrop-blur sm:w-[400px] dark:bg-pink-600/50 dark:text-white"
+              >
+                <Navigation className="flex flex-col gap-5 " />
+                <SearchBar className="mt-10 sm:hidden" />
               </SheetContent>
             </Sheet>
             <Link
               to={"/"}
               className="duration-600 ml-2 flex max-w-28 transition-all hover:tracking-widest "
             >
-              <h1 className="text-2xl font-bold drop-shadow-light dark:drop-shadow-dark">
-                GrapeVault
-              </h1>
-              <img src="logo.svg" className="ml-1 h-[30px] w-[30px] " />
+              <h1 className="text-2xl font-bold ">GrapeVault</h1>
+              <img
+                src="logo.svg"
+                className="ml-3 mt-1 h-[30px] w-[30px] text-white "
+              />
             </Link>
           </div>
           <Navigation className="mx-6 hidden items-center space-x-4 lg:block lg:space-x-6 " />

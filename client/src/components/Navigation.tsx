@@ -16,7 +16,7 @@ export function Navigation({ className }: NavProps) {
           key={i}
           asChild
           variant="ghost"
-          className="h-[20px] transition-all duration-300 max-lg:block max-lg:px-2 max-lg:py-1 max-lg:text-lg lg:text-base lg:hover:text-xl"
+          className="h-[20px] transition-all duration-300 hover:text-white max-lg:block max-lg:px-2 max-lg:py-1 max-lg:text-lg lg:text-base lg:hover:text-xl dark:hover:text-pink-400"
         >
           <Link key={i} to={route.href}>
             {route.label}
