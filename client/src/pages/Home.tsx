@@ -4,11 +4,15 @@ import fourthImg from "@/assets/images/fourth.jpg";
 import thirdImg from "@/assets/images/third.jpeg";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+import HomeSection from "@/components/ui/home-section";
 
 export function Home() {
+  useEffect(() => {}, []);
+
   return (
     <div className="absolute top-0 w-full">
-      <div className="sticky top-0 h-[100dvh]  bg-purple-400 ">
+      <div className="sticky top-0 h-[100dvh] bg-purple-400 ">
         <video
           src={intro}
           autoPlay
@@ -22,34 +26,9 @@ export function Home() {
           </Link>
         </div>
       </div>
-
-      <div className="sticky top-0 flex h-[100dvh] max-w-full items-center justify-center bg-purple-400">
-        <img
-          src={secondImg}
-          className="absolute left-0 top-0 h-full w-full object-cover  brightness-50"
-        />
-        <div className="absolute left-0 top-0 z-[100] flex h-full w-full items-center justify-center font-bold text-white">
-          Example text
-        </div>
-      </div>
-      <div className="sticky top-0 flex h-[100dvh] max-w-full items-center justify-center bg-purple-400">
-        <img
-          src={thirdImg}
-          className="absolute left-0 top-0 h-full w-full object-cover  brightness-50"
-        />
-        <div className="absolute left-0 top-0 z-[100] flex h-full w-full items-center justify-center font-bold text-white">
-          Example text
-        </div>
-      </div>
-      <div className="sticky top-0 flex h-[100dvh] max-w-full items-center justify-center bg-purple-400">
-        <img
-          src={fourthImg}
-          className="absolute left-0 top-0 h-full w-full object-cover  brightness-50"
-        />
-        <div className="absolute left-0 top-0 z-[100] flex h-full w-full items-center justify-center font-bold text-white">
-          Example text
-        </div>
-      </div>
+      <HomeSection imageSrc={secondImg}>Example text</HomeSection>
+      <HomeSection imageSrc={thirdImg}>Example text</HomeSection>
+      <HomeSection imageSrc={fourthImg}>Example text</HomeSection>
     </div>
   );
 }

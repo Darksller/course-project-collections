@@ -15,7 +15,7 @@ export function Header() {
 
   return (
     <HeaderScroll>
-      <header className="bg-white/60 py-2 font-muli  text-pink-600/100 shadow-2xl backdrop-blur dark:bg-pink-600/50 dark:text-white">
+      <header className="bg-white/60 py-2 font-muli text-pink-600/100 shadow-2xl backdrop-blur dark:bg-pink-600/50 dark:text-white">
         <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
             <Sheet>
