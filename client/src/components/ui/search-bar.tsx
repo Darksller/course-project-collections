@@ -28,7 +28,7 @@ export default function SearchBar({ className }: SearchBarProps) {
       <Input
         type="search"
         placeholder="Search"
-        className="border-pink-600 bg-white/40 pl-9 text-white placeholder:text-pink-500 focus:backdrop-blur-md dark:border-white dark:bg-pink-500/40 dark:placeholder:text-white"
+        className="border-pink-600 bg-white/40 pl-9 font-muli text-white placeholder:font-muli placeholder:text-pink-500 focus:backdrop-blur-md dark:border-white dark:bg-pink-500/40 dark:placeholder:text-white"
         onChange={onSearchInputChange}
         onKeyDown={onKeyPressed}
       />

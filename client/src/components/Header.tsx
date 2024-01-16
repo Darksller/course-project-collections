@@ -15,7 +15,7 @@ export function Header() {
 
   return (
     <HeaderScroll>
-      <header className="bg-white/60 py-2 text-pink-600/100 shadow-2xl backdrop-blur dark:bg-pink-600/50 dark:text-white">
+      <header className="bg-white/60 py-2 font-muli  text-pink-600/100 shadow-2xl backdrop-blur dark:bg-pink-600/50 dark:text-white">
         <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
             <Sheet>
@@ -26,7 +26,7 @@ export function Header() {
                 side="left"
                 className="w-[300px] bg-white/60  text-pink-500 backdrop-blur sm:w-[400px] dark:bg-pink-600/50 dark:text-white"
               >
-                <Navigation className="flex flex-col gap-5 " />
+                <Navigation className="flex flex-col gap-5 font-bold" />
                 <SearchBar className="mt-10 sm:hidden" />
               </SheetContent>
             </Sheet>
@@ -34,10 +34,10 @@ export function Header() {
               to={"/"}
               className="duration-600 ml-2 flex max-w-28 transition-all hover:tracking-widest "
             >
-              <h1 className="text-2xl font-bold ">GrapeVault</h1>
+              <h1 className="text-2xl font-bold ">DunkVault</h1>
               <img
                 src="logo.svg"
-                className="ml-3 mt-1 h-[30px] w-[30px] text-white "
+                className="ml-3 mt-0.5 h-[30px] w-[30px] text-white "
               />
             </Link>
           </div>
