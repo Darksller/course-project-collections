@@ -1,0 +1,18 @@
+{
+  "navigation": {
+    "home": "Home",
+    "collections": "Collections",
+    "users": "Users"
+  },
+  "searchBar": "Search",
+  "start": "Start",
+  "main": {
+    "enterText": "Immerse yourself in an amazing universe of collections",
+    "exploreButton": "Immerse",
+    "secondSectionTitle": "",
+    "secondSectionDescription": "On our site you can create your own collections where you can store any items you like. It can be photos, videos, articles, music, books, links to websites or even just your thoughts and ideas."
+  },
+  "languages": "Languages",
+  "en": "English",
+  "ru": "Russian"
+}

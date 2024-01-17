@@ -1,21 +1,24 @@
 import { Button } from "./ui/button";
 import { HamburgerMenuIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
-import { ProfileButton } from "./ui/profile-button";
 import { useTheme } from "./ThemeProvider";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Navigation } from "./Navigation";
 import SearchBar from "./ui/search-bar";
 import { Link } from "@tanstack/react-router";
 import HeaderScroll from "react-headroom";
+import { useTranslation } from "react-i18next";
+
 export function Header() {
+  const { t } = useTranslation("global");
   const { theme, setTheme } = useTheme();
+
   function switchTheme(): void {
     setTheme(theme === "dark" ? "light" : "dark");
   }
 
   return (
     <HeaderScroll>
-      <header className="bg-white/60 py-2 font-muli text-pink-600/100 shadow-2xl backdrop-blur dark:bg-pink-600/50 dark:text-white">
+      <header className="duration-600 bg-white/60 py-2 text-pink-600/100 shadow-2xl backdrop-blur transition-all dark:bg-pink-600/50 dark:text-white">
         <div className="relative mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center">
             <Sheet>
@@ -55,7 +58,13 @@ export function Header() {
               <MoonIcon className="absolute h-6 w-6 rotate-90 scale-0 transition-all hover:text-blue-500 dark:rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle Theme</span>
             </Button>
-            <ProfileButton />
+            {/* <ProfileButton /> */}
+            <Button
+              variant="ghost"
+              className="space rounded-3xl border border-pink-500 px-5 text-base tracking-wide transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:animate-in dark:border-white"
+            >
+              {t("start")}
+            </Button>
           </div>
         </div>
       </header>

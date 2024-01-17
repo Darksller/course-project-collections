@@ -3,7 +3,7 @@ export default function ItemCard() {
     //TODO: При появлении айтема картинка круто выезжает (типо когда меняешь там снизу в диве картинку и сразу альтабаешься там прикольная анимация)
     <div className="group relative mx-auto  h-[250px] w-[270px] rounded-md border border-gray-200 font-muli shadow-2xl">
       <div className="absolute left-[50%] top-1 h-full w-full translate-x-[-50%] px-2 transition-all duration-200 ease-in-out group-hover:top-[-90px] ">
-        <div className="h-[85%] overflow-hidden rounded-md bg-[url('@/assets/images/item.jpg')] bg-cover transition-all delay-1000 duration-1000 " />
+        <div className="h-[85%] overflow-hidden rounded-md bg-[url('@/assets/images/demo.jpg')] bg-cover transition-all delay-1000 duration-1000 " />
       </div>
       <div className="absolute bottom-0 mb-1 h-[120px] w-full px-4">
         {/* <div className="relative mb-[45px] p-[5px]">

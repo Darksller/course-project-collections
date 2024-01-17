@@ -60,3 +60,16 @@
     @apply scroll-smooth;
   }
 }
+
+@font-face {
+  font-family: "SofiaProBold";
+  src: url("@/assets/fonts/Sofia Pro/SofiaProBold.ttf");
+}
+@font-face {
+  font-family: "CenturyGothicRegular";
+  src: url("@/assets/fonts/Century Gothic/centurygothic.ttf");
+}
+@font-face {
+  font-family: "CenturyGothicBold";
+  src: url("@/assets/fonts/Century Gothic/centurygothic_bold.ttf");
+}

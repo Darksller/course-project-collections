@@ -20,6 +20,9 @@ module.exports = {
     fontFamily: {
       under: "Playfair Display",
       muli: ["Mulish", "sans-serif"],
+      sofiaProBold: "SofiaProBold",
+      cgr: "CenturyGothicRegular",
+      cgb: "CenturyGothicBold",
     },
     extend: {
       colors: {
