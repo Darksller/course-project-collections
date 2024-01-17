@@ -4,6 +4,7 @@ import fourthImg from "@/assets/images/fourth.jpg";
 import thirdImg from "@/assets/images/third.jpeg";
 import { HomeImageSection } from "@/components/ui/home-image-section";
 import { useTranslation } from "react-i18next";
+import { AnimArrow } from "@/components/ui/anim-arrow";
 
 export function Home() {
   const { t } = useTranslation("global");
@@ -22,9 +23,9 @@ export function Home() {
           <div className="font-cgb bg-white/40 p-4 text-left text-5xl font-extrabold text-pink-500 backdrop-blur transition-all duration-500 lg:text-center lg:text-7xl dark:bg-pink-500/50 dark:text-white">
             {t(`main.enterText`)}
           </div>
-          {/* <AnimArrow className="absolute left-[50%] cursor-pointer bg-pink-500/50">
-      {t("main.exploreButton")}
-    </AnimArrow> */}
+          <AnimArrow className="absolute left-[47%] top-[200%] scale-[300%] cursor-pointer bg-black/50">
+            {t("main.exploreButton")}
+          </AnimArrow>
         </div>
       </div>
       <HomeImageSection className="h-[125dvh]" imageSrc={secondImg}>
