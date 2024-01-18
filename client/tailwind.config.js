@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line no-undef
 module.exports = {
@@ -23,6 +24,10 @@ module.exports = {
       sofiaProBold: "SofiaProBold",
       cgr: "CenturyGothicRegular",
       cgb: "CenturyGothicBold",
+    },
+    animationDelay: {
+      minus: "-0.2s",
+      minusXl: "-0.4s",
     },
     extend: {
       colors: {
@@ -107,13 +112,31 @@ module.exports = {
           "0%": { color: "#fff" },
           "100%": { color: "#000" },
         },
+        arrow: {
+          "0%": {
+            opacity: 0,
+            transform: "rotate(45deg) translate(-20px, -20px)",
+          },
+          "50%": {
+            opacity: 1,
+          },
+          "100%": {
+            opacity: 0,
+            transform: "rotate(45deg) translate(20px, 20px)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        arrow: "arrow 2s infinite",
       },
     },
   },
-  // eslint-disable-next-line no-undef
-  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar")],
+
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwind-scrollbar"),
+    require("tailwindcss-animation-delay"),
+  ],
 };
