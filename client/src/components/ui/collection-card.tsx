@@ -6,7 +6,7 @@ import {
 } from "@radix-ui/react-icons";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Button } from "./button";
+import { Button } from "./shadcn-ui/button";
 
 export function CollectionCard() {
   const [isLiked, setLiked] = useState(false);

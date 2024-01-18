@@ -1,6 +1,6 @@
-import { Button } from "./ui/button";
+import { Button } from "./ui/shadcn-ui/button";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/shadcn-ui/sheet";
 import { Navigation } from "./Navigation";
 import SearchBar from "./ui/search-bar";
 import { Link } from "@tanstack/react-router";
@@ -28,7 +28,6 @@ export function Header() {
                 <SearchBar className="mt-10 sm:hidden" />
               </SheetContent>
             </Sheet>
-
             <Link
               to={"/"}
               className="duration-600 ml-2 flex max-w-28 transition-all hover:tracking-widest "

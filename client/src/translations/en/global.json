@@ -13,6 +13,10 @@
     "secondSectionDescription": "On our site you can create your own collections where you can store any items you like. It can be photos, videos, articles, music, books, links to websites or even just your thoughts and ideas."
   },
   "languages": "Languages",
+  "changeLanguage": "Language change",
+  "changeTheme": "Theme change",
+  "settings": "Settings",
+  "settingsDescription": "Choose language and change theme",
   "en": "English",
   "ru": "Russian"
 }

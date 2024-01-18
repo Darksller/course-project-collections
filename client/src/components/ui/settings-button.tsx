@@ -1,20 +1,19 @@
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { GearIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
-import { useTheme } from "../ThemeProvider";
+import { Button } from "@/components/ui/shadcn-ui/button";
+import { Label } from "@/components/ui/shadcn-ui/label";
+import { GearIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Popover, PopoverContent, PopoverTrigger } from "./shadcn-ui/popover";
+import { useTranslation } from "react-i18next";
+import { LanguageSelect } from "./language-select";
+import SwitchThemeButton from "./switch-theme-button";
 
 type SettingButtonProps = {
   className?: string;
 };
 
 export function SettingsButton({ className }: SettingButtonProps) {
-  const { theme, setTheme } = useTheme();
+  const { t } = useTranslation("global");
 
-  function switchTheme(): void {
-    setTheme(theme === "dark" ? "light" : "dark");
-  }
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -29,27 +28,29 @@ export function SettingsButton({ className }: SettingButtonProps) {
           <GearIcon className="size-7 " />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent className="mx-2 mt-1 w-72 border-pink-500 bg-white/70 backdrop-blur dark:border-white dark:bg-pink-500/50 dark:backdrop-blur-lg">
         <div className="grid gap-4">
           <div className="space-y-2">
-            <h4 className="font-medium leading-none">Dimensions</h4>
-            <p className="text-sm text-muted-foreground">
-              Set the dimensions for the layer.
+            <h4 className="font-medium leading-none text-pink-600 dark:text-white">
+              {t("settings")}
+            </h4>
+            <p className="text-sm text-pink-600/70 dark:text-white/70">
+              {t("settingsDescription")}.
             </p>
           </div>
           <div className="grid gap-2">
-            <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="maxWidth">Max. width</Label>
-              <Button
-                variant="ghost"
-                className="mr-6"
-                aria-label="Toggle Theme"
-                onClick={switchTheme}
-              >
-                <SunIcon className="absolute h-6 w-6 rotate-0 scale-100 transition-all hover:text-yellow-500 dark:-rotate-90 dark:scale-0 " />
-                <MoonIcon className="absolute h-6 w-6 rotate-90 scale-0 transition-all hover:text-blue-500 dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">Toggle Theme</span>
-              </Button>
+            <div className="w-full border border-pink-500/50 dark:border-white/50" />
+            <div className="grid grid-cols-2 items-center gap-4">
+              <Label className="text-pink-600 dark:text-white">
+                {t("changeTheme")}:
+              </Label>
+              <SwitchThemeButton />
+            </div>
+            <div className="grid grid-cols-2 items-center gap-4">
+              <Label className="text-pink-600 dark:text-white">
+                {t("changeLanguage")}:
+              </Label>
+              <LanguageSelect />
             </div>
           </div>
         </div>

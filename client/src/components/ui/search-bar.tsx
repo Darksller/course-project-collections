@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { Input } from "./input";
+import { Input } from "./shadcn-ui/input";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
