@@ -1,59 +1,27 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const userApi = createApi({
-  reducerPath: 'userApi',
-  tagTypes: ['Users'],
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://tsk4-server.vercel.app/' }),
+export const authApi = createApi({
+  reducerPath: 'authApi',
+  tagTypes: ['auth'],
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://localhost/9999/' }),
   endpoints: (build) => ({
-    getUsers: build.query({
-      query: () => '/getUsers',
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Users', id })),
-              { type: 'Users', id: 'LIST' },
-            ]
-          : [{ type: 'Users', id: 'LIST' }],
-    }),
-    signUp: build.mutation({
+    register: build.mutation({
       query: (body) => ({
-        url: '/signUp',
+        url: '/auth/register',
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
-    }),
-    changeStatus: build.mutation({
-      query: (body) => ({
-        url: '/changeStatus',
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
+      invalidatesTags: [{ type: 'auth', id: 'LIST' }],
     }),
     login: build.mutation({
       query: (body) => ({
-        url: '/login',
+        url: '/auth/login',
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
-    }),
-    delete: build.mutation({
-      query: (body) => ({
-        url: '/deleteUsers',
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: [{ type: 'Users', id: 'LIST' }],
+      invalidatesTags: [{ type: 'auth', id: 'LIST' }],
     }),
   }),
 })
 
-export const {
-  useGetUsersQuery,
-  useSignUpMutation,
-  useChangeStatusMutation,
-  useLoginMutation,
-  useDeleteMutation,
-} = userApi
+export const { useLoginMutation, useRegisterMutation } = authApi
