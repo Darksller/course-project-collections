@@ -6,6 +6,9 @@
   },
   "searchBar": "Поиск",
   "start": "Начать",
+  "authentication": "Аутентификация",
+  "login": "Вход",
+  "registration": "Регистрация",
   "main": {
     "enterText": "Погрузись в удивительную вселенную коллекций",
     "exploreButton": "Погрузиться",

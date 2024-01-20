@@ -1,15 +1,15 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
 type AnimArrowProps = {
-  className?: string;
-  children: React.ReactNode;
-};
+  className?: string
+  children: React.ReactNode
+}
 
 export function AnimArrow({ className, children }: AnimArrowProps) {
   return (
     <div
       className={cn(
-        "group relative inline-block text-[1.25em] italic text-[#999] transition-all duration-200 hover:text-[#eaeaea]",
+        'group relative inline-block text-[1.25em] italic text-[#999] transition-all duration-200 hover:text-[#eaeaea]',
         className,
       )}
     >
@@ -23,5 +23,5 @@ export function AnimArrow({ className, children }: AnimArrowProps) {
         </span>
       </span>
     </div>
-  );
+  )
 }

@@ -1,14 +1,15 @@
-import { Button } from "./ui/shadcn-ui/button";
-import { Navigation } from "./Navigation";
-import SearchBar from "./ui/search-bar";
-import { Link } from "@tanstack/react-router";
-import HeaderScroll from "react-headroom";
-import { useTranslation } from "react-i18next";
-import { SettingsButton } from "./ui/settings-button";
-import { HamburgerMenu } from "./ui/hamburger-menu";
+import { Navigation } from './ui/header/Navigation'
+import SearchBar from './ui/header/search-bar'
+import { Link } from '@tanstack/react-router'
+import HeaderScroll from 'react-headroom'
+import { useTranslation } from 'react-i18next'
+import { SettingsButton } from './ui/header/settings-button'
+import { HamburgerMenu } from './ui/header/hamburger-menu'
+import DialogWrapper from './ui/dialog-wrapper'
+import { AuthenticationForm } from './AuthenticationForm'
 
 export function Header() {
-  const { t } = useTranslation("global");
+  const { t } = useTranslation('global')
 
   return (
     <HeaderScroll>
@@ -17,7 +18,7 @@ export function Header() {
           <div className="flex items-center pl-2 lg:pl-[15%]">
             <HamburgerMenu />
             <Link
-              to={"/"}
+              to={'/'}
               className="duration-600 ml-2 flex max-w-28 transition-all hover:tracking-widest "
             >
               <h1 className="text-2xl font-bold ">DunkVault</h1>
@@ -32,17 +33,17 @@ export function Header() {
 
           <div className="flex items-center">
             <SearchBar className="mr-6 hidden sm:block" />
-
-            <Button
-              variant="ghost"
-              className="rounded-3xl border border-pink-500 px-5 text-base font-bold tracking-wide transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:text-pink-500 hover:animate-in dark:border-white dark:hover:text-white"
+            <DialogWrapper
+              dialogContent={<AuthenticationForm />}
+              dialogTitle={t('authentication')}
+              className="rounded-3xl border border-pink-500 px-5 py-1 text-base font-bold tracking-wide transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:text-pink-500 hover:animate-in dark:border-white dark:hover:text-white"
             >
-              {t("start")}
-            </Button>
+              {t('start')}
+            </DialogWrapper>
           </div>
           <SettingsButton className="mr-3" />
         </div>
       </header>
     </HeaderScroll>
-  );
+  )
 }

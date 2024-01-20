@@ -1,7 +1,7 @@
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { Sheet, SheetContent, SheetTrigger } from "./shadcn-ui/sheet";
-import { Navigation } from "../Navigation";
-import SearchBar from "./search-bar";
+import { HamburgerMenuIcon } from '@radix-ui/react-icons'
+import { Sheet, SheetContent, SheetTrigger } from '../shadcn-ui/sheet'
+import { Navigation } from './Navigation'
+import SearchBar from './search-bar'
 
 export function HamburgerMenu() {
   return (
@@ -17,5 +17,5 @@ export function HamburgerMenu() {
         <SearchBar className="mt-10 sm:hidden" />
       </SheetContent>
     </Sheet>
-  );
+  )
 }

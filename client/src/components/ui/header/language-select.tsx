@@ -6,14 +6,14 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/shadcn-ui/select";
-import { useTranslation } from "react-i18next";
+} from '@/components/ui/shadcn-ui/select'
+import { useTranslation } from 'react-i18next'
 
 export function LanguageSelect() {
-  const { t, i18n } = useTranslation("global");
+  const { t, i18n } = useTranslation('global')
 
   function onLanguageChange(event: string) {
-    i18n.changeLanguage(event);
+    i18n.changeLanguage(event)
   }
   return (
     <Select onValueChange={onLanguageChange}>
@@ -25,11 +25,11 @@ export function LanguageSelect() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>{t("languages")}:</SelectLabel>
+          <SelectLabel>{t('languages')}:</SelectLabel>
           <SelectItem value="ru">Русский</SelectItem>
           <SelectItem value="en">English</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
-  );
+  )
 }

@@ -6,6 +6,9 @@
   },
   "searchBar": "Search",
   "start": "Start",
+  "authentication": "Authentication",
+  "login": "Login",
+  "registration": "Registration",
   "main": {
     "enterText": "Immerse yourself in an amazing universe of collections",
     "exploreButton": "Immerse",

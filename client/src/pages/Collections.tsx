@@ -1,5 +1,5 @@
-import { CollectionCard } from "@/components/ui/collection-card";
-import ItemCard from "@/components/ui/item-card";
+import { CollectionCard } from '@/components/ui/collection-card'
+import ItemCard from '@/components/ui/item-card'
 
 export function Collections() {
   return (
@@ -29,5 +29,5 @@ export function Collections() {
         <ItemCard />
       </div>
     </div>
-  );
+  )
 }

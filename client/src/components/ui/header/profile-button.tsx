@@ -5,13 +5,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/shadcn-ui/dropdown-menu";
+} from '@/components/ui/shadcn-ui/dropdown-menu'
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/shadcn-ui/avatar";
-import { PersonIcon } from "@radix-ui/react-icons";
+} from '@/components/ui/shadcn-ui/avatar'
+import { PersonIcon } from '@radix-ui/react-icons'
 
 export function ProfileButton() {
   return (
@@ -32,5 +32,5 @@ export function ProfileButton() {
         <DropdownMenuItem className="cursor-pointer">Log Out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

@@ -1,16 +1,16 @@
-import { routes } from "@/routes/routes";
-import { cn } from "@/lib/utils";
-import { Button } from "./ui/shadcn-ui/button";
-import { Link } from "@tanstack/react-router";
-import { useTranslation } from "react-i18next";
+import { routes } from '@/routes/routes'
+import { cn } from '@/lib/utils'
+import { Button } from '../shadcn-ui/button'
+import { Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 type NavProps = React.DetailedHTMLProps<
   React.HTMLAttributes<HTMLElement>,
   HTMLElement
->;
+>
 
 export function Navigation({ className }: NavProps) {
-  const { t } = useTranslation("global");
+  const { t } = useTranslation('global')
   return (
     <nav className={cn(className)}>
       {routes.map((route, i) => (
@@ -26,5 +26,5 @@ export function Navigation({ className }: NavProps) {
         </Button>
       ))}
     </nav>
-  );
+  )
 }

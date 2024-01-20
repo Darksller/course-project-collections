@@ -1,11 +1,11 @@
-import { cn } from "@/lib/utils";
-import React from "react";
+import { cn } from '@/lib/utils'
+import React from 'react'
 
 type HomeSectionProps = {
-  children: React.ReactNode;
-  imageSrc: string;
-  className?: string;
-};
+  children: React.ReactNode
+  imageSrc: string
+  className?: string
+}
 
 export function HomeImageSection({
   children,
@@ -15,7 +15,7 @@ export function HomeImageSection({
   return (
     <div
       className={cn(
-        "sticky top-0 flex h-[100dvh] max-w-full items-center justify-center bg-purple-400",
+        'sticky top-0 flex h-[100dvh] max-w-full items-center justify-center bg-purple-400',
         className,
       )}
     >
@@ -27,5 +27,5 @@ export function HomeImageSection({
         {children}
       </div>
     </div>
-  );
+  )
 }
