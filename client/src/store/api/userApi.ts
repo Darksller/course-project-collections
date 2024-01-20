@@ -11,7 +11,6 @@ export const authApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'auth', id: 'LIST' }],
     }),
     login: build.mutation({
       query: (body) => ({
@@ -19,7 +18,6 @@ export const authApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'auth', id: 'LIST' }],
     }),
   }),
 })
