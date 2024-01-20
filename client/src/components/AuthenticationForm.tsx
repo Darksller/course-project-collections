@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/shadcn-ui/tabs'
 import { useTranslation } from 'react-i18next'
 import { LoginForm } from './ui/authentication/login-form'
-import RegistrationForm from './ui/authentication/registration-form'
+import { RegistrationForm } from './ui/authentication/registration-form'
 export function AuthenticationForm() {
   const { t } = useTranslation('global')
   return (
