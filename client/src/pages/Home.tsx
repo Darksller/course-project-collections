@@ -5,7 +5,7 @@ import thirdImg from '@/assets/images/third.jpeg'
 import { HomeImageSection } from '@/components/ui/home-image-section'
 import { useTranslation } from 'react-i18next'
 import { SmoothArrow } from '@/components/ui/smooth-arrow'
-import { Link } from '@tanstack/react-router'
+import { CheckAuthLink } from '@/components/check-auth-link'
 
 export function Home() {
   const { t } = useTranslation('global')
@@ -26,16 +26,18 @@ export function Home() {
             {t('main.enterText')}
           </h1>
         </div>
-        <Link
-          to="/collections/createCollection"
+        <CheckAuthLink
+          to="/collections/create"
           className="group absolute top-[70%] flex w-full max-w-3xl cursor-pointer items-center justify-center bg-white/50 px-5 backdrop-blur lg:rounded-full dark:bg-pink-500/50"
         >
-          <SmoothArrow className="right-[85%]" />
-          <div className="flex py-2 text-4xl italic transition-all duration-300 lg:text-6xl lg:group-hover:scale-110 ">
-            {t('main.exploreButton')}
-          </div>
-          <SmoothArrow className="left-[80%]" />
-        </Link>
+          <>
+            <SmoothArrow className="right-[85%]" />
+            <div className="flex py-2 text-4xl italic transition-all duration-300 lg:text-6xl lg:group-hover:scale-110 ">
+              {t('main.exploreButton')}
+            </div>
+            <SmoothArrow className="left-[80%]" />
+          </>
+        </CheckAuthLink>
       </div>
 
       <HomeImageSection className="h-[125dvh]" imageSrc={secondImg}>

@@ -15,6 +15,8 @@ import { Button } from '../shadcn-ui/button'
 import { FormError } from '../form-error'
 import { useRegisterMutation } from '@/store/api/authApi'
 import { useState } from 'react'
+import { FormSuccess } from '../form-success'
+import useSignIn from 'react-auth-kit/hooks/useSignIn'
 
 type ErrorResponse = {
   status: string
@@ -22,7 +24,9 @@ type ErrorResponse = {
 }
 
 export function RegistrationForm() {
+  const signIn = useSignIn()
   const [error, setError] = useState<string | undefined>('')
+  const [success, setSuccess] = useState<string | undefined>('')
   const [register, isLoading] = useRegisterMutation()
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
@@ -36,7 +40,16 @@ export function RegistrationForm() {
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     setError('')
     try {
-      await register(values).unwrap()
+      const response = await register(values).unwrap()
+      setSuccess('Success register!')
+      signIn({
+        auth: {
+          token: response.accessToken,
+          type: 'bearer',
+        },
+        userState: response.user,
+      })
+      window.location.reload()
     } catch (error) {
       setError(
         error instanceof Error
@@ -61,7 +74,7 @@ export function RegistrationForm() {
                     {...field}
                     placeholder="Darksller"
                     type="username"
-                    disabled={isLoading.isLoading}
+                    disabled={isLoading.isLoading || isLoading.isSuccess}
                   />
                 </FormControl>
                 <FormMessage />
@@ -77,7 +90,7 @@ export function RegistrationForm() {
                 <FormControl>
                   <Input
                     {...field}
-                    disabled={isLoading.isLoading}
+                    disabled={isLoading.isLoading || isLoading.isSuccess}
                     placeholder="darksller.sss@gmail.com"
                     type="email"
                   />
@@ -97,7 +110,7 @@ export function RegistrationForm() {
                     {...field}
                     placeholder="********"
                     type="password"
-                    disabled={isLoading.isLoading}
+                    disabled={isLoading.isLoading || isLoading.isSuccess}
                   />
                 </FormControl>
                 <FormMessage />
@@ -106,7 +119,12 @@ export function RegistrationForm() {
           />
         </div>
         <FormError message={error} />
-        <Button type="submit" className="w-full" disabled={isLoading.isLoading}>
+        <FormSuccess message={success} />
+        <Button
+          type="submit"
+          className="w-full"
+          disabled={isLoading.isLoading || isLoading.isSuccess}
+        >
           Register
         </Button>
       </form>

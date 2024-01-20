@@ -1,6 +1,8 @@
 import { createUser, getUserByEmail } from '../db/users'
 import express from 'express'
 import { authentication, random } from '../helpers'
+import jwt from 'jsonwebtoken'
+import _ from 'lodash'
 
 export const login = async (req: express.Request, res: express.Response) => {
 	try {
@@ -16,14 +18,16 @@ export const login = async (req: express.Request, res: express.Response) => {
 		if (user.authentication.password !== expectedHash)
 			return res.status(403).json('Invalid email or password')
 
-		const salt = random()
-		user.authentication.sessionToken = authentication(salt, user._id.toString())
-		await user.save()
-		res.cookie(process.env.AUTH_COOKIE, user.authentication.sessionToken, {
-			domain: process.env.DOMAIN,
-			path: '/',
+		const _user = _.omit(user.toObject(), ['authentication'])
+		user.authentication.accessToken = jwt.sign(_user, process.env.SECRET, {
+			expiresIn: +process.env.TOKEN_EXPIRATION,
 		})
-		return res.status(200).json(user).end()
+		await user.save()
+
+		return res
+			.status(200)
+			.json({ user: _user, accessToken: user.authentication.accessToken })
+			.end()
 	} catch (error) {
 		console.log(error)
 		return res.status(400).json('Something went wrong...')
@@ -40,17 +44,25 @@ export const register = async (req: express.Request, res: express.Response) => {
 		if (existingUser)
 			return res.status(400).json('User with this email already exists')
 
+		const _user = { username, email, role: 'default-user' }
+		const accessToken = jwt.sign(_user, process.env.SECRET, {
+			expiresIn: +process.env.TOKEN_EXPIRATION,
+		})
+
 		const salt = random()
 		try {
 			const user = await createUser({
-				username,
-				email,
+				..._user,
 				authentication: {
+					accessToken,
 					salt,
 					password: authentication(salt, password),
 				},
 			})
-			return res.status(200).json(user)
+			return res
+				.status(200)
+				.json({ user: _.omit(user, ['authentication']), accessToken })
+				.end()
 		} catch (error) {
 			return res.status(400).json('User with this username already exists')
 		}

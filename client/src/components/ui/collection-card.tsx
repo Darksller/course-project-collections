@@ -3,24 +3,27 @@ import {
   HeartIcon,
   InfoCircledIcon,
   LockClosedIcon,
-} from "@radix-ui/react-icons";
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Button } from "./shadcn-ui/button";
+} from '@radix-ui/react-icons'
+import { Link } from '@tanstack/react-router'
+import { useState } from 'react'
+import { Button } from './shadcn-ui/button'
 
-export function CollectionCard() {
-  const [isLiked, setLiked] = useState(false);
+type CollectionCardProps = {
+  id: string
+}
+
+export function CollectionCard({ id }: CollectionCardProps) {
+  const [isLiked, setLiked] = useState(false)
   function onLikeClicked() {
-    setLiked((prev) => !prev);
+    setLiked((prev) => !prev)
   }
   //TODO: fix bottom
-  //TODO: fix link in link
   return (
     <div className="group relative m-auto h-[250px] w-[225px] scale-95 cursor-pointer overflow-hidden rounded-md border-purple-300 transition-all duration-500 hover:scale-105 hover:shadow-2xl">
       <div className="absolute right-0 top-0 z-50 h-14 w-11 translate-x-[10px] translate-y-[-22px] rounded-xl border border-white/50 backdrop-blur hover:animate-pulse md:hidden">
         <InfoCircledIcon className="ml-1 mt-[26px] size-6 text-white " />
       </div>
-      <Link to="$collection">
+      <Link to={'/collections/$collectionId'} params={{ collectionId: id }}>
         <div className="group/img h-full overflow-hidden rounded-md bg-[url('@/assets/images/item.jpg')] bg-cover   transition-all delay-1000 duration-1000">
           <div className="relative h-full w-full rounded-md bg-black/45  text-white opacity-0 transition-all duration-500 max-md:group-hover:opacity-100 md:group-hover/img:opacity-100">
             <div className="relative h-[80%] max-w-[92%] pl-5 ">
@@ -58,5 +61,5 @@ export function CollectionCard() {
         </Button>
       </div>
     </div>
-  );
+  )
 }

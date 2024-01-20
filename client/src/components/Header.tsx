@@ -1,4 +1,4 @@
-import { Navigation } from './ui/header/Navigation'
+import { Navigation } from './ui/header/navigtation'
 import SearchBar from './ui/header/search-bar'
 import { Link } from '@tanstack/react-router'
 import HeaderScroll from 'react-headroom'
@@ -7,8 +7,11 @@ import { SettingsButton } from './ui/header/settings-button'
 import { HamburgerMenu } from './ui/header/hamburger-menu'
 import DialogWrapper from './ui/dialog-wrapper'
 import { AuthenticationForm } from './AuthenticationForm'
+import { useAuthStore } from '@/store/authStore'
+import { ProfileButton } from './ui/header/profile-button'
 
 export function Header() {
+  const { isAuth } = useAuthStore()
   const { t } = useTranslation('global')
 
   return (
@@ -33,13 +36,17 @@ export function Header() {
 
           <div className="flex items-center">
             <SearchBar className="mr-6 hidden sm:block" />
-            <DialogWrapper
-              dialogContent={<AuthenticationForm />}
-              dialogTitle={t('authentication')}
-              className="rounded-3xl border border-pink-500 px-5 py-1 text-base font-bold tracking-wide transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:text-pink-500 hover:animate-in dark:border-white dark:hover:text-white"
-            >
-              {t('start')}
-            </DialogWrapper>
+            {!isAuth ? (
+              <DialogWrapper
+                dialogContent={<AuthenticationForm />}
+                dialogTitle={t('authentication')}
+                className="rounded-3xl border border-pink-500 px-5 py-1 text-base font-bold tracking-wide transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:text-pink-500 hover:animate-in dark:border-white dark:hover:text-white"
+              >
+                {t('start')}
+              </DialogWrapper>
+            ) : (
+              <ProfileButton />
+            )}
           </div>
           <SettingsButton className="mr-3" />
         </div>

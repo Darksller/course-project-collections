@@ -12,6 +12,7 @@ export const authApi = createApi({
         body,
       }),
     }),
+
     login: build.mutation({
       query: (body) => ({
         url: '/auth/login',
@@ -19,7 +20,16 @@ export const authApi = createApi({
         body,
       }),
     }),
+
+    refresh: build.mutation({
+      query: (body) => ({
+        url: '/auth/refresh',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useLoginMutation, useRegisterMutation } = authApi
+export const { useLoginMutation, useRegisterMutation, useRefreshMutation } =
+  authApi

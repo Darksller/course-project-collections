@@ -1,3 +1,4 @@
+import { useUiStore } from '@/store/useUiStore'
 import {
   Dialog,
   DialogContent,
@@ -22,8 +23,9 @@ export default function DialogWrapper({
   dialogContent,
   className,
 }: DialogWrapperProps) {
+  const { isAuthModelOpen, setIsAuthModelOpen } = useUiStore()
   return (
-    <Dialog>
+    <Dialog open={isAuthModelOpen} onOpenChange={setIsAuthModelOpen}>
       <DialogTrigger className={className}>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>

@@ -1,6 +1,6 @@
 import { HamburgerMenuIcon } from '@radix-ui/react-icons'
 import { Sheet, SheetContent, SheetTrigger } from '../shadcn-ui/sheet'
-import { Navigation } from './Navigation'
+import { Navigation } from './navigtation'
 import SearchBar from './search-bar'
 
 export function HamburgerMenu() {
