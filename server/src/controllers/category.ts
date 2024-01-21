@@ -1,5 +1,9 @@
 import express from 'express'
-import { createCategory, getCategories, getCategoryById } from '../db/category'
+import {
+	createCategory,
+	getCategories,
+	getCategoryById,
+} from '../db/categories'
 
 export const getAllCategories = async (
 	req: express.Request,

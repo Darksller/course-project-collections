@@ -9,7 +9,7 @@ export const collectionsApi = createApi({
     credentials: 'include',
   }),
   endpoints: (build) => ({
-    getCollections: build.query<CollectionsResponse, void>({
+    getCollections: build.query<Collection[], void>({
       query: () => 'collections',
       providesTags: (result) =>
         result
@@ -22,9 +22,10 @@ export const collectionsApi = createApi({
             ]
           : [{ type: 'Collections', id: 'LIST' }],
     }),
+    getCollectionById: build.query<Collection, string>({
+      query: (_id) => `collections/${_id}`,
+    }),
   }),
 })
 
 export const { useGetCollectionsQuery } = collectionsApi
-
-export type CollectionsResponse = Collection[]

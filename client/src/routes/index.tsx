@@ -1,5 +1,5 @@
 import { App } from '@/App'
-import { CollectionsResponse, collectionsApi } from '@/api/collectionsApi'
+import { collectionsApi } from '@/api/collectionsApi'
 import { CollectionPage } from '@/pages/CollectionPage'
 import { Collections } from '@/pages/Collections'
 import { CreateCollection } from '@/pages/CreateCollection'
@@ -30,7 +30,7 @@ export const collectionsRoute = new Route({
       collectionsApi.endpoints.getCollections.initiate(),
     )
     const response = await promise
-    return { collections: response.data as CollectionsResponse }
+    return { collections: response.data }
   },
 })
 
@@ -39,11 +39,11 @@ export const collectionRoute = new Route({
   path: '$collectionId',
   component: CollectionPage,
   loader: async ({ params }) => {
-    const collectionId = params.collectionId
-    const collection = console.log(collectionId)
-    return {
-      collection,
-    }
+    const promise = store.dispatch(
+      collectionsApi.endpoints.getCollectionById.initiate(params.collectionId),
+    )
+    const response = await promise
+    return { collection: response.data }
   },
 })
 

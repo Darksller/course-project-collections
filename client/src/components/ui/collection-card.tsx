@@ -8,7 +8,7 @@ import { Link } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Button } from './shadcn-ui/button'
 import { Collection } from '@/pages/Collections'
-import image from '@/assets/images/item.jpg'
+import dummyImage from '@/assets/images/dummyCollectionImage.jpg'
 type CollectionCardProps = {
   isLikedByMe?: boolean
   collection: Collection
@@ -34,21 +34,21 @@ export function CollectionCard({
       >
         <img
           className={
-            'absolute h-full overflow-hidden rounded-md bg-cover object-cover transition-all delay-1000 duration-1000'
+            'absolute h-full w-full overflow-hidden rounded-md bg-cover object-cover transition-all delay-1000 duration-1000'
           }
           src={collection.imageUrl}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null
-            currentTarget.src = image
+            currentTarget.src = dummyImage
           }}
         />
-        <div className="relative h-full w-full rounded-md  bg-black/45 text-white opacity-0 transition-all duration-500 group-hover/img:z-[999] max-md:group-hover:opacity-100 md:group-hover/img:opacity-100">
+        <div className="relative h-full w-full rounded-md bg-black/45 text-white opacity-0 transition-all duration-500 group-hover/img:z-[999] max-md:group-hover:opacity-100 md:group-hover/img:opacity-100">
           <div className="relative h-[80%] max-w-[92%] pl-5 ">
             <div className="text-sm italic tracking-wide text-white transition-all duration-1000 group-hover/img:translate-y-[160%] group-hover:translate-y-[160%] group-hover/img:text-2xl group-hover:text-2xl">
               {collection.name}
             </div>
             <div className="absolute bottom-0 max-h-[50%] w-[92%] translate-y-full overflow-hidden text-ellipsis break-all text-sm text-white opacity-0 duration-1000 group-hover/img:translate-y-0 group-hover:translate-y-0 group-hover/img:opacity-100 group-hover:opacity-100">
-              <div className="w-0 border-b-2 text-white transition-all delay-700 duration-1000 group-hover/img:w-full  group-hover:w-full dark:border-white" />
+              <div className="w-0 border-b-2 text-white transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
               {collection.description}
             </div>
           </div>
@@ -61,18 +61,20 @@ export function CollectionCard({
           </div>
         </div>
       </Link>
-      <div className="absolute bottom-0 flex h-[50px] w-full items-center bg-black/45 font-bold text-white transition-all duration-1000 group-hover:bottom-[-30%] hover:!bottom-0">
-        <LockClosedIcon className="ml-2 mr-1" />
+      <div className="absolute bottom-0 flex h-[50px] w-full items-center bg-purple-900/70 font-bold text-white transition-all duration-1000 group-hover:bottom-[-30%] hover:!bottom-0 dark:bg-black/45">
+        <LockClosedIcon className="ml-2 mr-1" color="white" />
         {collection.name}
-        <Button
-          variant="ghost"
-          className="ml-auto hover:text-red-600"
-          onClick={onLikeClicked}
-        >
+        <Button variant="ghost" className="ml-auto " onClick={onLikeClicked}>
           {!isLiked ? (
-            <HeartIcon className="size-7 transition-all duration-300 hover:scale-125" />
+            <HeartIcon
+              className="size-7 transition-all duration-300 hover:scale-125"
+              color="white"
+            />
           ) : (
-            <HeartFilledIcon className="size-7 text-red-600 transition-all duration-300 hover:scale-125 hover:text-red-400" />
+            <HeartFilledIcon
+              className="size-7 transition-all duration-300 hover:scale-125"
+              color="white"
+            />
           )}
         </Button>
       </div>

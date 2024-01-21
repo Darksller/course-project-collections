@@ -14,11 +14,30 @@ const UserSchema = new mongoose.Schema({
 			'Please fill a valid email address',
 		],
 	},
-	role: { type: String, required: true, select: true },
+	role: { type: String, required: true, default: 'default_user', select: true },
+	likedCollections: [
+		{ type: mongoose.Schema.Types.ObjectId, ref: 'Collection', required: true },
+	],
+	likedComments: [
+		{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment', required: true },
+	],
+	likedItems: [
+		{ type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
+	],
+	collections: [
+		{ type: mongoose.Schema.Types.ObjectId, ref: 'Collection', required: true },
+	],
+	comments: [
+		{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment', required: true },
+	],
+	items: [
+		{ type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
+	],
 	authentication: {
 		password: { type: String, required: false, select: false },
 		salt: { type: String, select: false },
 		accessToken: { type: String, select: false },
+		isBanned: { type: Boolean, required: true, default: false, select: false },
 	},
 })
 

@@ -22,13 +22,13 @@ export function Home() {
         />
 
         <div className="absolute top-[50%] z-[100] flex w-full translate-y-[-80%] flex-col  lg:left-[50%] lg:top-[50%] lg:translate-x-[-50%] lg:translate-y-[-80%] ">
-          <h1 className="bg-white/40 p-4 text-left font-cgb text-5xl font-extrabold text-pink-500 backdrop-blur transition-all duration-500 lg:text-center lg:text-7xl dark:bg-pink-500/50 dark:text-white">
+          <h1 className="bg-white/40 p-4 text-left font-cgb text-5xl font-extrabold backdrop-blur transition-all duration-500 lg:text-center lg:text-7xl dark:bg-purple-500/50 dark:text-white">
             {t('main.enterText')}
           </h1>
         </div>
         <CheckAuthLink
           to="/collections/create"
-          className="group absolute top-[70%] flex w-full max-w-3xl cursor-pointer items-center justify-center bg-white/50 px-5 backdrop-blur lg:rounded-full dark:bg-pink-500/50"
+          className="group absolute top-[70%] flex w-full max-w-3xl cursor-pointer items-center justify-center bg-white/50 px-5 backdrop-blur lg:rounded-full dark:bg-purple-500/50"
         >
           <>
             <SmoothArrow className="right-[85%]" />

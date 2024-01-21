@@ -24,13 +24,13 @@ export default function SearchBar({ className }: SearchBarProps) {
     <div className={cn(className)}>
       <MagnifyingGlassIcon
         className={cn(
-          'absolute z-[9] my-1.5 ml-2 h-6 w-6 text-pink-500 dark:text-white',
+          'absolute z-[9] my-1.5 ml-2 h-6 w-6 text-purple-600 dark:text-white',
         )}
       />
       <Input
         type="search"
         placeholder={t('searchBar')}
-        className="border-pink-600 bg-white/40 pl-9 font-muli text-white placeholder:font-muli placeholder:text-pink-500 focus:backdrop-blur-md dark:border-white dark:bg-pink-500/40 dark:placeholder:text-white"
+        className="border-purple-700 bg-white/40 pl-9 placeholder:text-purple-600 focus:backdrop-blur-md dark:border-white dark:bg-purple-500 dark:bg-opacity-0 dark:placeholder:text-white"
         onChange={onSearchInputChange}
         onKeyDown={onKeyPressed}
       />

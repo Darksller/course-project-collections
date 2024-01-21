@@ -15,7 +15,7 @@ import { PersonIcon } from '@radix-ui/react-icons'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
 
-type User = {
+export type User = {
   _id: string
   username: string
   email: string

@@ -13,10 +13,9 @@ import { ProfileButton } from './ui/header/profile-button'
 export function Header() {
   const { isAuth } = useAuthStore()
   const { t } = useTranslation('global')
-
   return (
     <HeaderScroll>
-      <header className="duration-600 w-full bg-white/60 py-2 text-pink-600/100 shadow-2xl backdrop-blur-xl transition-all dark:bg-pink-600/50 dark:text-white">
+      <header className="duration-600 w-full bg-white/60 py-2 text-purple-700/100 shadow-2xl backdrop-blur-xl transition-all dark:bg-purple-700/50 dark:text-white">
         <div className="relative flex w-full items-center justify-between">
           <div className="flex items-center pl-2 lg:pl-[15%]">
             <HamburgerMenu />
@@ -40,7 +39,7 @@ export function Header() {
               <DialogWrapper
                 dialogContent={<AuthenticationForm />}
                 dialogTitle={t('authentication')}
-                className="rounded-3xl border border-pink-500 px-5 py-1 text-base font-bold tracking-wide transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:text-pink-500 hover:animate-in dark:border-white dark:hover:text-white"
+                className="rounded-3xl border border-purple-600 px-5 py-1 text-base font-bold tracking-wide transition-all duration-300 hover:scale-105 hover:bg-white/20  hover:text-purple-500 hover:animate-in dark:border-white dark:hover:text-white"
               >
                 {t('start')}
               </DialogWrapper>

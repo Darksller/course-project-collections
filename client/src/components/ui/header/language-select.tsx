@@ -20,7 +20,7 @@ export function LanguageSelect() {
       <SelectTrigger>
         <SelectValue
           placeholder={t(i18n.language)}
-          className="border-pink-500"
+          className="border-purple-500"
         />
       </SelectTrigger>
       <SelectContent>
