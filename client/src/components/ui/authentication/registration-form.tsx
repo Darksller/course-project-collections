@@ -13,7 +13,7 @@ import {
 import { Input } from '../shadcn-ui/input'
 import { Button } from '../shadcn-ui/button'
 import { FormError } from '../form-error'
-import { useRegisterMutation } from '@/store/api/authApi'
+import { useRegisterMutation } from '@/api/authApi'
 import { useState } from 'react'
 import { FormSuccess } from '../form-success'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'

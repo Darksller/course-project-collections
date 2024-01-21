@@ -6,7 +6,7 @@ export const useUiStore = create<UiStore>((set) => ({
     set({ isAuthModelOpen }),
 }))
 
-interface UiStore {
+type UiStore = {
   isAuthModelOpen: boolean | undefined
   setIsAuthModelOpen: (isAuthModelOpen: boolean | undefined) => void
 }

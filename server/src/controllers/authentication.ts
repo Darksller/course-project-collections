@@ -24,6 +24,11 @@ export const login = async (req: express.Request, res: express.Response) => {
 		})
 		await user.save()
 
+		res.cookie(process.env.AUTH_COOKIE, user.authentication.accessToken, {
+			domain: process.env.DOMAIN,
+			path: '/',
+		})
+
 		return res
 			.status(200)
 			.json({ user: _user, accessToken: user.authentication.accessToken })

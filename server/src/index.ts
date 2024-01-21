@@ -33,5 +33,3 @@ mongoose.connect(process.env.MONGO_URL)
 mongoose.connection.on('error', (error: Error) => console.log(error.message))
 
 app.use('/', router())
-
-export default mongoose.Promise

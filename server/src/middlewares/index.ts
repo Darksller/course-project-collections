@@ -1,7 +1,7 @@
 import express from 'express'
 import { get, merge } from 'lodash'
-
-import { getUserBySessionToken } from '../db/users'
+import jwt from 'jsonwebtoken'
+import { getUserByAccessToken } from '../db/users'
 
 export const isAuthenticated = async (
 	req: express.Request,
@@ -9,9 +9,9 @@ export const isAuthenticated = async (
 	next: express.NextFunction
 ) => {
 	try {
-		const sessionToken = req.cookies[process.env.AUTH_COOKIE]
-		if (!sessionToken) return res.sendStatus(403)
-		const existingUser = await getUserBySessionToken(sessionToken)
+		const accessToken = req.cookies[process.env.AUTH_COOKIE]
+		if (!accessToken) return res.sendStatus(403)
+		const existingUser = await getUserByAccessToken(accessToken)
 		if (!existingUser) return res.sendStatus(403)
 		merge(req, { identity: existingUser })
 		return next()
@@ -32,6 +32,27 @@ export const isOwner = async (
 		if (!currentUserId) return res.sendStatus(403)
 		if (currentUserId.toString() !== id) return res.sendStatus(403)
 		next()
+	} catch (error) {
+		console.log(error)
+		return res.sendStatus(400)
+	}
+}
+
+export const isAdmin = async (
+	req: express.Request,
+	res: express.Response,
+	next: express.NextFunction
+) => {
+	try {
+		const sessionToken = req.cookies[process.env.AUTH_COOKIE]
+		if (!sessionToken) return res.sendStatus(403)
+		const decodedToken = jwt.decode(sessionToken)
+		if (typeof decodedToken === 'string') return res.sendStatus(403)
+		const { role } = decodedToken
+		if (!role) return res.sendStatus(403)
+		if (role !== 'ADMIN')
+			return res.status(400).json('You must be an administrator')
+		return next()
 	} catch (error) {
 		console.log(error)
 		return res.sendStatus(400)

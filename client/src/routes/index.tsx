@@ -1,9 +1,11 @@
 import { App } from '@/App'
+import { collectionsApi, useGetCollectionsQuery } from '@/api/collectionsApi'
 import { CollectionPage } from '@/pages/CollectionPage'
-import { Collections } from '@/pages/Collections'
+import { Collection, Collections } from '@/pages/Collections'
 import { CreateCollection } from '@/pages/CreateCollection'
 import { Home } from '@/pages/Home'
 import { Users } from '@/pages/Users'
+import { store } from '@/store/reduxStore'
 import { Outlet, RootRoute, Route, Router } from '@tanstack/react-router'
 const rootRoute = new RootRoute({ component: App })
 
@@ -23,6 +25,13 @@ export const collectionsRoute = new Route({
   getParentRoute: () => collectionsLayoutRoute,
   path: '/',
   component: Collections,
+  loader: async () => {
+    const promise = store.dispatch(
+      collectionsApi.endpoints.getCollections.initiate(),
+    )
+    const response = await promise
+    return { collections: response.data }
+  },
 })
 
 export const collectionRoute = new Route({

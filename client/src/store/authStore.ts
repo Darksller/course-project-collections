@@ -17,7 +17,7 @@ export const useAuthStore = create<authStore>((set) => ({
   setIsAuth: (isAuth: boolean) => set({ isAuth }),
 }))
 
-interface authStore {
+type authStore = {
   isAuth: boolean
   setIsAuth: (isAuth: boolean) => void
 }
