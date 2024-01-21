@@ -1,7 +1,7 @@
 import { App } from '@/App'
-import { collectionsApi, useGetCollectionsQuery } from '@/api/collectionsApi'
+import { CollectionsResponse, collectionsApi } from '@/api/collectionsApi'
 import { CollectionPage } from '@/pages/CollectionPage'
-import { Collection, Collections } from '@/pages/Collections'
+import { Collections } from '@/pages/Collections'
 import { CreateCollection } from '@/pages/CreateCollection'
 import { Home } from '@/pages/Home'
 import { Users } from '@/pages/Users'
@@ -30,7 +30,7 @@ export const collectionsRoute = new Route({
       collectionsApi.endpoints.getCollections.initiate(),
     )
     const response = await promise
-    return { collections: response.data }
+    return { collections: response.data as CollectionsResponse }
   },
 })
 

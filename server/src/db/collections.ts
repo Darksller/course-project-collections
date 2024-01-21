@@ -21,14 +21,16 @@ const CollectionSchema = new mongoose.Schema({
 				enum: ['NOT_PRESENT', 'PRESENT_OPTIONAL', 'PRESENT_REQUIRED'],
 				required: true,
 			},
-			fieldName: { type: mongoose.Schema.Types.Mixed, required: true },
+			fieldName: { type: String, required: true },
+			fieldType: { type: mongoose.Schema.Types.Mixed, required: true },
 		},
 	],
 })
 
 export const CollectionModel = mongoose.model('Collection', CollectionSchema)
 
-export const getCollections = () => CollectionModel.find()
+export const getCollections = () =>
+	CollectionModel.find().populate('user').populate('category')
 export const getCollectionById = (id: string) => CollectionModel.findById(id)
 export const createCollection = (values: Record<string, any>) =>
 	new CollectionModel(values).save().then(collection => collection.toObject())
