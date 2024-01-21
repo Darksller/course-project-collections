@@ -1,14 +1,8 @@
-import {
-  HeartFilledIcon,
-  HeartIcon,
-  InfoCircledIcon,
-  LockClosedIcon,
-} from '@radix-ui/react-icons'
+import { InfoCircledIcon, LockClosedIcon } from '@radix-ui/react-icons'
 import { Link } from '@tanstack/react-router'
-import { useState } from 'react'
-import { Button } from './shadcn-ui/button'
 import { Collection } from '@/pages/Collections'
 import dummyImage from '@/assets/images/dummyCollectionImage.jpg'
+import { LikeButton } from './like-button'
 type CollectionCardProps = {
   isLikedByMe?: boolean
   collection: Collection
@@ -18,10 +12,6 @@ export function CollectionCard({
   collection,
   isLikedByMe = false,
 }: CollectionCardProps) {
-  const [isLiked, setLiked] = useState(isLikedByMe)
-  function onLikeClicked() {
-    setLiked((prev) => !prev)
-  }
   return (
     <div className="group relative m-auto h-[250px] w-[225px] scale-95 cursor-pointer overflow-hidden rounded-md border-purple-300 transition-all duration-500 hover:scale-105 hover:shadow-2xl">
       <div className="absolute right-0 top-0 z-50 h-14 w-11 translate-x-[10px] translate-y-[-22px] rounded-xl border border-white/50 backdrop-blur hover:animate-pulse md:hidden">
@@ -64,19 +54,7 @@ export function CollectionCard({
       <div className="absolute bottom-0 flex h-[50px] w-full items-center bg-purple-900/70 font-bold text-white transition-all duration-1000 group-hover:bottom-[-30%] hover:!bottom-0 dark:bg-black/45">
         <LockClosedIcon className="ml-2 mr-1" color="white" />
         {collection.name}
-        <Button variant="ghost" className="ml-auto " onClick={onLikeClicked}>
-          {!isLiked ? (
-            <HeartIcon
-              className="size-7 transition-all duration-300 hover:scale-125"
-              color="white"
-            />
-          ) : (
-            <HeartFilledIcon
-              className="size-7 transition-all duration-300 hover:scale-125"
-              color="white"
-            />
-          )}
-        </Button>
+        <LikeButton isLikedByMe={isLikedByMe} />
       </div>
     </div>
   )

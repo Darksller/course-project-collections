@@ -17,7 +17,11 @@ const indexRoute = new Route({
 
 export const collectionsLayoutRoute = new Route({
   path: '/collections',
-  component: Outlet,
+  component: () => (
+    <div className="mx-auto mt-12 max-w-1440 rounded-xl bg-slate-200 bg-opacity-40 backdrop-blur dark:bg-white/40">
+      <Outlet />
+    </div>
+  ),
   getParentRoute: () => rootRoute,
 })
 

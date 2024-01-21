@@ -5,7 +5,7 @@ export const collectionsApi = createApi({
   reducerPath: 'collectionsApi',
   tagTypes: ['Collections'],
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:9999/',
+    baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
   }),
   endpoints: (build) => ({
