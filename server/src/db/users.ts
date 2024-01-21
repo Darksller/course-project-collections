@@ -16,22 +16,52 @@ const UserSchema = new mongoose.Schema({
 	},
 	role: { type: String, required: true, default: 'default_user', select: true },
 	likedCollections: [
-		{ type: mongoose.Schema.Types.ObjectId, ref: 'Collection', required: true },
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Collection',
+			required: true,
+			select: false,
+		},
 	],
 	likedComments: [
-		{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment', required: true },
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Comment',
+			required: true,
+			select: false,
+		},
 	],
 	likedItems: [
-		{ type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Item',
+			required: true,
+			select: false,
+		},
 	],
 	collections: [
-		{ type: mongoose.Schema.Types.ObjectId, ref: 'Collection', required: true },
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Collection',
+			required: true,
+			select: false,
+		},
 	],
 	comments: [
-		{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment', required: true },
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Comment',
+			required: true,
+			select: false,
+		},
 	],
 	items: [
-		{ type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Item',
+			required: true,
+			select: false,
+		},
 	],
 	authentication: {
 		password: { type: String, required: false, select: false },

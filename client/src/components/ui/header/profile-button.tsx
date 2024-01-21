@@ -15,14 +15,6 @@ import { PersonIcon } from '@radix-ui/react-icons'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
 
-export type User = {
-  _id: string
-  username: string
-  email: string
-  role: string
-  imageUrl?: string
-}
-
 export function ProfileButton() {
   const user = useAuthUser<User>()
   console.log(user)

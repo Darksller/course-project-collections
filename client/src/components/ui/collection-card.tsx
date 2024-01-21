@@ -54,7 +54,7 @@ export function CollectionCard({
       <div className="absolute bottom-0 flex h-[50px] w-full items-center bg-purple-900/70 font-bold text-white transition-all duration-1000 group-hover:bottom-[-30%] hover:!bottom-0 dark:bg-black/45">
         <LockClosedIcon className="ml-2 mr-1" color="white" />
         {collection.name}
-        <LikeButton isLikedByMe={isLikedByMe} />
+        <LikeButton isLikedByMe={isLikedByMe} className="ml-auto" />
       </div>
     </div>
   )

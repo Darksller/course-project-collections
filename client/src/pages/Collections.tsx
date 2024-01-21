@@ -1,30 +1,6 @@
 import { CollectionCard } from '@/components/ui/collection-card'
 import { collectionsRoute } from '@/routes'
 
-export type Collection = {
-  _id: string
-  category: {
-    _id: string
-    name: string
-  }
-  description: string
-  isPrivate: boolean
-  name: string
-  isClosed: boolean
-  user: {
-    _id: string
-    username: string
-  }
-  imageUrl?: string
-  customFields?: [
-    {
-      fieldState: 'NOT_PRESENT' | 'PRESENT_OPTIONAL' | 'PRESENT_REQUIRED'
-      fieldName: string
-      fieldType: string
-    },
-  ]
-}
-
 export function Collections() {
   const { collections } = collectionsRoute.useLoaderData()
   if (!collections)
