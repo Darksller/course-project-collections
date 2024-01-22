@@ -1,8 +1,8 @@
 import { InfoCircledIcon, LockClosedIcon } from '@radix-ui/react-icons'
 import { Link } from '@tanstack/react-router'
-import { Collection } from '@/pages/Collections'
 import dummyImage from '@/assets/images/dummyCollectionImage.jpg'
 import { LikeButton } from './like-button'
+import { Collection } from '@/schemas/dbSchemas'
 type CollectionCardProps = {
   isLikedByMe?: boolean
   collection: Collection
@@ -51,7 +51,7 @@ export function CollectionCard({
           </div>
         </div>
       </Link>
-      <div className="absolute bottom-0 flex h-[50px] w-full items-center bg-purple-900/70 font-bold text-white transition-all duration-1000 group-hover:bottom-[-30%] hover:!bottom-0 dark:bg-black/45">
+      <div className="absolute bottom-0 flex h-[50px] w-full items-center  bg-black/45 font-bold text-white transition-all duration-1000 group-hover:bottom-[-30%] hover:!bottom-0">
         <LockClosedIcon className="ml-2 mr-1" color="white" />
         {collection.name}
         <LikeButton isLikedByMe={isLikedByMe} className="ml-auto" />

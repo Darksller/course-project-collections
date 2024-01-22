@@ -54,6 +54,8 @@
     @apply border-border;
     @apply text-purple-600;
     @apply dark:text-white;
+    @apply scrollbar-thin;
+    @apply scrollbar-track-white scrollbar-thumb-purple-700/80 dark:scrollbar-track-purple-700/80 dark:scrollbar-thumb-white;
   }
   body {
     @apply bg-background text-foreground;

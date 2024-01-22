@@ -13,16 +13,17 @@ import dummyImage from '@/assets/images/dummyCollectionImage.jpg'
 import { LikeButton } from '@/components/ui/like-button'
 import { LanguageSelect } from '@/components/ui/header/language-select'
 import SearchBar from '@/components/ui/header/search-bar'
-import { ItemCard } from '@/components/ui/item-card'
 import { v4 } from 'uuid'
 import { Fragment } from 'react'
+import { ItemPage } from './ItemPage'
 
 export function CollectionPage() {
   const { collection } = collectionRoute.useLoaderData()
   if (!collection) return <h1 className="text-4xl">Collection not found</h1>
+
   return (
-    <div className="h-full px-4 py-4">
-      <Card className="flex w-full flex-col gap-5 border border-purple-700/50 p-5 sm:grid sm:grid-cols-3">
+    <div className="h-full px-4 py-4 ">
+      <Card className="flex w-full flex-col gap-5 border border-purple-700/50 p-5 max-sm:pb-0 sm:grid sm:grid-cols-3 sm:rounded-3xl">
         <div className="h-full w-full  ">
           <div className="h-full w-full overflow-hidden rounded-xl border ">
             <img
@@ -35,8 +36,8 @@ export function CollectionPage() {
             />
           </div>
         </div>
-        <div className="grid grid-rows-3 border-purple-700/50 max-sm:border-t-[1px] sm:col-span-2 sm:border-l-[1px] dark:border-white/50">
-          <CardHeader className="flex p-3 px-6 pt-7 ">
+        <div className="grid grid-rows-3 border-purple-700/50 max-sm:flex max-sm:flex-col max-sm:border-t-[1px] sm:col-span-2 sm:border-l-[1px] dark:border-white/50">
+          <CardHeader className="flex p-0 pt-7 max-sm:py-4 lg:p-3 lg:px-6">
             <CardTitle className="flex w-full items-center justify-between">
               <div className="flex text-3xl max-lg:text-xl lg:items-center">
                 {collection.name}
@@ -59,23 +60,23 @@ export function CollectionPage() {
             </div>
           </CardHeader>
 
-          <CardContent className="row-span-2 mx-6 grid grid-cols-3 gap-4 border-t-[1px]  border-purple-700/50 dark:border-white/50">
-            <div className="flex h-full flex-col gap-2  border-white/30 py-4">
+          <CardContent className="row-span-2 grid grid-cols-3 gap-4 border-t-[1px] border-purple-700/50 max-sm:p-0 lg:mx-6 dark:border-white/50">
+            <div className="flex h-full flex-col gap-2 border-white/30 py-4">
               <Label
                 htmlFor="description"
-                className="overflow-hidden text-ellipsis break-all text-2xl"
+                className="overflow-hidden text-ellipsis break-all text-2xl max-sm:text-base max-sm:font-bold"
               >
                 Описание
               </Label>
               <div className="w-full border-b-2 border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
-              <div className="overflow-hidden text-ellipsis ">
+              <div className="overflow-hidden text-ellipsis max-sm:text-[11px]">
                 {collection.description}
               </div>
             </div>
-            <div className="col-span-2 flex h-full flex-col gap-2 rounded-xl border-white/30 px-2 py-4">
+            <div className="col-span-2 flex h-full flex-col gap-2 rounded-xl border-white/30 py-4 max-sm:text-[11px] sm:px-2">
               <Label
                 htmlFor="description"
-                className="overflow-hidden text-ellipsis break-all text-2xl"
+                className="overflow-hidden text-ellipsis break-all text-2xl max-sm:text-base max-sm:font-bold"
               >
                 Дополнительные поля
               </Label>
@@ -85,7 +86,7 @@ export function CollectionPage() {
                 <div>Type</div>
                 <div>State</div>
               </div>
-              <div className="w-full  border-b-2  border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
+              <div className="w-full border-b-2  border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
               <div className="overflow-hidden text-ellipsis break-all">
                 <div className="grid w-full grid-cols-3 overflow-hidden text-ellipsis break-all">
                   {collection.customFields?.map((field) => (
@@ -99,7 +100,7 @@ export function CollectionPage() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="mx-6 flex justify-end border-t-[1px] border-purple-700/50 py-2 dark:border-white/50">
+          <CardFooter className="flex items-center justify-end border-t-[1px] border-purple-700/50 py-2 max-sm:pr-0  sm:mx-6 dark:border-white/50">
             <LikeButton />
           </CardFooter>
         </div>
@@ -123,7 +124,7 @@ export function CollectionPage() {
         </div>
         <div className="w-full border-b-[1px] border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
         <div className="m-auto flex flex-wrap gap-4 py-5">
-          {collection.items?.map((item) => <ItemCard key={v4()} item={item} />)}
+          {collection.items?.map((item) => <ItemPage key={v4()} item={item} />)}
         </div>
       </div>
     </div>

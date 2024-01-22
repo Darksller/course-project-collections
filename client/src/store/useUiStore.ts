@@ -6,6 +6,10 @@ export const useUiStore = create<UiStore>((set) => ({
     set({ isAuthModelOpen }),
   isNavSheetOpen: false,
   setIsNavSheetOpen: (isNavSheetOpen) => set({ isNavSheetOpen }),
+  itemIdToOpen: '',
+  setItemIdToOpen: (itemIdToOpen: string) => set({ itemIdToOpen }),
+  isItemSheetOpen: false,
+  setIsItemSheetOpen: (isItemSheetOpen: boolean) => set({ isItemSheetOpen }),
 }))
 
 type UiStore = {
@@ -13,4 +17,8 @@ type UiStore = {
   setIsAuthModelOpen: (isAuthModelOpen: boolean | undefined) => void
   isNavSheetOpen: boolean | undefined
   setIsNavSheetOpen: (isNavSheetOpen: boolean | undefined) => void
+  itemIdToOpen: string
+  setItemIdToOpen: (itemIdToOpen: string) => void
+  isItemSheetOpen: boolean
+  setIsItemSheetOpen: (isItemSheetOpen: boolean) => void
 }

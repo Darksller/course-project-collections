@@ -27,18 +27,16 @@ export function LikeButton({
       {!isLiked ? (
         <HeartIcon
           className={cn(
-            'size-7 rounded-full p-1 transition-all duration-300 hover:scale-125',
+            'size-9 rounded-full p-1 text-black transition-all duration-300 hover:scale-125',
             iconProps,
           )}
-          color="white"
         />
       ) : (
         <HeartFilledIcon
           className={cn(
-            'size-7 transition-all duration-300 hover:scale-125',
+            'size-9 transition-all duration-300 hover:scale-125',
             iconProps,
           )}
-          color="white"
         />
       )}
     </Button>

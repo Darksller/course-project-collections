@@ -5,7 +5,6 @@ export type Collection = {
     name: string
   }
   description: string
-  isPrivate: boolean
   name: string
   isClosed: boolean
   user: {

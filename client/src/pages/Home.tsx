@@ -5,11 +5,10 @@ import thirdImg from '@/assets/images/third.jpeg'
 import { HomeImageSection } from '@/components/ui/home-image-section'
 import { useTranslation } from 'react-i18next'
 import { SmoothArrow } from '@/components/ui/smooth-arrow'
-import { CheckAuthLink } from '@/components/check-auth-link'
+import { CheckAuthLink } from '@/components/ui/check-auth-link'
 
 export function Home() {
   const { t } = useTranslation('global')
-
   return (
     <div className="absolute top-0 w-full">
       <div className="sticky top-0 flex h-[100dvh] justify-center bg-black">
@@ -22,9 +21,9 @@ export function Home() {
         />
 
         <div className="absolute top-[50%] z-[100] flex w-full translate-y-[-80%] flex-col  lg:left-[50%] lg:top-[50%] lg:translate-x-[-50%] lg:translate-y-[-80%] ">
-          <h1 className="bg-white/40 p-4 text-left font-cgb text-5xl font-extrabold backdrop-blur transition-all duration-500 lg:text-center lg:text-7xl dark:bg-purple-500/50 dark:text-white">
+          <div className="bg-white/40 p-4 text-left font-cgb text-5xl font-extrabold backdrop-blur transition-all duration-500 lg:text-center lg:text-7xl dark:bg-purple-500/50 dark:text-white">
             {t('main.enterText')}
-          </h1>
+          </div>
         </div>
         <CheckAuthLink
           to="/collections/create"

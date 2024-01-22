@@ -1,4 +1,4 @@
-import { Navigation } from './ui/header/navigtation'
+import { Navigation } from './ui/header/navigation'
 import SearchBar from './ui/header/search-bar'
 import { Link } from '@tanstack/react-router'
 import HeaderScroll from 'react-headroom'
@@ -15,13 +15,13 @@ export function Header() {
   const { t } = useTranslation('global')
   return (
     <HeaderScroll>
-      <header className="duration-600 w-full bg-white/60 py-2 text-purple-700/100 shadow-2xl backdrop-blur-xl transition-all dark:bg-purple-700/50 dark:text-white">
+      <header className="duration-600 w-full bg-white/60 py-2 text-purple-700/100 shadow-lg backdrop-blur-xl transition-all dark:bg-purple-700/50 dark:text-white">
         <div className="relative flex w-full items-center justify-between">
           <div className="flex items-center pl-2 lg:pl-[15%]">
             <HamburgerMenu />
             <Link
               to={'/'}
-              className="duration-600 ml-2 flex max-w-28 transition-all hover:tracking-widest "
+              className="duration-600 ml-2 flex max-w-28 transition-all hover:tracking-widest max-sm:mr-5"
             >
               <h1 className="text-2xl font-bold ">DunkVault</h1>
               <img
