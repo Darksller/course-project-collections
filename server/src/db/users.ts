@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
 	likedCollections: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Collection',
+			ref: 'PersonalCollection',
 			required: true,
 			select: false,
 		},
@@ -42,7 +42,7 @@ const UserSchema = new mongoose.Schema({
 	collections: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Collection',
+			ref: 'PersonalCollection',
 			required: true,
 			select: false,
 		},

@@ -11,7 +11,7 @@ const ItemSchema = new mongoose.Schema({
 	},
 	collection: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Collection',
+		ref: 'PersonalCollection',
 		required: true,
 	},
 	likeCount: { type: Number, required: true, default: 0 },

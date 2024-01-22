@@ -14,13 +14,7 @@ export type Collection = {
   }
   items: Item[]
   imageUrl?: string
-  customFields?: [
-    {
-      fieldState: 'NOT_PRESENT' | 'PRESENT_OPTIONAL' | 'PRESENT_REQUIRED'
-      fieldName: string
-      fieldType: string
-    },
-  ]
+  customFields?: CustomField[]
 }
 
 export type Comment = {
@@ -40,17 +34,21 @@ export type Item = {
   likeCount: number
   tags: Tag[]
   comments: Comment[]
-  customFields?: [
-    {
-      fieldState: 'NOT_PRESENT' | 'PRESENT_OPTIONAL' | 'PRESENT_REQUIRED'
-      fieldName: string
-      fieldType: string
-      fieldValue: unknown
-    },
-  ]
+  customFields?: CustomFieldWithValue[]
 }
+
+export type CustomField = {
+  fieldState: 'NOT_PRESENT' | 'PRESENT_OPTIONAL' | 'PRESENT_REQUIRED'
+  fieldName: string
+  fieldType: string
+}
+
+export type CustomFieldWithValue = CustomField & { fieldValue: string }
+
 export type Tag = {
+  _id: string
   name: string
+  color: string
 }
 
 export type User = {

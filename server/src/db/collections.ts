@@ -32,7 +32,10 @@ const CollectionSchema = new mongoose.Schema({
 	],
 })
 
-export const CollectionModel = mongoose.model('Collection', CollectionSchema)
+export const CollectionModel = mongoose.model(
+	'PersonalCollection',
+	CollectionSchema
+)
 
 export const getCollections = () =>
 	CollectionModel.find().populate('user').populate('category').populate('items')

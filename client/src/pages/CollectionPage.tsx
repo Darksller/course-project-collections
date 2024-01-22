@@ -3,18 +3,19 @@ import { Button } from '@/components/ui/shadcn-ui/button'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/shadcn-ui/card'
 import { Label } from '@/components/ui/shadcn-ui/label'
-import { LockClosedIcon } from '@radix-ui/react-icons'
+import { LockClosedIcon, LockOpen1Icon } from '@radix-ui/react-icons'
 import dummyImage from '@/assets/images/dummyCollectionImage.jpg'
 import { LikeButton } from '@/components/ui/like-button'
 import { LanguageSelect } from '@/components/ui/header/language-select'
 import SearchBar from '@/components/ui/header/search-bar'
 import { ItemCard } from '@/components/ui/item-card'
+import { v4 } from 'uuid'
+import { Fragment } from 'react'
 
 export function CollectionPage() {
   const { collection } = collectionRoute.useLoaderData()
@@ -37,9 +38,13 @@ export function CollectionPage() {
         <div className="grid grid-rows-3 border-purple-700/50 max-sm:border-t-[1px] sm:col-span-2 sm:border-l-[1px] dark:border-white/50">
           <CardHeader className="flex p-3 px-6 pt-7 ">
             <CardTitle className="flex w-full items-center justify-between">
-              <div className="flex lg:text-3xl ">
+              <div className="flex text-3xl max-lg:text-xl lg:items-center">
                 {collection.name}
-                <LockClosedIcon className="ml-2" />
+                {collection.isClosed ? (
+                  <LockClosedIcon className="ml-2 lg:size-7" />
+                ) : (
+                  <LockOpen1Icon className="ml-2 lg:size-7" />
+                )}
               </div>
               <Button
                 variant={'ghost'}
@@ -48,11 +53,12 @@ export function CollectionPage() {
                 Редактировать
               </Button>
             </CardTitle>
-            <CardDescription className="flex justify-between">
+            <div className="flex justify-between text-[14px]">
               <div>Author: {collection.user.username}</div>
               <div>Category: {collection.category.name}</div>
-            </CardDescription>
+            </div>
           </CardHeader>
+
           <CardContent className="row-span-2 mx-6 grid grid-cols-3 gap-4 border-t-[1px]  border-purple-700/50 dark:border-white/50">
             <div className="flex h-full flex-col gap-2  border-white/30 py-4">
               <Label
@@ -62,7 +68,7 @@ export function CollectionPage() {
                 Описание
               </Label>
               <div className="w-full border-b-2 border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
-              <div className="overflow-hidden text-ellipsis break-all">
+              <div className="overflow-hidden text-ellipsis ">
                 {collection.description}
               </div>
             </div>
@@ -83,11 +89,11 @@ export function CollectionPage() {
               <div className="overflow-hidden text-ellipsis break-all">
                 <div className="grid w-full grid-cols-3 overflow-hidden text-ellipsis break-all">
                   {collection.customFields?.map((field) => (
-                    <>
+                    <Fragment key={v4()}>
                       <div>{field.fieldName}</div>
                       <div>{field.fieldType}</div>
                       <div>{field.fieldState}</div>
-                    </>
+                    </Fragment>
                   ))}
                 </div>
               </div>
@@ -116,24 +122,8 @@ export function CollectionPage() {
           </div>
         </div>
         <div className="w-full border-b-[1px] border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
-        <div className="m-auto flex flex-wrap py-5">
-          {collection.items?.map((item) => (
-            <ItemCard key={item._id} item={item} />
-          ))}
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
-          <ItemCard />
+        <div className="m-auto flex flex-wrap gap-4 py-5">
+          {collection.items?.map((item) => <ItemCard key={v4()} item={item} />)}
         </div>
       </div>
     </div>
