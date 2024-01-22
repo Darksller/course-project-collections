@@ -1,4 +1,4 @@
-import { Collection } from '@/pages/Collections'
+import { Collection } from '@/schemas/dbSchemas'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const itemsApi = createApi({
