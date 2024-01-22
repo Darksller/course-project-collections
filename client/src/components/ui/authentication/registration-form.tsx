@@ -75,6 +75,7 @@ export function RegistrationForm() {
                     placeholder="Darksller"
                     type="username"
                     disabled={isLoading.isLoading || isLoading.isSuccess}
+                    className="border-purple-700/50 dark:border-white/50"
                   />
                 </FormControl>
                 <FormMessage />
@@ -93,6 +94,7 @@ export function RegistrationForm() {
                     disabled={isLoading.isLoading || isLoading.isSuccess}
                     placeholder="darksller.sss@gmail.com"
                     type="email"
+                    className="border-purple-700/50 dark:border-white/50"
                   />
                 </FormControl>
                 <FormMessage />
@@ -111,6 +113,7 @@ export function RegistrationForm() {
                     placeholder="********"
                     type="password"
                     disabled={isLoading.isLoading || isLoading.isSuccess}
+                    className=" border-purple-700/50 dark:border-white/50"
                   />
                 </FormControl>
                 <FormMessage />
