@@ -97,6 +97,8 @@ export const addItemToCollection = async (
 
 		const collection = await getCollectionById(id)
 		if (!collection) return res.status(403).json(`The collection doesn't exist`)
+		if (collection.isClosed)
+			return res.status(403).json('This collection is closed')
 
 		const owner = await getUserById(user.id)
 		if (!owner) return res.status(403).json('No such user')

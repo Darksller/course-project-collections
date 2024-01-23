@@ -18,7 +18,6 @@ import { User } from '@/schemas/dbSchemas'
 
 export function ProfileButton() {
   const user = useAuthUser<User>()
-  console.log(user)
   const signOut = useSignOut()
   function onSignOut() {
     signOut()

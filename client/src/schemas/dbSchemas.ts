@@ -1,3 +1,5 @@
+import * as z from 'zod'
+
 export type Collection = {
   _id: string
   category: {
@@ -22,6 +24,35 @@ export type Comment = {
   user: User
   likeCount: number
 }
+
+export const ItemSchema = z.object({
+  name: z.string().min(1, { message: 'Name is required' }),
+  description: z.string().min(1, { message: 'Description is required' }),
+  imageUrl: z.string(),
+  user: z.string().min(1),
+  collection: z.string().min(1),
+  likeCount: z.number().gte(0),
+  comments: z.array(z.string().min(1)),
+  tags: z.array(
+    z.object({
+      _id: z.string(),
+      color: z.string(),
+    }),
+  ),
+  //.min(1, { message: 'Tags is required' })
+  customFieldsWithValue: z.array(
+    z.object({
+      fieldName: z.string().min(1),
+      fieldType: z.string().min(1),
+      fieldValue: z.string().min(1),
+      fieldState: z.enum([
+        'NOT_PRESENT',
+        'PRESENT_OPTIONAL',
+        'PRESENT_REQUIRED',
+      ]),
+    }),
+  ),
+})
 
 export type Item = {
   _id: string

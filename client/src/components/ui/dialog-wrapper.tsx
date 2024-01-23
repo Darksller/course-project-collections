@@ -1,4 +1,3 @@
-import { useUiStore } from '@/store/useUiStore'
 import {
   Dialog,
   DialogContent,
@@ -7,25 +6,36 @@ import {
   DialogTitle,
   DialogTrigger,
 } from './shadcn-ui/dialog'
+import { useState } from 'react'
 type DialogWrapperProps = {
-  children: string
+  children: JSX.Element | string
   dialogTitle: string
   dialogDescription?: string
   dialogContent: JSX.Element
   variant?: 'default' | 'ghost'
   className?: string
+  isModalOpen?: boolean
+  setIsModalOpen?: (isModalOpen: boolean) => void
 }
 
-export default function DialogWrapper({
+export function DialogWrapper({
   dialogTitle,
   dialogDescription,
   children,
   dialogContent,
   className,
+  isModalOpen,
+  setIsModalOpen,
 }: DialogWrapperProps) {
-  const { isAuthModelOpen, setIsAuthModelOpen } = useUiStore()
+  const [isOpen, setIsOpen] = useState(false)
   return (
-    <Dialog open={isAuthModelOpen} onOpenChange={setIsAuthModelOpen}>
+    <Dialog
+      open={isModalOpen || isOpen}
+      onOpenChange={(value) => {
+        if (setIsModalOpen) setIsModalOpen(value)
+        else setIsOpen(value)
+      }}
+    >
       <DialogTrigger className={className}>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>

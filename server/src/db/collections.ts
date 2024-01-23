@@ -32,22 +32,27 @@ const CollectionSchema = new mongoose.Schema({
 	],
 })
 
-export const CollectionModel = mongoose.model(
+export const PersonalCollectionModel = mongoose.model(
 	'PersonalCollection',
 	CollectionSchema
 )
 
 export const getCollections = () =>
-	CollectionModel.find().populate('user').populate('category').populate('items')
+	PersonalCollectionModel.find()
+		.populate('user')
+		.populate('category')
+		.populate('items')
 
 export const getCollectionById = (id: string) =>
-	CollectionModel.findById(id)
+	PersonalCollectionModel.findById(id)
 		.populate('user')
 		.populate('category')
 		.populate('items')
 
 export const createCollection = (values: Record<string, any>) =>
-	new CollectionModel(values).save().then(collection => collection.toObject())
+	new PersonalCollectionModel(values)
+		.save()
+		.then(personalCollection => personalCollection.toObject())
 
 export const updateCollectionById = (id: string, values: Record<string, any>) =>
-	CollectionModel.findByIdAndUpdate(id, values)
+	PersonalCollectionModel.findByIdAndUpdate(id, values)

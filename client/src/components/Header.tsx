@@ -5,12 +5,14 @@ import HeaderScroll from 'react-headroom'
 import { useTranslation } from 'react-i18next'
 import { SettingsButton } from './ui/header/settings-button'
 import { HamburgerMenu } from './ui/header/hamburger-menu'
-import DialogWrapper from './ui/dialog-wrapper'
+import { DialogWrapper } from './ui/dialog-wrapper'
 import { AuthenticationForm } from './AuthenticationForm'
 import { useAuthStore } from '@/store/authStore'
 import { ProfileButton } from './ui/header/profile-button'
+import { useUiStore } from '@/store/useUiStore'
 
 export function Header() {
+  const { isAuthModelOpen, setIsAuthModelOpen } = useUiStore()
   const { isAuth } = useAuthStore()
   const { t } = useTranslation('global')
   return (
@@ -37,6 +39,8 @@ export function Header() {
             <SearchBar className="mr-6 hidden sm:block" />
             {!isAuth ? (
               <DialogWrapper
+                isModalOpen={isAuthModelOpen}
+                setIsModalOpen={setIsAuthModelOpen}
                 dialogContent={<AuthenticationForm />}
                 dialogTitle={t('authentication')}
                 className="rounded-3xl border border-purple-600 px-5 py-1 text-base font-bold tracking-wide transition-all duration-300 hover:scale-105 hover:bg-white/20  hover:text-purple-500 hover:animate-in dark:border-white dark:hover:text-white"

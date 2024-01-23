@@ -5,7 +5,7 @@ export const itemsApi = createApi({
   reducerPath: 'itemsApi',
   tagTypes: ['Items'],
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:9999/',
+    baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
   }),
   endpoints: (build) => ({
@@ -38,7 +38,16 @@ export const itemsApi = createApi({
     getItemById: build.query<Collection, string>({
       query: (_id) => `items/${_id}`,
     }),
+
+    addItem: build.mutation({
+      query: (body) => ({
+        url: '/collections/items/add',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useGetItemsQuery, useGetItemByIdQuery } = itemsApi
+export const { useGetItemsQuery, useGetItemByIdQuery, useAddItemMutation } =
+  itemsApi

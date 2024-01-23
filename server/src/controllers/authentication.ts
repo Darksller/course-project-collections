@@ -24,7 +24,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 		})
 		await user.save()
 
-		// I dont know why this is here
+		// I don't know why this is here
 		// res.cookie(process.env.AUTH_COOKIE, user.authentication.accessToken, {
 		// 	domain: process.env.DOMAIN,
 		// 	path: '/',

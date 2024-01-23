@@ -9,7 +9,7 @@ const ItemSchema = new mongoose.Schema({
 		ref: 'User',
 		required: true,
 	},
-	collection: {
+	personalCollection: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'PersonalCollection',
 		required: true,
