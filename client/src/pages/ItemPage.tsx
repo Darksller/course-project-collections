@@ -1,4 +1,4 @@
-import { ItemCard } from '@/components/ui/item-card'
+import { ItemCard } from '@/components/ui/collections/item-card'
 import { ItemSheetToOpen } from '@/components/ui/item-sheet-to-open'
 import { Button } from '@/components/ui/shadcn-ui/button'
 import {

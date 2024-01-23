@@ -7,12 +7,12 @@ const CollectionSchema = new mongoose.Schema({
 	isClosed: { type: Boolean, required: true },
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
+		ref: 'Users',
 		required: true,
 	},
 	category: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Category',
+		ref: 'Categories',
 		required: true,
 	},
 	customFields: [
@@ -33,7 +33,7 @@ const CollectionSchema = new mongoose.Schema({
 })
 
 export const PersonalCollectionModel = mongoose.model(
-	'PersonalCollection',
+	'PersonalCollections',
 	CollectionSchema
 )
 

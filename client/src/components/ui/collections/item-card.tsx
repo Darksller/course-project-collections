@@ -1,7 +1,7 @@
 import { Item } from '@/schemas/dbSchemas'
-import dummyImage from '@/assets/images/dummyItemImage.jpg'
 import { getFieldsToPresent } from '@/lib/cardUtils'
 import { Link } from '@tanstack/react-router'
+import { dummyItemImage } from '@/constants/images'
 type ItemCardProps = {
   item: Item
   hideCollection?: boolean
@@ -28,7 +28,7 @@ export function ItemCard({ item, hideCollection = true }: ItemCardProps) {
           src={item.imageUrl}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null
-            currentTarget.src = dummyImage
+            currentTarget.src = dummyItemImage
           }}
         />
         {!hideCollection && (

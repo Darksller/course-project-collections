@@ -19,7 +19,6 @@ import { ItemPage } from './ItemPage'
 import { DialogWrapper } from '@/components/ui/dialog-wrapper'
 import { AddItemPage } from './AddItemPage'
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
-import { ChooseTag } from '@/components/ui/choose-tag'
 
 export function CollectionPage() {
   const isAuthenticated = useIsAuthenticated()
@@ -116,8 +115,16 @@ export function CollectionPage() {
         <div className="flex w-full justify-end py-2">
           {isAuthenticated() && (
             <DialogWrapper
+              className="scrollbar-thin"
+              contentClassName="sm:w-[50%] h-[70%] scrollbar-thin overflow-y-scrollbar overflow-y-scroll"
               dialogTitle={'Add Item'}
-              dialogContent={<AddItemPage collectionId={collection._id} />}
+              dialogDescription="There is the page where you can add your own item!"
+              dialogContent={
+                <AddItemPage
+                  collectionId={collection._id}
+                  customFields={collection.customFields}
+                />
+              }
             >
               Add Item
             </DialogWrapper>

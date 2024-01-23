@@ -15,6 +15,7 @@ type DialogWrapperProps = {
   variant?: 'default' | 'ghost'
   className?: string
   isModalOpen?: boolean
+  contentClassName?: string
   setIsModalOpen?: (isModalOpen: boolean) => void
 }
 
@@ -26,6 +27,7 @@ export function DialogWrapper({
   className,
   isModalOpen,
   setIsModalOpen,
+  contentClassName,
 }: DialogWrapperProps) {
   const [isOpen, setIsOpen] = useState(false)
   return (
@@ -37,12 +39,12 @@ export function DialogWrapper({
       }}
     >
       <DialogTrigger className={className}>{children}</DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
+      <DialogContent className={contentClassName}>
+        <DialogHeader className="">
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>{dialogDescription}</DialogDescription>
         </DialogHeader>
-        {dialogContent}
+        <div className="row-span-12 h-full">{dialogContent}</div>
       </DialogContent>
     </Dialog>
   )

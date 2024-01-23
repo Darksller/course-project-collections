@@ -1,8 +1,8 @@
 import { InfoCircledIcon, LockClosedIcon } from '@radix-ui/react-icons'
 import { Link } from '@tanstack/react-router'
-import dummyImage from '@/assets/images/dummyCollectionImage.jpg'
-import { LikeButton } from './like-button'
+import { LikeButton } from '../like-button'
 import { Collection } from '@/schemas/dbSchemas'
+import { dummyCollectionImage } from '@/constants/images'
 type CollectionCardProps = {
   isLikedByMe?: boolean
   collection: Collection
@@ -29,7 +29,7 @@ export function CollectionCard({
           src={collection.imageUrl}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null
-            currentTarget.src = dummyImage
+            currentTarget.src = dummyCollectionImage
           }}
         />
         <div className="relative h-full w-full rounded-md bg-black/45 text-white opacity-0 transition-all duration-500 group-hover/img:z-[999] max-md:group-hover:opacity-100 md:group-hover/img:opacity-100">

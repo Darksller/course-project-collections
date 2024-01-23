@@ -44,12 +44,8 @@ export const ItemSchema = z.object({
     z.object({
       fieldName: z.string().min(1),
       fieldType: z.string().min(1),
-      fieldValue: z.string().min(1),
-      fieldState: z.enum([
-        'NOT_PRESENT',
-        'PRESENT_OPTIONAL',
-        'PRESENT_REQUIRED',
-      ]),
+      fieldValue: z.union([z.string(), z.boolean(), z.date(), z.number()]),
+      fieldState: z.string().min(1),
     }),
   ),
 })
@@ -68,12 +64,14 @@ export type Item = {
 }
 
 export type CustomField = {
-  fieldState: 'NOT_PRESENT' | 'PRESENT_OPTIONAL' | 'PRESENT_REQUIRED'
+  fieldState: 'PRESENT_OPTIONAL' | 'PRESENT_REQUIRED'
   fieldName: string
   fieldType: string
 }
 
-export type CustomFieldWithValue = CustomField & { fieldValue: string }
+export type CustomFieldWithValue = CustomField & {
+  fieldValue: string | boolean | number | Date
+}
 
 export type Tag = {
   _id: string

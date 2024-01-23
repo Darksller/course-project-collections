@@ -5,13 +5,13 @@ const CategorySchema = new mongoose.Schema({
 	personalCollections: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'PersonalCollection',
+			ref: 'PersonalCollections',
 			unique: true,
 		},
 	],
 })
 
-export const CategoryModel = mongoose.model('Category', CategorySchema)
+export const CategoryModel = mongoose.model('Categories', CategorySchema)
 
 export const getCategories = () => CategoryModel.find()
 export const getCategoryById = (id: string) => CategoryModel.findById(id)

@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
 	likedCollections: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'PersonalCollection',
+			ref: 'PersonalCollections',
 			required: true,
 			select: false,
 		},
@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
 	likedComments: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Comment',
+			ref: 'Comments',
 			required: true,
 			select: false,
 		},
@@ -34,7 +34,7 @@ const UserSchema = new mongoose.Schema({
 	likedItems: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Item',
+			ref: 'Items',
 			required: true,
 			select: false,
 		},
@@ -42,7 +42,7 @@ const UserSchema = new mongoose.Schema({
 	collections: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'PersonalCollection',
+			ref: 'PersonalCollections',
 			required: true,
 			select: false,
 		},
@@ -50,7 +50,7 @@ const UserSchema = new mongoose.Schema({
 	comments: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Comment',
+			ref: 'Comments',
 			required: true,
 			select: false,
 		},
@@ -58,7 +58,7 @@ const UserSchema = new mongoose.Schema({
 	items: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Item',
+			ref: 'Items',
 			required: true,
 			select: false,
 		},
@@ -71,7 +71,7 @@ const UserSchema = new mongoose.Schema({
 	},
 })
 
-export const UserModel = mongoose.model('User', UserSchema)
+export const UserModel = mongoose.model('Users', UserSchema)
 
 export const getUsers = () => UserModel.find()
 export const getUserByEmail = (email: string) => UserModel.findOne({ email })

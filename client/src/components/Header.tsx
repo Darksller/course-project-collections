@@ -39,6 +39,7 @@ export function Header() {
             <SearchBar className="mr-6 hidden sm:block" />
             {!isAuth ? (
               <DialogWrapper
+                contentClassName="w-[500px]"
                 isModalOpen={isAuthModelOpen}
                 setIsModalOpen={setIsAuthModelOpen}
                 dialogContent={<AuthenticationForm />}

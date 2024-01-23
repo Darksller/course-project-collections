@@ -1,4 +1,4 @@
-import { CollectionCard } from '@/components/ui/collection-card'
+import { CollectionCard } from '@/components/ui/collections/collection-card'
 import { collectionsRoute } from '@/routes'
 
 export function Collections() {

@@ -1,4 +1,4 @@
-import { Collection } from '@/schemas/dbSchemas'
+import { Item } from '@/schemas/dbSchemas'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const itemsApi = createApi({
@@ -9,7 +9,7 @@ export const itemsApi = createApi({
     credentials: 'include',
   }),
   endpoints: (build) => ({
-    getItems: build.query<Collection[], void>({
+    getItems: build.query<Item[], void>({
       query: () => 'items',
       providesTags: (result) =>
         result
@@ -22,7 +22,7 @@ export const itemsApi = createApi({
             ]
           : [{ type: 'Items', id: 'LIST' }],
     }),
-    getItemsByCollectionId: build.query<Collection[], void>({
+    getItemsByCollectionId: build.query<Item[], void>({
       query: () => 'items',
       providesTags: (result) =>
         result
@@ -34,9 +34,6 @@ export const itemsApi = createApi({
               { type: 'Items', id: 'LIST' },
             ]
           : [{ type: 'Items', id: 'LIST' }],
-    }),
-    getItemById: build.query<Collection, string>({
-      query: (_id) => `items/${_id}`,
     }),
 
     addItem: build.mutation({
@@ -49,5 +46,4 @@ export const itemsApi = createApi({
   }),
 })
 
-export const { useGetItemsQuery, useGetItemByIdQuery, useAddItemMutation } =
-  itemsApi
+export const { useGetItemsQuery, useAddItemMutation } = itemsApi

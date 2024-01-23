@@ -6,24 +6,24 @@ const ItemSchema = new mongoose.Schema({
 	imageUrl: { type: String },
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
+		ref: 'Users',
 		required: true,
 	},
 	personalCollection: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'PersonalCollection',
+		ref: 'PersonalCollections',
 		required: true,
 	},
 	likeCount: { type: Number, required: true, default: 0 },
 	tags: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Tag',
+			ref: 'Tags',
 			required: true,
 		},
 	],
 	comments: [
-		{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment', required: true },
+		{ type: mongoose.Schema.Types.ObjectId, ref: 'Comments', required: true },
 	],
 	customFields: [
 		{
@@ -39,7 +39,7 @@ const ItemSchema = new mongoose.Schema({
 	],
 })
 
-export const ItemModel = mongoose.model('Item', ItemSchema)
+export const ItemModel = mongoose.model('Items', ItemSchema)
 
 export const getItems = () =>
 	ItemModel.find().populate('user').populate('tags').populate('comments')
