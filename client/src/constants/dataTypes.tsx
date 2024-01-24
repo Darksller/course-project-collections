@@ -7,6 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/shadcn-ui/popover'
+import { Switch } from '@/components/ui/switch'
 import { cn } from '@/lib/utils'
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'
@@ -28,7 +29,7 @@ export const dataType: DataType = {
   ),
 
   Boolean: ({ field }: CustomProps) => (
-    <Checkbox checked={!!field.value} onCheckedChange={field.onChange} />
+    <Switch checked={!!field.value} onCheckedChange={field.onChange} />
   ),
 
   Number: ({ field, ...props }: CustomProps) => (
@@ -46,12 +47,14 @@ export const dataType: DataType = {
         <Button
           variant={'outline'}
           className={cn(
-            'w-[240px] pl-3 text-left font-normal',
+            'w-[90%] border-purple-700/50 bg-white/50  text-left font-normal dark:bg-purple-700/50 dark:hover:bg-purple-700',
             !field.value && 'text-muted-foreground',
           )}
         >
           {field.value ? (
-            format(field.value as string | number | Date, 'PPP')
+            <span className="max-sm:text-[10px]">
+              {format(field.value as string | number | Date, 'PP')}
+            </span>
           ) : (
             <span>Pick a date</span>
           )}
@@ -60,6 +63,7 @@ export const dataType: DataType = {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
+          className="dark:bg-purple-700/50"
           mode="single"
           selected={field.value as Date}
           onSelect={field.onChange}

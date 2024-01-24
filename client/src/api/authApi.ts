@@ -1,3 +1,4 @@
+import { RootState } from '@/store/reduxStore'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const authApi = createApi({
@@ -24,7 +25,7 @@ export const authApi = createApi({
       }),
     }),
 
-    refresh: build.mutation({
+    refresh: build.mutation<string, string>({
       query: (body) => ({
         url: '/auth/refresh',
         method: 'POST',
@@ -34,5 +35,4 @@ export const authApi = createApi({
   }),
 })
 
-export const { useLoginMutation, useRegisterMutation, useRefreshMutation } =
-  authApi
+export const { useLoginMutation, useRegisterMutation } = authApi

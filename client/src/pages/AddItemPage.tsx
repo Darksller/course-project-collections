@@ -41,9 +41,9 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
   const [tags, setTags] = useState<Tag[]>([])
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
-  const [addImage, isLoading] = useAddImageMutation()
-  const [addItem, isImageLoading] = useAddItemMutation()
-  const { data, isLoading: isTagsLoading, isError } = useGetTagsQuery()
+  const [addImage] = useAddImageMutation()
+  const [addItem, isLoading] = useAddItemMutation()
+  const { data } = useGetTagsQuery()
 
   const form = useForm<z.infer<typeof ItemSchema>>({
     resolver: zodResolver(ItemSchema),
@@ -69,10 +69,12 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
   const onSubmit = async (values: z.infer<typeof ItemSchema>) => {
     setError('')
     setSuccess('')
+    if (tags.length === 0) return setError('Tags are required')
+    values.tags = tags
     try {
-      console.log(values)
+      await addItem(values)
       setSuccess('Item added!')
-      //window.location.reload()
+      window.location.reload()
     } catch (error) {
       setError(
         error instanceof Error
@@ -158,15 +160,15 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
                   <FormLabel>Tags</FormLabel>
                   <FormControl>
                     <Select
-                      onChange={(e) => {
-                        const tagsArray: Tag[] = e.map((item) => item.value)
-                        setTags(tagsArray)
-                      }}
-                      backspaceRemovesValue={true}
-                      isMulti={true}
-                      options={data?.map((tag) => {
-                        return { label: tag.name, value: tag }
-                      })}
+                      backspaceRemovesValue
+                      isMulti
+                      onChange={(value) =>
+                        setTags(value.map((tag) => tag.value))
+                      }
+                      options={data?.map((tag) => ({
+                        label: tag.name,
+                        value: tag,
+                      }))}
                       className="text-purple-700"
                     />
                   </FormControl>
@@ -179,15 +181,15 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
         <Separator />
         <div className="font-bold">Additional fields:</div>
         <Separator />
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-4 gap-4">
           {customFields?.map((customField, index) => (
             <FormField
               key={index}
               control={form.control}
               name={`customFieldsWithValue.${index}.fieldValue`}
               render={({ field }) => (
-                <FormItem className="flex flex-col rounded-xl border p-2">
-                  <FormLabel>
+                <FormItem className="flex h-full flex-col items-center rounded-2xl border py-2 align-middle  dark:border-white/50">
+                  <FormLabel className="px-2 max-sm:text-[11px]">
                     {customField.fieldName} : {customField.fieldType}
                   </FormLabel>
                   <FormControl>
@@ -196,103 +198,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
                         field: { ...field },
                         placeholder: `${customField.fieldType}`,
                         className:
-                          'border-purple-700/50 dark:border-white/50 max-sm:w-[60%] w-[80%]',
-                      })}
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          {customFields?.map((customField, index) => (
-            <FormField
-              key={index}
-              control={form.control}
-              name={`customFieldsWithValue.${index}.fieldValue`}
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>
-                    {customField.fieldName} : {customField.fieldType}
-                  </FormLabel>
-                  <FormControl>
-                    {dataType[customField.fieldType] &&
-                      dataType[customField.fieldType]({
-                        field: { ...field },
-                        placeholder: `${customField.fieldType}`,
-                        className:
-                          'border-purple-700/50 dark:border-white/50 max-sm:w-[60%] w-[80%]',
-                      })}
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          {customFields?.map((customField, index) => (
-            <FormField
-              key={index}
-              control={form.control}
-              name={`customFieldsWithValue.${index}.fieldValue`}
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>
-                    {customField.fieldName} : {customField.fieldType}
-                  </FormLabel>
-                  <FormControl>
-                    {dataType[customField.fieldType] &&
-                      dataType[customField.fieldType]({
-                        field: { ...field },
-                        placeholder: `${customField.fieldType}`,
-                        className:
-                          'border-purple-700/50 dark:border-white/50 max-sm:w-[60%] w-[80%]',
-                      })}
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          {customFields?.map((customField, index) => (
-            <FormField
-              key={index}
-              control={form.control}
-              name={`customFieldsWithValue.${index}.fieldValue`}
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>
-                    {customField.fieldName} : {customField.fieldType}
-                  </FormLabel>
-                  <FormControl>
-                    {dataType[customField.fieldType] &&
-                      dataType[customField.fieldType]({
-                        field: { ...field },
-                        placeholder: `${customField.fieldType}`,
-                        className:
-                          'border-purple-700/50 dark:border-white/50 max-sm:w-[60%] w-[80%]',
-                      })}
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          {customFields?.map((customField, index) => (
-            <FormField
-              key={index}
-              control={form.control}
-              name={`customFieldsWithValue.${index}.fieldValue`}
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>
-                    {customField.fieldName} : {customField.fieldType}
-                  </FormLabel>
-                  <FormControl>
-                    {dataType[customField.fieldType] &&
-                      dataType[customField.fieldType]({
-                        field: { ...field },
-                        placeholder: `${customField.fieldType}`,
-                        className:
-                          'border-purple-700/50 dark:border-white/50 max-sm:w-[60%] w-[80%]',
+                          'border-purple-700/50 dark:border-white/50 max-sm:w-[60%] w-[80%] max-sm:placeholder:text-[9px]',
                       })}
                   </FormControl>
                   <FormMessage />

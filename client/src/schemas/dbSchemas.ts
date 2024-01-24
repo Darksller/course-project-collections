@@ -36,15 +36,20 @@ export const ItemSchema = z.object({
   tags: z.array(
     z.object({
       _id: z.string(),
+      name: z.string().min(1),
       color: z.string(),
     }),
   ),
-  //.min(1, { message: 'Tags is required' })
   customFieldsWithValue: z.array(
     z.object({
       fieldName: z.string().min(1),
       fieldType: z.string().min(1),
-      fieldValue: z.union([z.string(), z.boolean(), z.date(), z.number()]),
+      fieldValue: z.union([
+        z.string().min(1),
+        z.boolean(),
+        z.date(),
+        z.number(),
+      ]),
       fieldState: z.string().min(1),
     }),
   ),
