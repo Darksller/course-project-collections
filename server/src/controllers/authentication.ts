@@ -51,13 +51,22 @@ export const login = async (req: express.Request, res: express.Response) => {
 
 export const refresh = async (req: express.Request, res: express.Response) => {
 	try {
-		const { authToken, refreshToken } = req.body
+		const { refreshToken } = req.body
 
-		if (!authToken || !refreshToken) return res.sendStatus(401)
-		const user = jwt.verify(authToken, process.env.SECRET)
-		if (user) return res.status(200).json(authToken)
+		if (!refreshToken) return res.sendStatus(401)
 
-		const dbUser = await getUserByRefreshToken(refreshToken)
+		const dbUser = await getUserByRefreshToken(refreshToken).select(
+			'+authentication.refreshToken'
+		)
+
+		if (refreshToken === dbUser.authentication.refreshToken) {
+			const u = _.omit(dbUser.toObject(), ['authentication'])
+			const accessToken = jwt.sign(u, process.env.SECRET, {
+				expiresIn: +process.env.TOKEN_EXPIRATION,
+			})
+			return res.status(200).json(accessToken)
+		}
+		return res.sendStatus(403)
 	} catch (error) {
 		console.log(error)
 		return res.sendStatus(404)

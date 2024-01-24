@@ -1,4 +1,3 @@
-import { useAddImageMutation } from '@/api/fileStorageApi'
 import { useAddItemMutation } from '@/api/itemsApi'
 import { useGetTagsQuery } from '@/api/tagsApi'
 import { FormError } from '@/components/ui/form-error'
@@ -18,13 +17,19 @@ import { Textarea } from '@/components/ui/shadcn-ui/textarea'
 import { dummyItemImage } from '@/constants/images'
 import { CustomField, ItemSchema, Tag, User } from '@/schemas/dbSchemas'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import Select from 'react-select/creatable'
 import { dataType } from '@/constants/dataTypes'
 import { defaultType } from '@/constants/defaultTypesValue'
+import { cn } from '@/lib/utils'
+import { Cross1Icon } from '@radix-ui/react-icons'
+import { mapStringTagsToObjectArray } from '@/lib/itemUtils'
+import { storage } from '@/constants/firebase'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { v4 } from 'uuid'
 
 type ErrorResponse = {
   status: string
@@ -41,9 +46,10 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
   const [tags, setTags] = useState<Tag[]>([])
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
-  const [_] = useAddImageMutation()
   const [addItem, isLoading] = useAddItemMutation()
   const { data } = useGetTagsQuery()
+  const [image, setImage] = useState<string>('')
+  const [selectedFile, setFile] = useState<File>()
 
   const form = useForm<z.infer<typeof ItemSchema>>({
     resolver: zodResolver(ItemSchema),
@@ -70,12 +76,19 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
     setError('')
     setSuccess('')
     if (tags.length === 0) return setError('Tags are required')
-    values.tags = tags
+
     try {
-      await addItem(values)
+      if (selectedFile) {
+        const imageRef = ref(storage, `images/${selectedFile.name + v4()}`)
+        await uploadBytes(imageRef, selectedFile)
+        values.imageUrl = await getDownloadURL(imageRef)
+      }
+      values.tags = mapStringTagsToObjectArray(tags)
+      await addItem(values).unwrap()
       setSuccess('Item added!')
       window.location.reload()
     } catch (error) {
+      console.log(error)
       setError(
         error instanceof Error
           ? error.message
@@ -84,6 +97,13 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
     }
   }
 
+  function onSetImage(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      setFile(e.target.files[0])
+      const url = URL.createObjectURL(e.target.files[0])
+      setImage(url)
+    }
+  }
   return (
     <Form {...form}>
       <form
@@ -95,20 +115,29 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
           <FormField
             control={form.control}
             name="imageUrl"
-            render={({ field }) => (
+            render={(_) => (
               <FormItem>
                 <FormLabel>Image</FormLabel>
                 <FormControl>
                   <div className="group relative h-[87%] w-full rounded-xl">
                     <img
-                      src={dummyItemImage}
-                      className="absolute h-full w-full overflow-hidden rounded-xl object-cover opacity-30 group-hover:border-4 group-hover:border-purple-700 dark:group-hover:border-white"
+                      src={image ? image : dummyItemImage}
+                      className={cn(
+                        'absolute h-full w-full overflow-hidden rounded-xl object-cover group-hover:border-4 group-hover:border-purple-700 dark:group-hover:border-white',
+                        !image && 'opacity-30',
+                      )}
                     />
                     <Input
-                      {...field}
+                      onChange={onSetImage}
                       type="file"
                       className="absolute z-[999] h-full cursor-pointer border-purple-700/50 opacity-0 dark:border-white/50"
                     />
+                    {image && (
+                      <Cross1Icon
+                        className="absolute right-2 top-2 z-[9999] size-6 cursor-pointer rounded-full border bg-white/50 p-1 font-bold"
+                        onClick={() => setImage('')}
+                      />
+                    )}
                   </div>
                 </FormControl>
                 <FormMessage />

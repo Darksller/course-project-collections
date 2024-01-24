@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'PersonalCollection',
 			required: true,
-			select: false,
+			select: true,
 		},
 	],
 	likedComments: [
@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Comment',
 			required: true,
-			select: false,
+			select: true,
 		},
 	],
 	likedItems: [
@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Item',
 			required: true,
-			select: false,
+			select: true,
 		},
 	],
 	collections: [
@@ -44,7 +44,7 @@ const UserSchema = new mongoose.Schema({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'PersonalCollection',
 			required: true,
-			select: false,
+			select: true,
 		},
 	],
 	comments: [
@@ -52,7 +52,7 @@ const UserSchema = new mongoose.Schema({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Comment',
 			required: true,
-			select: false,
+			select: true,
 		},
 	],
 	items: [
@@ -60,7 +60,7 @@ const UserSchema = new mongoose.Schema({
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Item',
 			required: true,
-			select: false,
+			select: true,
 		},
 	],
 	authentication: {

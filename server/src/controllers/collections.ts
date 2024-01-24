@@ -7,6 +7,8 @@ import {
 import { createItem } from '../db/items'
 import { getUserById } from '../db/users'
 import { getCategoryById } from '../db/categories'
+import { TagModel, addAdditionalTags } from '../db/tags'
+import { RequestBody } from '../types/request'
 
 export const getAllCollections = async (
 	req: express.Request,
@@ -85,21 +87,35 @@ export const addItemToCollection = async (
 	res: express.Response
 ) => {
 	try {
-		const { id } = req.params
-		const { name, description, imageUrl, user, tags, customFields } = req.body
+		const {
+			name,
+			description,
+			imageUrl,
+			user,
+			tags,
+			customFields,
+			collection: id,
+		}: RequestBody = req.body
 
-		if (!name || !description || !imageUrl || !user || !tags || !customFields)
+		if (!name || !description || !user || tags.length === 0 || !id)
 			return res.status(403).json('Some fields are empty or invalid')
 
-		//TODO: add new tags и потом им этот итем засунуть
-		//const newTags = await addAdditionalTags(tags)
+		const filtredTags = tags.filter(tag => tag._id === '')
+
+		const newTags = await addAdditionalTags(
+			filtredTags.map(tag => ({ name: tag.name, color: tag.color }))
+		)
+
+		const oldTags = tags.filter(tag => tag._id !== '')
+		const tgs = [...newTags, ...oldTags]
 
 		const collection = await getCollectionById(id)
+
 		if (!collection) return res.status(403).json(`The collection doesn't exist`)
 		if (collection.isClosed)
 			return res.status(403).json('This collection is closed')
 
-		const owner = await getUserById(user.id)
+		const owner = await getUserById(user)
 		if (!owner) return res.status(403).json('No such user')
 
 		const newItem = await createItem({
@@ -107,20 +123,21 @@ export const addItemToCollection = async (
 			description,
 			imageUrl,
 			user,
-			tags,
+			tgs,
 			customFields,
-			collection: collection._id,
+			personalCollection: collection._id,
 		})
 
 		collection.items.push(newItem._id)
 		await collection.save()
+
 		owner.items.push(newItem._id)
 		await owner.save()
 
 		return res.status(200).json(newItem).end()
 	} catch (error) {
 		console.log(error.message)
-		return res.status(400).json('I think its because of tags')
+		return res.status(400).json('This items name is taken ')
 	}
 }
 

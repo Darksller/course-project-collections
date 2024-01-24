@@ -5,7 +5,7 @@ const TagSchema = new mongoose.Schema({
 	items: [
 		{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Item' },
 	],
-	color: { type: String, required: true, unique: true },
+	color: { type: String, required: true },
 })
 
 export const TagModel = mongoose.model('Tag', TagSchema)
