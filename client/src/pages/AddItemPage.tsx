@@ -41,7 +41,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
   const [tags, setTags] = useState<Tag[]>([])
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
-  const [addImage] = useAddImageMutation()
+  const [_] = useAddImageMutation()
   const [addItem, isLoading] = useAddItemMutation()
   const { data } = useGetTagsQuery()
 
