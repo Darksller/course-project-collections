@@ -27,7 +27,7 @@ export function ProfileButton() {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={user!.imageUrl} />
+          <AvatarImage src={user?.imageUrl} />
           <AvatarFallback>
             <PersonIcon />
           </AvatarFallback>

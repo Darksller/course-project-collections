@@ -23,6 +23,16 @@ export const login = async (req: express.Request, res: express.Response) => {
 		const accessToken = jwt.sign(_user, process.env.SECRET, {
 			expiresIn: +process.env.TOKEN_EXPIRATION,
 		})
+
+		const refreshToken = jwt.sign(
+			{ random: random() },
+			process.env.REFRESH_SECRET,
+			{
+				expiresIn: +process.env.REFRESH_TOKEN_EXPIRATION,
+			}
+		)
+
+		user.authentication.refreshToken = refreshToken
 		await user.save()
 
 		return res
@@ -30,21 +40,22 @@ export const login = async (req: express.Request, res: express.Response) => {
 			.json({
 				user: _user,
 				accessToken,
-				refreshToken: user.authentication.refreshToken,
+				refreshToken: refreshToken,
 			})
 			.end()
 	} catch (error) {
-		console.log(error)
+		console.log(error.message)
 		return res.status(400).json('Something went wrong...')
 	}
 }
 
 export const refresh = async (req: express.Request, res: express.Response) => {
 	try {
-		const { accessToken, refreshToken } = req.body
-		if (!accessToken || !refreshToken) return res.sendStatus(401)
-		const user = jwt.verify(accessToken, process.env.SECRET)
-		if (user) return res.status(200).json(accessToken)
+		const { authToken, refreshToken } = req.body
+
+		if (!authToken || !refreshToken) return res.sendStatus(401)
+		const user = jwt.verify(authToken, process.env.SECRET)
+		if (user) return res.status(200).json(authToken)
 
 		const dbUser = await getUserByRefreshToken(refreshToken)
 	} catch (error) {

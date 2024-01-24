@@ -7,13 +7,14 @@ import { SettingsButton } from './ui/header/settings-button'
 import { HamburgerMenu } from './ui/header/hamburger-menu'
 import { DialogWrapper } from './ui/dialog-wrapper'
 import { AuthenticationForm } from './AuthenticationForm'
-import { useAuthStore } from '@/store/authStore'
 import { ProfileButton } from './ui/header/profile-button'
 import { useUiStore } from '@/store/useUiStore'
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
 
 export function Header() {
+  const isAuthenticated = useIsAuthenticated()
   const { isAuthModelOpen, setIsAuthModelOpen } = useUiStore()
-  const { isAuth } = useAuthStore()
+
   const { t } = useTranslation('global')
   return (
     <HeaderScroll>
@@ -37,7 +38,7 @@ export function Header() {
 
           <div className="flex items-center">
             <SearchBar className="mr-6 hidden sm:block" />
-            {!isAuth ? (
+            {!isAuthenticated() ? (
               <DialogWrapper
                 contentClassName="w-[500px]"
                 isModalOpen={isAuthModelOpen}
