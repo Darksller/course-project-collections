@@ -43,13 +43,16 @@ export function ItemCard({ item, hideCollection = true }: ItemCardProps) {
         <div className="grid grid-cols-2 rounded-lg text-xs font-bold  ">
           {getFieldsToPresent(item.customFields!).length > 0 ? (
             getFieldsToPresent(item.customFields!).map((field) => (
-              <div className="z-[-1] max-h-[47.5px] min-h-[47.5px] truncate text-wrap p-1">
-                {field.fieldName}: <div>{field.fieldValue}</div>
+              <div
+                key={field.fieldName}
+                className="z-[-1] max-h-[47.5px] min-h-[47.5px] truncate text-wrap p-1"
+              >
+                {field.fieldName}: <div>{String(field.fieldValue)}</div>
               </div>
             ))
           ) : (
             <div className="z-[-1] col-span-5 truncate text-wrap p-5">
-              No additional fields was presented
+              No additional fields were presented
             </div>
           )}
         </div>

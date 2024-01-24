@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { RefreshApiType } from './refreshApi'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -36,3 +35,9 @@ export const authApi = createApi({
 })
 
 export const { useLoginMutation, useRegisterMutation } = authApi
+
+type RefreshApiType = {
+  authToken?: string | undefined
+  refreshToken?: string | undefined
+  authUserState: object | null
+}
