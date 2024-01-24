@@ -47,6 +47,7 @@ export function RegistrationForm() {
           token: response.accessToken,
           type: 'bearer',
         },
+        refresh: response.refreshToken,
         userState: response.user,
       })
       window.location.reload()

@@ -1,5 +1,5 @@
-import { RootState } from '@/store/reduxStore'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { RefreshApiType } from './refreshApi'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -25,7 +25,7 @@ export const authApi = createApi({
       }),
     }),
 
-    refresh: build.mutation<string, string>({
+    refresh: build.mutation<string, RefreshApiType>({
       query: (body) => ({
         url: '/auth/refresh',
         method: 'POST',

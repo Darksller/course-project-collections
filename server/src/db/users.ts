@@ -75,7 +75,7 @@ export const UserModel = mongoose.model('User', UserSchema)
 
 export const getUsers = () => UserModel.find()
 export const getUserByEmail = (email: string) => UserModel.findOne({ email })
-export const getUserByAccessToken = (refreshToken: string) =>
+export const getUserByRefreshToken = (refreshToken: string) =>
 	UserModel.findOne({ 'authentication.refreshToken': refreshToken })
 export const getUserById = (id: string) => UserModel.findById(id)
 export const createUser = (values: Record<string, any>) =>

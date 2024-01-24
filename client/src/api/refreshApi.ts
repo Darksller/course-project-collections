@@ -2,15 +2,19 @@ import { store } from '@/store/reduxStore'
 import createRefresh from 'react-auth-kit/createRefresh'
 import { authApi } from './authApi'
 
-const refRefreshApi = createRefresh({
+export type RefreshApiType = {
+  authToken?: string | undefined
+  refreshToken?: string | undefined
+  authUserState: unknown
+}
+
+export const refreshApi = createRefresh({
   interval: 10,
   refreshApiCallback: async (param) => {
     try {
       if (param.authToken === undefined) return { isSuccess: false }
 
-      const promise = store.dispatch(
-        authApi.endpoints.refresh.initiate(param.authToken),
-      )
+      const promise = store.dispatch(authApi.endpoints.refresh.initiate(param))
 
       const response = await promise
 

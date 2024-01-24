@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail } from '../db/users'
+import { createUser, getUserByEmail, getUserByRefreshToken } from '../db/users'
 import express from 'express'
 import { authentication, random } from '../helpers'
 import jwt from 'jsonwebtoken'
@@ -39,6 +39,20 @@ export const login = async (req: express.Request, res: express.Response) => {
 	}
 }
 
+export const refresh = async (req: express.Request, res: express.Response) => {
+	try {
+		const { accessToken, refreshToken } = req.body
+		if (!accessToken || !refreshToken) return res.sendStatus(401)
+		const user = jwt.verify(accessToken, process.env.SECRET)
+		if (user) return res.status(200).json(accessToken)
+
+		const dbUser = await getUserByRefreshToken(refreshToken)
+	} catch (error) {
+		console.log(error)
+		return res.sendStatus(404)
+	}
+}
+
 export const register = async (req: express.Request, res: express.Response) => {
 	try {
 		const { username, email, password } = req.body
@@ -54,14 +68,20 @@ export const register = async (req: express.Request, res: express.Response) => {
 			expiresIn: +process.env.TOKEN_EXPIRATION,
 		})
 
-		const refreshToken = random()
+		const refreshToken = jwt.sign(
+			{ random: random() },
+			process.env.REFRESH_SECRET,
+			{
+				expiresIn: +process.env.REFRESH_TOKEN_EXPIRATION,
+			}
+		)
 
 		const salt = random()
 		try {
 			const user = await createUser({
 				..._user,
 				authentication: {
-					accessToken,
+					refreshToken,
 					salt,
 					password: authentication(salt, password),
 				},
