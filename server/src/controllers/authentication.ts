@@ -10,29 +10,28 @@ export const login = async (req: express.Request, res: express.Response) => {
 		if (!email || !password)
 			return res.status(400).json('Invalid email or password')
 		const user = await getUserByEmail(email).select(
-			'+authentication.salt + authentication.password'
+			'+authentication.salt + authentication.password + authentication.refreshToken'
 		)
 
 		if (!user) return res.status(400).json('Invalid email or password')
 		const expectedHash = authentication(user.authentication.salt, password)
+
 		if (user.authentication.password !== expectedHash)
 			return res.status(403).json('Invalid email or password')
 
 		const _user = _.omit(user.toObject(), ['authentication'])
-		user.authentication.accessToken = jwt.sign(_user, process.env.SECRET, {
+		const accessToken = jwt.sign(_user, process.env.SECRET, {
 			expiresIn: +process.env.TOKEN_EXPIRATION,
 		})
 		await user.save()
 
-		// I don't know why this is here
-		// res.cookie(process.env.AUTH_COOKIE, user.authentication.accessToken, {
-		// 	domain: process.env.DOMAIN,
-		// 	path: '/',
-		// })
-
 		return res
 			.status(200)
-			.json({ user: _user, accessToken: user.authentication.accessToken })
+			.json({
+				user: _user,
+				accessToken,
+				refreshToken: user.authentication.refreshToken,
+			})
 			.end()
 	} catch (error) {
 		console.log(error)
@@ -55,6 +54,8 @@ export const register = async (req: express.Request, res: express.Response) => {
 			expiresIn: +process.env.TOKEN_EXPIRATION,
 		})
 
+		const refreshToken = random()
+
 		const salt = random()
 		try {
 			const user = await createUser({
@@ -67,7 +68,11 @@ export const register = async (req: express.Request, res: express.Response) => {
 			})
 			return res
 				.status(200)
-				.json({ user: _.omit(user, ['authentication']), accessToken })
+				.json({
+					user: _.omit(user, ['authentication']),
+					accessToken,
+					refreshToken,
+				})
 				.end()
 		} catch (error) {
 			return res.status(400).json('User with this username already exists')

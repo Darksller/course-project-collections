@@ -5,13 +5,13 @@ const CommentSchema = new mongoose.Schema({
 	date: { type: Date, required: true },
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Users',
+		ref: 'User',
 		required: true,
 	},
 	likeCount: { type: Number, required: true },
 })
 
-export const CommentModel = mongoose.model('Comments', CommentSchema)
+export const CommentModel = mongoose.model('Comment', CommentSchema)
 
 export const getComments = () => CommentModel.find().populate('user')
 export const deleteCommentById = (id: string) =>

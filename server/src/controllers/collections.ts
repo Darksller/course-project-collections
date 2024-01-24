@@ -29,7 +29,6 @@ export const getCollection = async (
 		const { id } = req.params
 
 		const collection = await getCollectionById(id)
-
 		return res.status(200).json(collection)
 	} catch (error) {
 		console.log(error)

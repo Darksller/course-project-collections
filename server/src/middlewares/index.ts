@@ -1,7 +1,6 @@
 import express from 'express'
 import { get, merge } from 'lodash'
 import jwt from 'jsonwebtoken'
-import { getUserByAccessToken } from '../db/users'
 
 export const isAuthenticated = async (
 	req: express.Request,
@@ -11,7 +10,7 @@ export const isAuthenticated = async (
 	try {
 		const accessToken = req.cookies[process.env.AUTH_COOKIE]
 		if (!accessToken) return res.sendStatus(403)
-		const existingUser = await getUserByAccessToken(accessToken)
+		const existingUser = jwt.verify(accessToken, process.env.SECRET)
 		if (!existingUser) return res.sendStatus(403)
 		merge(req, { identity: existingUser })
 		return next()
@@ -44,9 +43,9 @@ export const isAdmin = async (
 	next: express.NextFunction
 ) => {
 	try {
-		const sessionToken = req.cookies[process.env.AUTH_COOKIE]
-		if (!sessionToken) return res.sendStatus(403)
-		const decodedToken = jwt.decode(sessionToken)
+		const accessToken = req.cookies[process.env.AUTH_COOKIE]
+		if (!accessToken) return res.sendStatus(403)
+		const decodedToken = jwt.decode(accessToken)
 		if (typeof decodedToken === 'string') return res.sendStatus(403)
 		const { role } = decodedToken
 		if (!role) return res.sendStatus(403)

@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
 	likedCollections: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'PersonalCollections',
+			ref: 'PersonalCollection',
 			required: true,
 			select: false,
 		},
@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
 	likedComments: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Comments',
+			ref: 'Comment',
 			required: true,
 			select: false,
 		},
@@ -34,7 +34,7 @@ const UserSchema = new mongoose.Schema({
 	likedItems: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Items',
+			ref: 'Item',
 			required: true,
 			select: false,
 		},
@@ -42,7 +42,7 @@ const UserSchema = new mongoose.Schema({
 	collections: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'PersonalCollections',
+			ref: 'PersonalCollection',
 			required: true,
 			select: false,
 		},
@@ -50,7 +50,7 @@ const UserSchema = new mongoose.Schema({
 	comments: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Comments',
+			ref: 'Comment',
 			required: true,
 			select: false,
 		},
@@ -58,7 +58,7 @@ const UserSchema = new mongoose.Schema({
 	items: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Items',
+			ref: 'Item',
 			required: true,
 			select: false,
 		},
@@ -66,17 +66,17 @@ const UserSchema = new mongoose.Schema({
 	authentication: {
 		password: { type: String, required: false, select: false },
 		salt: { type: String, select: false },
-		accessToken: { type: String, select: false },
+		refreshToken: { type: String, select: false },
 		isBanned: { type: Boolean, required: true, default: false, select: false },
 	},
 })
 
-export const UserModel = mongoose.model('Users', UserSchema)
+export const UserModel = mongoose.model('User', UserSchema)
 
 export const getUsers = () => UserModel.find()
 export const getUserByEmail = (email: string) => UserModel.findOne({ email })
-export const getUserByAccessToken = (accessToken: string) =>
-	UserModel.findOne({ 'authentication.accessToken': accessToken })
+export const getUserByAccessToken = (refreshToken: string) =>
+	UserModel.findOne({ 'authentication.refreshToken': refreshToken })
 export const getUserById = (id: string) => UserModel.findById(id)
 export const createUser = (values: Record<string, any>) =>
 	new UserModel(values).save().then(user => user.toObject())

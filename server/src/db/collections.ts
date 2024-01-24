@@ -1,4 +1,4 @@
-import mongoose, { Collection } from 'mongoose'
+import mongoose from 'mongoose'
 
 const CollectionSchema = new mongoose.Schema({
 	name: { type: String, required: true, unique: true },
@@ -7,12 +7,12 @@ const CollectionSchema = new mongoose.Schema({
 	isClosed: { type: Boolean, required: true },
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Users',
+		ref: 'User',
 		required: true,
 	},
 	category: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Categories',
+		ref: 'Category',
 		required: true,
 	},
 	customFields: [
@@ -28,12 +28,12 @@ const CollectionSchema = new mongoose.Schema({
 	],
 	likeCount: { type: Number, required: true, default: 0 },
 	items: [
-		{ type: mongoose.Schema.Types.ObjectId, ref: 'Items', required: true },
+		{ type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
 	],
 })
 
 export const PersonalCollectionModel = mongoose.model(
-	'PersonalCollections',
+	'PersonalCollection',
 	CollectionSchema
 )
 

@@ -4,6 +4,6 @@ const DataTypeSchema = new mongoose.Schema({
 	name: { type: String, required: true, unique: true },
 })
 
-export const DataTypeModel = mongoose.model('DataTypes', DataTypeSchema)
+export const DataTypeModel = mongoose.model('DataType', DataTypeSchema)
 
 export const getDataTypes = () => DataTypeModel.find()
