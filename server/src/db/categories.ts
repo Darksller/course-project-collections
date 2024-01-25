@@ -6,7 +6,6 @@ const CategorySchema = new mongoose.Schema({
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'PersonalCollection',
-			unique: true,
 		},
 	],
 })

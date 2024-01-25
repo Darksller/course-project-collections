@@ -4,12 +4,12 @@ const CollectionSchema = new mongoose.Schema({
 	name: { type: String, required: true, unique: true },
 	description: { type: String, required: true },
 	imageUrl: { type: String },
-	isClosed: { type: Boolean, required: true },
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: true,
 	},
+	isClosed: { type: Boolean, required: true },
 	category: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Category',

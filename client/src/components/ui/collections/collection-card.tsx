@@ -2,7 +2,7 @@ import { InfoCircledIcon, LockClosedIcon } from '@radix-ui/react-icons'
 import { Link } from '@tanstack/react-router'
 import { LikeButton } from '../like-button'
 import { Collection } from '@/schemas/dbSchemas'
-import { dummyCollectionImage } from '@/constants/images'
+import { dummyCollectionImage } from '@/constants/media'
 type CollectionCardProps = {
   isLikedByMe?: boolean
   collection: Collection

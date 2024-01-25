@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/shadcn-ui/card'
 import { Label } from '@/components/ui/shadcn-ui/label'
 import { LockClosedIcon, LockOpen1Icon } from '@radix-ui/react-icons'
-import dummyImage from '@/assets/images/dummyCollectionImage.jpg'
+import { dummyCollectionImage } from '@/constants/media'
 import { LikeButton } from '@/components/ui/like-button'
 import { LanguageSelect } from '@/components/ui/header/language-select'
 import SearchBar from '@/components/ui/header/search-bar'
@@ -35,7 +35,7 @@ export function CollectionPage() {
               src={collection.imageUrl}
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null
-                currentTarget.src = dummyImage
+                currentTarget.src = dummyCollectionImage
               }}
             />
           </div>

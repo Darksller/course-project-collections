@@ -56,23 +56,35 @@
     @apply dark:text-white;
     @apply scrollbar-thin;
     @apply scrollbar-track-white scrollbar-thumb-purple-700/80 dark:scrollbar-track-purple-700/80 dark:scrollbar-thumb-white;
+
+    #fr-logo {
+      @apply hidden
+    }
   }
+
+
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply scroll-smooth;
   }
+
+
 }
 
 @font-face {
   font-family: 'SofiaProBold';
   src: url('@/assets/fonts/Sofia Pro/Sofia Pro Bold.ttf');
 }
+
 @font-face {
   font-family: 'CenturyGothicRegular';
   src: url('@/assets/fonts/Century Gothic/centurygothic.ttf');
 }
+
 @font-face {
   font-family: 'CenturyGothicBold';
   src: url('@/assets/fonts/Century Gothic/centurygothic_bold.ttf');

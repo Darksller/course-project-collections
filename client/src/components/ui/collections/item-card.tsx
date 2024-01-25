@@ -1,7 +1,7 @@
 import { Item } from '@/schemas/dbSchemas'
 import { getFieldsToPresent } from '@/lib/cardUtils'
 import { Link } from '@tanstack/react-router'
-import { dummyItemImage } from '@/constants/images'
+import { dummyItemImage } from '@/constants/media'
 type ItemCardProps = {
   item: Item
   hideCollection?: boolean

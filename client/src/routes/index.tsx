@@ -1,4 +1,5 @@
 import { App } from '@/App'
+import { categoriesApi } from '@/api/categoriesApi'
 import { collectionsApi } from '@/api/collectionsApi'
 import { CollectionPage } from '@/pages/CollectionPage'
 import { Collections } from '@/pages/Collections'
@@ -18,7 +19,7 @@ const indexRoute = new Route({
 export const collectionsLayoutRoute = new Route({
   path: '/collections',
   component: () => (
-    <div className="mx-auto max-w-1440 rounded-xl  bg-slate-200 bg-opacity-40 backdrop-blur sm:mt-12 dark:bg-white/40">
+    <div className="mx-auto mt-4 max-w-1440 rounded-xl bg-slate-200 bg-opacity-40 backdrop-blur sm:mt-12 dark:bg-purple-500/60">
       <Outlet />
     </div>
   ),
@@ -30,10 +31,10 @@ export const collectionsRoute = new Route({
   path: '/',
   component: Collections,
   loader: async () => {
-    const promise = store.dispatch(
+    const response = await store.dispatch(
       collectionsApi.endpoints.getCollections.initiate(),
     )
-    const response = await promise
+
     return { collections: response.data }
   },
 })
@@ -43,10 +44,10 @@ export const collectionRoute = new Route({
   path: '$collectionId',
   component: CollectionPage,
   loader: async ({ params }) => {
-    const promise = store.dispatch(
+    const response = await store.dispatch(
       collectionsApi.endpoints.getCollectionById.initiate(params.collectionId),
     )
-    const response = await promise
+
     return { collection: response.data }
   },
 })
@@ -55,6 +56,12 @@ export const createCollectionsRoute = new Route({
   getParentRoute: () => collectionsLayoutRoute,
   path: '/create',
   component: CreateCollection,
+  loader: async () => {
+    const response = await store.dispatch(
+      categoriesApi.endpoints.getCategories.initiate(),
+    )
+    return { categories: response.data }
+  },
 })
 
 export const usersRoute = new Route({

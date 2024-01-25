@@ -1,28 +1,44 @@
 import * as z from 'zod'
 
+export const CollectionSchema = z.object({
+  name: z.string().min(1, { message: 'Name is required' }),
+  description: z.string().min(1, { message: 'Description is required' }),
+  imageUrl: z.string(),
+  user: z.string().min(1),
+  category: z.string().min(1),
+  likeCount: z.number().gte(0),
+  isClosed: z.boolean(),
+  customFields: z.array(
+    z.object({
+      fieldName: z.string().min(1),
+      fieldType: z.string().min(1),
+      fieldState: z.string().min(1),
+    }),
+  ),
+})
+
 export type Collection = {
   _id: string
-  category: {
-    _id: string
-    name: string
-  }
+  category: Category
   description: string
   name: string
   isClosed: boolean
-  user: {
-    _id: string
-    username: string
-  }
+  user: User
   items: Item[]
   imageUrl?: string
   customFields?: CustomField[]
 }
 
-export type Comment = {
-  content: string
-  date: Date
-  user: User
-  likeCount: number
+export type Category = {
+  _id: string
+  name: string
+  collections: Collection[]
+}
+
+export type CustomField = {
+  fieldState: 'PRESENT_OPTIONAL' | 'PRESENT_REQUIRED'
+  fieldName: string
+  fieldType: string
 }
 
 export const ItemSchema = z.object({
@@ -68,10 +84,11 @@ export type Item = {
   customFields?: CustomFieldWithValue[]
 }
 
-export type CustomField = {
-  fieldState: 'PRESENT_OPTIONAL' | 'PRESENT_REQUIRED'
-  fieldName: string
-  fieldType: string
+export type Comment = {
+  content: string
+  date: Date
+  user: User
+  likeCount: number
 }
 
 export type CustomFieldWithValue = CustomField & {

@@ -14,63 +14,36 @@ import {
 } from '@/components/ui/shadcn-ui/form'
 import { Input } from '@/components/ui/shadcn-ui/input'
 import { Textarea } from '@/components/ui/shadcn-ui/textarea'
-import { dummyItemImage } from '@/constants/images'
-import { CustomField, ItemSchema, Tag, User } from '@/schemas/dbSchemas'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { ChangeEvent, useState } from 'react'
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
-import { useForm } from 'react-hook-form'
+import { dummyItemImage } from '@/constants/media'
+import { CustomField, ItemSchema } from '@/schemas/dbSchemas'
 import { z } from 'zod'
 import Select from 'react-select/creatable'
 import { dataType } from '@/constants/dataTypes'
-import { defaultType } from '@/constants/defaultTypesValue'
 import { cn } from '@/lib/utils'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import { mapStringTagsToObjectArray } from '@/lib/itemUtils'
 import { storage } from '@/constants/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
+import { useItemForm } from '@/hooks/useItemForm'
+import { ErrorResponse } from '@/store/reduxStore'
+import { useImage } from '@/hooks/useImage'
+import { useFormResponse } from '@/hooks/useFormResponse'
 
-type ErrorResponse = {
-  status: string
-  data: string
-}
-
-type AddItemPageProps = {
+export type AddItemPageProps = {
   collectionId: string
   customFields: CustomField[] | undefined
 }
 
 export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
-  const user = useAuthUser<User>()
-  const [tags, setTags] = useState<Tag[]>([])
-  const [error, setError] = useState<string | undefined>('')
-  const [success, setSuccess] = useState<string | undefined>('')
+  const { error, setError, success, setSuccess } = useFormResponse()
+  const { image, onSetImage, selectedFile, setImage } = useImage()
   const [addItem, isLoading] = useAddItemMutation()
-  const { data } = useGetTagsQuery()
-  const [image, setImage] = useState<string>('')
-  const [selectedFile, setFile] = useState<File>()
-
-  const form = useForm<z.infer<typeof ItemSchema>>({
-    resolver: zodResolver(ItemSchema),
-    defaultValues: {
-      collection: collectionId,
-      description: '',
-      imageUrl: '',
-      likeCount: 0,
-      name: '',
-      user: user!._id,
-      tags: [],
-      customFieldsWithValue:
-        customFields?.map((customField) => ({
-          fieldName: customField.fieldName,
-          fieldType: customField.fieldType,
-          fieldValue: defaultType[customField.fieldType],
-          fieldState: customField.fieldState,
-        })) || [],
-      comments: [],
-    },
+  const { form, tags, setTags } = useItemForm({
+    collectionId,
+    customFields,
   })
+  const { data } = useGetTagsQuery()
 
   const onSubmit = async (values: z.infer<typeof ItemSchema>) => {
     setError('')
@@ -97,13 +70,6 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
     }
   }
 
-  function onSetImage(e: ChangeEvent<HTMLInputElement>) {
-    if (e.target.files) {
-      setFile(e.target.files[0])
-      const url = URL.createObjectURL(e.target.files[0])
-      setImage(url)
-    }
-  }
   return (
     <Form {...form}>
       <form

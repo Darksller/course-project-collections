@@ -1,4 +1,4 @@
-import intro from '@/assets/videos/intro.mp4'
+import { introVideo } from '@/constants/media'
 import secondImg from '@/assets/images/second.png'
 import fourthImg from '@/assets/images/fourth.jpg'
 import thirdImg from '@/assets/images/third.jpeg'
@@ -13,7 +13,7 @@ export function Home() {
     <div className="absolute top-0 w-full">
       <div className="sticky top-0 flex h-[100dvh] justify-center bg-black">
         <video
-          src={intro}
+          src={introVideo}
           autoPlay
           loop
           muted

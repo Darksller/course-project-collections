@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 
 export function LanguageSelect() {
   const { t, i18n } = useTranslation('global')
-
+  console.log(i18n.languages)
   function onLanguageChange(event: string) {
     i18n.changeLanguage(event)
   }

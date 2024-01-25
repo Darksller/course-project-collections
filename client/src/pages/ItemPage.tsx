@@ -10,7 +10,7 @@ import {
   SheetTitle,
 } from '@/components/ui/shadcn-ui/sheet'
 import { Item } from '@/schemas/dbSchemas'
-import dummyImage from '@/assets/images/dummyItemImage.jpg'
+import { dummyItemImage } from '@/constants/media'
 
 type ItemPageProps = {
   item: Item
@@ -34,7 +34,7 @@ export function ItemPage({ item }: ItemPageProps) {
               src={item.imageUrl}
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null
-                currentTarget.src = dummyImage
+                currentTarget.src = dummyItemImage
               }}
             />
           </div>
