@@ -16,7 +16,8 @@ import {
   CarouselPrevious,
 } from '@/components/ui/shadcn-ui/carousel'
 import { useGetFiveLatestItemsQuery } from '@/api/itemsApi'
-import { ItemCard } from '@/components/ui/collections/item-card'
+import { ItemPage } from './ItemPage'
+import TagCloud from '@/components/ui/home/tag-cloud'
 
 export function Home() {
   const { data } = useGetBiggestQuery()
@@ -54,7 +55,7 @@ export function Home() {
 
       <HomeImageSection className="h-[125dvh]" imageSrc={secondImg}>
         <div className="absolute top-[10%] w-full">
-          <div className="text-5xl uppercase sm:text-9xl ">
+          <div className="text-5xl uppercase sm:text-7xl lg:text-9xl ">
             {t('Five of the biggest collections')}
           </div>
           <div className="mt-[30%] flex items-center justify-center px-4 sm:mt-[5%]">
@@ -100,15 +101,19 @@ export function Home() {
                 opts={{
                   align: 'start',
                 }}
-                className="w-full max-w-[80%] max-sm:scale-90"
+                className="z-[999] w-full max-w-[80%] overflow-y-visible max-sm:scale-90"
               >
                 <CarouselContent>
                   {items?.map((item, index) => (
                     <CarouselItem
                       key={index}
-                      className="md:basis-1/2 lg:basis-1/4"
+                      className="overflow-y-visible md:basis-1/2 lg:basis-1/4"
                     >
-                      <ItemCard key={item._id} item={item} />
+                      <ItemPage
+                        key={item._id}
+                        item={item}
+                        hideCollection={false}
+                      />
                     </CarouselItem>
                   ))}
                 </CarouselContent>
@@ -122,7 +127,16 @@ export function Home() {
         </div>
       </HomeImageSection>
       <HomeImageSection className="h-[105dvh]" imageSrc={fourthImg}>
-        Example text
+        <div className="w-[50%]">
+          <div className="top-[50%] z-[100] flex w-full translate-y-[-80%] flex-col lg:left-[50%] lg:top-[50%] ">
+            <div className="bg-white/40 p-4 text-left font-cgb text-5xl font-extrabold backdrop-blur transition-all duration-500 lg:text-center lg:text-7xl dark:bg-purple-500/50 dark:text-white">
+              {t('Tag Cloud')}
+            </div>
+          </div>
+          <div className=" bg-black/50">
+            <TagCloud />
+          </div>
+        </div>
       </HomeImageSection>
     </div>
   )

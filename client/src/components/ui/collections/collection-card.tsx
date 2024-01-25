@@ -5,6 +5,7 @@ import { Collection, User } from '@/schemas/dbSchemas'
 import { dummyCollectionImage } from '@/constants/media'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import { useLike } from '@/hooks/useLike'
+import ReactMarkdown from 'react-markdown'
 type CollectionCardProps = {
   collection: Collection
 }
@@ -42,7 +43,9 @@ export function CollectionCard({ collection }: CollectionCardProps) {
             </div>
             <div className="absolute bottom-0 max-h-[50%] w-[92%] translate-y-full overflow-hidden text-ellipsis break-all text-sm text-white opacity-0 duration-1000 group-hover/img:translate-y-0 group-hover:translate-y-0 group-hover/img:opacity-100 group-hover:opacity-100">
               <div className="w-0 border-b-2 text-white transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
-              {collection.description}
+              <ReactMarkdown className={'prose text-white '}>
+                {String(collection.description)}
+              </ReactMarkdown>
             </div>
           </div>
 

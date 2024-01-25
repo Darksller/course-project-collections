@@ -17,15 +17,14 @@ export function useCollectionForm() {
       isClosed: false,
       category: '',
       user: user?._id,
-      customFields: [{ fieldName: '', fieldType: '', fieldState: '' }],
+      customFields: [{ fieldName: '', fieldType: '' }],
     },
   })
   const { fields, append, remove } = useFieldArray({
     name: 'customFields',
     control: form.control,
   })
-  const onAppendClicked = () =>
-    append({ fieldName: '', fieldType: '', fieldState: '' })
+  const onAppendClicked = () => append({ fieldName: '', fieldType: '' })
 
   return { form, ...form, fields, onAppendClicked, remove, user }
 }

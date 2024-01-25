@@ -7,7 +7,7 @@ import {
 import { createItem } from '../db/items'
 import { getUserById } from '../db/users'
 import { getCategoryById } from '../db/categories'
-import { addAdditionalTags } from '../db/tags'
+import { addAdditionalTags, getTagById } from '../db/tags'
 import { RequestBody } from '../types/request'
 import { removePTags } from '../helpers'
 
@@ -32,7 +32,7 @@ export const getCollection = async (
 		const { id } = req.params
 
 		const collection = await getCollectionById(id)
-		console.log(collection)
+
 		return res.status(200).json(collection)
 	} catch (error) {
 		console.log(error)
@@ -76,7 +76,8 @@ export const addCollection = async (
 			customFields,
 			isClosed,
 		})
-
+		cat.personalCollections.push(newCollection._id)
+		await cat.save()
 		owner.collections.push(newCollection._id)
 		await owner.save()
 		return res.status(200).json(newCollection).end()
@@ -100,7 +101,7 @@ export const addItemToCollection = async (
 			user,
 			creationDate,
 			tags,
-			customFields,
+			customFieldsWithValue,
 			collection: id,
 		}: RequestBody = req.body
 
@@ -131,9 +132,15 @@ export const addItemToCollection = async (
 			creationDate,
 			imageUrl,
 			user,
-			tgs,
-			customFields,
+			tags: tgs,
+			customFields: customFieldsWithValue,
 			personalCollection: collection._id,
+		})
+
+		tgs.forEach(async element => {
+			const tag = await getTagById(element._id)
+			tag.items.push(newItem._id)
+			await tag.save()
 		})
 
 		collection.items.push(newItem._id)

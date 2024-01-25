@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { TagModel } from './tags'
 
 const CollectionSchema = new mongoose.Schema({
 	name: { type: String, required: true, unique: true },
@@ -18,11 +19,6 @@ const CollectionSchema = new mongoose.Schema({
 	},
 	customFields: [
 		{
-			fieldState: {
-				type: String,
-				enum: ['NOT_PRESENT', 'PRESENT_OPTIONAL', 'PRESENT_REQUIRED'],
-				required: true,
-			},
 			fieldName: { type: String, required: true },
 			fieldType: { type: mongoose.Schema.Types.Mixed, required: true },
 		},
@@ -48,7 +44,10 @@ export const getCollectionById = (id: string) =>
 	PersonalCollectionModel.findById(id)
 		.populate('user')
 		.populate('category')
-		.populate('items')
+		.populate({
+			path: 'items',
+			populate: { path: 'tags', model: TagModel },
+		})
 
 export const createCollection = (values: Record<string, any>) =>
 	new PersonalCollectionModel(values)

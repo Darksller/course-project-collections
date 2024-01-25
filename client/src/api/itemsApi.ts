@@ -22,6 +22,11 @@ export const itemsApi = createApi({
             ]
           : [{ type: 'Items', id: 'LIST' }],
     }),
+
+    getItemById: build.query<Item, string>({
+      query: (_id) => `items/${_id}`,
+    }),
+
     getItemsByCollectionId: build.query<Item[], void>({
       query: () => 'items',
       providesTags: (result) =>
@@ -54,4 +59,5 @@ export const {
   useGetItemsQuery,
   useAddItemMutation,
   useGetFiveLatestItemsQuery,
+  useGetItemByIdQuery,
 } = itemsApi

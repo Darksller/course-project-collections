@@ -69,8 +69,8 @@ export function CollectionPage() {
             </div>
           </CardHeader>
 
-          <CardContent className="row-span-2 grid grid-cols-3 gap-4 border-t-[1px] border-purple-700/50 max-md:p-0 sm:mx-6 dark:border-white/50">
-            <div className="flex h-full flex-col gap-2 border-white/30 py-4">
+          <CardContent className="row-span-2 grid grid-cols-2 gap-4 border-t-[1px] border-purple-700/50 max-md:p-0 sm:mx-6 dark:border-white/50">
+            <div className="flex h-full max-h-[250px] flex-col gap-2  border-white/30 py-4 ">
               <Label
                 htmlFor="description"
                 className="overflow-hidden text-ellipsis break-all text-2xl max-md:text-base max-md:font-bold"
@@ -78,13 +78,13 @@ export function CollectionPage() {
                 Описание
               </Label>
               <div className="w-full border-b-2 border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
-              <div className="overflow-hidden text-ellipsis max-md:text-[14px] max-sm:text-[11px]">
+              <div className="overflow-hidden overflow-y-scroll text-ellipsis scrollbar-thin max-md:text-[14px] max-sm:text-[11px]">
                 <ReactMarkdown className={'prose'}>
                   {String(collection.description)}
                 </ReactMarkdown>
               </div>
             </div>
-            <div className="col-span-2 flex h-full flex-col gap-2 rounded-xl border-white/30 py-4 max-md:text-[14px] max-sm:text-[11px] md:px-2">
+            <div className="flex h-full flex-col gap-2 rounded-xl border-white/30 py-4 max-md:text-[14px] max-sm:text-[11px] md:px-2">
               <Label
                 htmlFor="description"
                 className="overflow-hidden text-ellipsis break-all text-2xl max-md:text-base max-md:font-bold"
@@ -92,19 +92,17 @@ export function CollectionPage() {
                 Дополнительные поля
               </Label>
               <div className="w-full border-b-2  border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
-              <div className="grid w-full grid-cols-3 overflow-hidden text-ellipsis break-all">
+              <div className="grid w-full grid-cols-2 overflow-hidden text-ellipsis break-all">
                 <div>Name</div>
                 <div>Type</div>
-                <div>State</div>
               </div>
               <div className="w-full border-b-2  border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
               <div className="overflow-hidden text-ellipsis break-all">
-                <div className="grid w-full grid-cols-3 overflow-hidden text-ellipsis break-all">
+                <div className="grid w-full grid-cols-2 overflow-hidden text-ellipsis break-all">
                   {collection.customFields?.map((field) => (
                     <Fragment key={v4()}>
                       <div>{field.fieldName}</div>
                       <div>{field.fieldType}</div>
-                      <div>{field.fieldState}</div>
                     </Fragment>
                   ))}
                 </div>
@@ -112,7 +110,7 @@ export function CollectionPage() {
             </div>
           </CardContent>
           <CardFooter className="flex items-center justify-between border-t-[1px] border-purple-700/50 py-2 max-md:pr-0  sm:mx-6 dark:border-white/50">
-            {format(collection.creationDate, 'PPP')}
+            <div>{format(String(collection.creationDate), 'PPP')}</div>
             <LikeButton onChange={onLike} liked={collectionLiked} />
           </CardFooter>
         </div>
@@ -124,7 +122,7 @@ export function CollectionPage() {
           {((!collection.isClosed && user) ||
             user?.collections.includes(collection._id)) && (
             <DialogWrapper
-              className="scrollbar-thin"
+              className="border border-purple-700 p-4 transition-all duration-300 scrollbar-thin hover:bg-purple-400 hover:text-white"
               contentClassName="sm:w-[50%] h-[70%] scrollbar-thin overflow-y-scrollbar overflow-y-scroll"
               dialogTitle={'Add Item'}
               dialogDescription="This is the page where you can add your own item!"
@@ -139,21 +137,27 @@ export function CollectionPage() {
             </DialogWrapper>
           )}
         </div>
-        <div className="flex py-2">
-          <div className="text-3xl">Items:</div>
-          <div className="flex w-full justify-end gap-4">
-            <div>
-              <SearchBar />
+        {collection.items.length > 0 && (
+          <div>
+            <div className="flex py-2">
+              <div className="text-3xl">Items:</div>
+              <div className="flex w-full justify-end gap-4">
+                <div>
+                  <SearchBar />
+                </div>
+                <div>
+                  <LanguageSelect />
+                </div>
+              </div>
             </div>
-            <div>
-              <LanguageSelect />
+            <div className="w-full border-b-[1px] border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
+            <div className="m-auto flex flex-wrap justify-between gap-4 py-5">
+              {collection.items?.map((item) => (
+                <ItemPage key={v4()} item={item} />
+              ))}
             </div>
           </div>
-        </div>
-        <div className="w-full border-b-[1px] border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
-        <div className="m-auto flex flex-wrap gap-4 py-5">
-          {collection.items?.map((item) => <ItemPage key={v4()} item={item} />)}
-        </div>
+        )}
       </div>
     </div>
   )

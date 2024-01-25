@@ -206,15 +206,14 @@ export function CreateCollection() {
                 control={form.control}
                 name="description"
                 render={({ field }) => (
-                  <FormItem className="py-4">
+                  <FormItem className="max-h-[250px] overflow-y-auto py-4 scrollbar-thin">
                     <FormControl>
                       <FroalaEditor
                         // @ts-ignore
                         value={field.value}
                         onModelChange={field.onChange}
                         config={{
-                          placeholderText:
-                            'Start writing some collection description :0',
+                          placeholderText: 'Start writing :0',
                         }}
                       />
                     </FormControl>
@@ -224,10 +223,9 @@ export function CreateCollection() {
               />
               <Separator />
               <div className="pt-2 ">
-                <div className="grid grid-cols-4 items-center justify-center gap-2 py-2">
+                <div className="grid grid-cols-3 items-center justify-center gap-2 py-2">
                   <div className="max-sm:text-[12px]">Type</div>
                   <div className="max-sm:text-[12px]">Name</div>
-                  <div className="max-sm:text-[12px]">State</div>
                   <Button
                     className="w-full rounded-none"
                     variant={'outline'}
@@ -242,7 +240,7 @@ export function CreateCollection() {
                 <div className="grid max-h-[200px] gap-2 overflow-x-hidden overflow-y-scroll scrollbar-thin max-sm:max-h-[150px]">
                   {fields.map((field, index) => {
                     return (
-                      <div key={field.id} className="grid grid-cols-4 gap-2 ">
+                      <div key={field.id} className="grid grid-cols-3 gap-2 ">
                         <FormField
                           control={form.control}
                           name={`customFields.${index}.fieldType`}
@@ -278,33 +276,6 @@ export function CreateCollection() {
                           className="rounded-none border-[1px] border-purple-700 bg-slate-200 transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white max-sm:text-[1px]  dark:border-white dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white"
                           {...register(
                             `customFields.${index}.fieldName` as const,
-                          )}
-                        />
-
-                        <FormField
-                          control={form.control}
-                          name={`customFields.${index}.fieldState`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Select
-                                  onValueChange={field.onChange}
-                                  defaultValue={field.value}
-                                >
-                                  <SelectTrigger className="rounded-none max-sm:text-[1px]">
-                                    <SelectValue placeholder="S" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {stateVariants?.map((option) => (
-                                      <SelectItem key={v4()} value={option}>
-                                        {option}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
                           )}
                         />
 

@@ -5,6 +5,6 @@ export type RequestBody = {
 	imageUrl: string
 	user: string
 	tags: { _id: string; name: string; color: string }[]
-	customFields: any[]
+	customFieldsWithValue: any[]
 	collection: string
 }

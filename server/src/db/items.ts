@@ -28,11 +28,6 @@ const ItemSchema = new mongoose.Schema({
 	],
 	customFields: [
 		{
-			fieldState: {
-				type: String,
-				enum: ['NOT_PRESENT', 'PRESENT_OPTIONAL', 'PRESENT_REQUIRED'],
-				required: true,
-			},
 			fieldName: { type: String, required: true },
 			fieldType: { type: mongoose.Schema.Types.Mixed, required: true },
 			fieldValue: { type: mongoose.Schema.Types.Mixed, required: true },
@@ -43,8 +38,12 @@ const ItemSchema = new mongoose.Schema({
 export const ItemModel = mongoose.model('Item', ItemSchema)
 
 export const getItems = () =>
-	ItemModel.find().populate('user').populate('tags').populate('comments')
-
+	ItemModel.find()
+		.populate('user')
+		.populate('tags')
+		.populate('personalCollection')
+export const getItemByIdDb = (id: string) =>
+	ItemModel.findById(id).populate('user').populate('tags')
 export const createItem = (values: Record<string, any>) =>
 	new ItemModel(values).save().then(item => item.toObject())
 export const updateCollectionById = (id: string, values: Record<string, any>) =>

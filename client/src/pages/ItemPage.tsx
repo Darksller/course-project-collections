@@ -14,14 +14,15 @@ import { dummyItemImage } from '@/constants/media'
 
 type ItemPageProps = {
   item: Item
+  hideCollection?: boolean
 }
 
-export function ItemPage({ item }: ItemPageProps) {
+export function ItemPage({ item, hideCollection }: ItemPageProps) {
   return (
     <ItemSheetToOpen itemId={item._id}>
       <>
         <SheetTrigger>
-          <ItemCard item={item} />
+          <ItemCard item={item} hideCollection={hideCollection} />
         </SheetTrigger>
         <SheetContent className="overflow-y-scroll scroll-smooth backdrop-blur scrollbar-thin scrollbar-track-white/50 scrollbar-thumb-purple-700/80 lg:w-[40%] dark:bg-purple-950/80 dark:scrollbar-track-white/50 dark:scrollbar-thumb-purple-700/80">
           <SheetHeader className="pb-7">

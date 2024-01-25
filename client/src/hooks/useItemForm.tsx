@@ -26,7 +26,6 @@ export function useItemForm({ collectionId, customFields }: AddItemPageProps) {
           fieldName: customField.fieldName,
           fieldType: customField.fieldType,
           fieldValue: defaultType[customField.fieldType],
-          fieldState: customField.fieldState,
         })) || [],
       comments: [],
     },

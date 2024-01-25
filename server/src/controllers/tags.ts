@@ -6,6 +6,7 @@ export const getAllTags = async (
 ) => {
 	try {
 		const tags = await getTags()
+
 		return res.status(200).json(tags)
 	} catch (error) {
 		console.log(error)

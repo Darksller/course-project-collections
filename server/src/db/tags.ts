@@ -10,8 +10,9 @@ const TagSchema = new mongoose.Schema({
 
 export const TagModel = mongoose.model('Tag', TagSchema)
 
-export const getTags = () => TagModel.find()
+export const getTags = () => TagModel.find().populate('items')
 export const addAdditionalTags = (tags: Record<string, any>[]) =>
 	TagModel.insertMany(tags)
 export const updateTagById = (id: string, values: Record<string, any>) =>
 	TagModel.findByIdAndUpdate(id, values)
+export const getTagById = (id: string) => TagModel.findById(id)

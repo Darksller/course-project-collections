@@ -125,8 +125,12 @@ module.exports = {
             transform: 'rotate(45deg) translate(20px, 20px)',
           },
         },
+        blinker: {
+          '50%': { opacity: 0.0 },
+        },
       },
       animation: {
+        blinker: 'blinker 3s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         arrow: 'arrow 2s infinite',

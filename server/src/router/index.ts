@@ -6,10 +6,12 @@ import category from './category'
 import collections from './collections'
 import tags from './tags'
 import dataTypes from './dataTypes'
+import items from './items'
 
 const router = express.Router()
 
 export default (): express.Router => {
+	items(router)
 	dataTypes(router)
 	tags(router)
 	collections(router)

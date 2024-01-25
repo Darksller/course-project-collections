@@ -29,6 +29,7 @@ import { useItemForm } from '@/hooks/useItemForm'
 import { ErrorResponse } from '@/store/reduxStore'
 import { useImage } from '@/hooks/useImage'
 import { useFormResponse } from '@/hooks/useFormResponse'
+import { useState } from 'react'
 
 export type AddItemPageProps = {
   collectionId: string
@@ -36,6 +37,8 @@ export type AddItemPageProps = {
 }
 
 export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
+  //@ts-ignore
+  const { imgLoad, setLoad } = useState<boolean>(false)
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
   const [addItem, isLoading] = useAddItemMutation()
@@ -44,13 +47,13 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
     customFields,
   })
   const { data } = useGetTagsQuery()
-
   const onSubmit = async (values: z.infer<typeof ItemSchema>) => {
     setError('')
     setSuccess('')
     if (tags.length === 0) return setError('Tags are required')
 
     try {
+      setLoad(true)
       if (selectedFile) {
         const imageRef = ref(storage, `images/${selectedFile.name + v4()}`)
         await uploadBytes(imageRef, selectedFile)
@@ -67,6 +70,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
           ? error.message
           : String((error as ErrorResponse).data),
       )
+      setLoad(false)
     }
   }
 
@@ -94,6 +98,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
                       )}
                     />
                     <Input
+                      disabled={imgLoad}
                       onChange={onSetImage}
                       type="file"
                       className="absolute z-[999] h-full cursor-pointer border-purple-700/50 opacity-0 dark:border-white/50"
@@ -119,6 +124,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
+                      disabled={imgLoad}
                       {...field}
                       placeholder="Item name"
                       type="name"
@@ -137,6 +143,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
+                      disabled={imgLoad}
                       {...field}
                       placeholder="Item description"
                       className="max-h-24 min-h-24 border-purple-700/50 dark:border-white/50"
@@ -155,6 +162,8 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
                   <FormLabel>Tags</FormLabel>
                   <FormControl>
                     <Select
+                      //@ts-ignore
+                      disabled={imgLoad}
                       backspaceRemovesValue
                       isMulti
                       onChange={(value) =>
@@ -174,8 +183,12 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
           </div>
         </div>
         <Separator />
-        <div className="font-bold">Additional fields:</div>
-        <Separator />
+        {customFields && (
+          <>
+            <div className="font-bold">Additional fields:</div>
+            <Separator />
+          </>
+        )}
         <div className="grid grid-cols-4 gap-4">
           {customFields?.map((customField, index) => (
             <FormField
@@ -191,6 +204,8 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
                     {dataType[customField.fieldType] &&
                       dataType[customField.fieldType]({
                         field: { ...field },
+                        //@ts-ignore
+                        disabled: { imgLoad },
                         placeholder: `${customField.fieldType}`,
                         className:
                           'border-purple-700/50 dark:border-white/50 max-sm:w-[60%] w-[80%] max-sm:placeholder:text-[9px]',

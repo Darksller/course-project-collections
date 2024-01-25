@@ -13,7 +13,6 @@ export const CollectionSchema = z.object({
     z.object({
       fieldName: z.string().min(1),
       fieldType: z.string().min(1),
-      fieldState: z.string().min(1),
     }),
   ),
 })
@@ -69,7 +68,6 @@ export const ItemSchema = z.object({
         z.date(),
         z.number(),
       ]),
-      fieldState: z.string().min(1),
     }),
   ),
 })
@@ -103,6 +101,7 @@ export type Tag = {
   _id: string
   name: string
   color: string
+  items: Item[]
 }
 
 export type User = {
