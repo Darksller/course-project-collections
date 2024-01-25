@@ -3,12 +3,13 @@ import { categoriesApi } from '@/api/categoriesApi'
 import { collectionsApi } from '@/api/collectionsApi'
 import { dataTypesApi } from '@/api/dataTypesApi'
 import { CollectionPage } from '@/pages/CollectionPage'
-import { Collections } from '@/pages/Collections'
-import { CreateCollection } from '@/pages/CreateCollection'
+import { Collections } from '@/pages/AllCollectionsPage'
+import { CreateCollection } from '@/pages/CreateCollectionPage'
 import { Home } from '@/pages/Home'
 import { Users } from '@/pages/Users'
 import { store } from '@/store/reduxStore'
 import { Outlet, RootRoute, Route, Router } from '@tanstack/react-router'
+import { EditCollectionPage } from '@/pages/EditCollectionPage'
 const rootRoute = new RootRoute({ component: App })
 
 const indexRoute = new Route({
@@ -53,6 +54,29 @@ export const collectionRoute = new Route({
   },
 })
 
+export const editCollectionRoute = new Route({
+  getParentRoute: () => collectionsLayoutRoute,
+  path: '/edit/$collectionId',
+  component: EditCollectionPage,
+  loader: async ({ params }) => {
+    const response = await store.dispatch(
+      collectionsApi.endpoints.getCollectionById.initiate(params.collectionId),
+    )
+    const responseCat = await store.dispatch(
+      categoriesApi.endpoints.getCategories.initiate(),
+    )
+    const typesResponse = await store.dispatch(
+      dataTypesApi.endpoints.getDataTypes.initiate(),
+    )
+
+    return {
+      collection: response.data,
+      categories: responseCat.data,
+      dataTypes: typesResponse.data,
+    }
+  },
+})
+
 export const createCollectionsRoute = new Route({
   getParentRoute: () => collectionsLayoutRoute,
   path: '/create',
@@ -80,6 +104,7 @@ const routeTree = rootRoute.addChildren([
     collectionsRoute,
     collectionRoute,
     createCollectionsRoute,
+    editCollectionRoute,
   ]),
   usersRoute,
 ])

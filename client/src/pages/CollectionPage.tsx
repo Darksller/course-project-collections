@@ -23,6 +23,7 @@ import { format } from 'date-fns'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import { User } from '@/schemas/dbSchemas'
 import { useLike } from '@/hooks/useLike'
+import { Link } from '@tanstack/react-router'
 
 export function CollectionPage() {
   const user = useAuthUser<User>()
@@ -56,12 +57,18 @@ export function CollectionPage() {
                   <LockOpen1Icon className="ml-2 sm:size-7" />
                 )}
               </div>
-              <Button
-                variant={'ghost'}
-                className=" border-[1px] border-purple-600 dark:border-white"
+              <Link
+                to={'/collections/edit/$collectionId'}
+                params={{ collectionId: collection._id }}
+                className="border-[1px] border-white hover:border-purple-700"
               >
-                Редактировать
-              </Button>
+                <Button
+                  variant={'ghost'}
+                  className=" dark:hover: rounded-none border-[1px] border-purple-600 hover:border-white hover:bg-purple-500 hover:text-white "
+                >
+                  Редактировать
+                </Button>
+              </Link>
             </CardTitle>
             <div className="flex justify-between text-[14px]">
               <div>Author: {collection.user.username}</div>
