@@ -29,7 +29,7 @@ export function CollectionPage() {
   const { collection } = collectionRoute.useLoaderData()
   const { collectionLiked, onLike } = useLike({ collectionId: collection?._id })
   if (!collection) return <h1 className="text-4xl">Collection not found</h1>
-  console.log(collectionLiked)
+
   return (
     <div className="h-full px-4 py-4 ">
       <Card className="flex w-full flex-col gap-5 border border-purple-700/50 p-5 max-sm:pb-0 sm:grid sm:grid-cols-3 sm:rounded-3xl">

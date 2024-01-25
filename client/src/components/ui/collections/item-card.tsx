@@ -7,6 +7,8 @@ type ItemCardProps = {
   hideCollection?: boolean
 }
 export function ItemCard({ item, hideCollection = true }: ItemCardProps) {
+  console.log(item)
+
   return (
     <div className="group relative mx-auto h-[250px] w-[270px] rounded-md border  border-purple-600 shadow-2xl dark:bg-purple-300/30">
       <div className="absolute left-[50%] top-1 h-full w-full translate-x-[-50%] px-1 transition-all duration-200 ease-in-out group-hover:top-[-90px] ">

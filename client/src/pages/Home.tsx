@@ -15,9 +15,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/shadcn-ui/carousel'
+import { useGetFiveLatestItemsQuery } from '@/api/itemsApi'
+import { ItemCard } from '@/components/ui/collections/item-card'
 
 export function Home() {
   const { data } = useGetBiggestQuery()
+  const { data: items } = useGetFiveLatestItemsQuery()
   const { t } = useTranslation('global')
   return (
     <div className="absolute top-0 w-full">
@@ -55,33 +58,68 @@ export function Home() {
             {t('Five of the biggest collections')}
           </div>
           <div className="mt-[30%] flex items-center justify-center px-4 sm:mt-[5%]">
-            <Carousel
-              opts={{
-                align: 'start',
-              }}
-              className="w-full max-w-[80%] max-sm:scale-90"
-            >
-              <CarouselContent>
-                {data?.map((collection, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="md:basis-1/2 lg:basis-1/4"
-                  >
-                    <CollectionCard
-                      key={collection._id}
-                      collection={collection}
-                    />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
+            {data?.length && data?.length > 0 ? (
+              <Carousel
+                opts={{
+                  align: 'start',
+                }}
+                className="w-full max-w-[80%] max-sm:scale-90"
+              >
+                <CarouselContent>
+                  {data?.map((collection, index) => (
+                    <CarouselItem
+                      key={index}
+                      className="md:basis-1/2 lg:basis-1/4"
+                    >
+                      <CollectionCard
+                        key={collection._id}
+                        collection={collection}
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            ) : (
+              <h2 className="mt-[10%] text-6xl">
+                Collections was not found...
+              </h2>
+            )}
           </div>
         </div>
       </HomeImageSection>
       <HomeImageSection className="h-[125dvh]" imageSrc={thirdImg}>
-        Example text
+        <div className="absolute top-[10%] w-full">
+          <div className="text-5xl uppercase sm:text-9xl ">
+            {t('Five latest items')}
+          </div>
+          <div className="mt-[30%] flex items-center justify-center px-4 sm:mt-[5%]">
+            {items?.length && items?.length > 0 ? (
+              <Carousel
+                opts={{
+                  align: 'start',
+                }}
+                className="w-full max-w-[80%] max-sm:scale-90"
+              >
+                <CarouselContent>
+                  {items?.map((item, index) => (
+                    <CarouselItem
+                      key={index}
+                      className="md:basis-1/2 lg:basis-1/4"
+                    >
+                      <ItemCard key={item._id} item={item} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            ) : (
+              <h2 className="mt-[10%] text-6xl">Items was not found...</h2>
+            )}
+          </div>
+        </div>
       </HomeImageSection>
       <HomeImageSection className="h-[105dvh]" imageSrc={fourthImg}>
         Example text

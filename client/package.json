@@ -45,6 +45,7 @@
     "froala-editor": "^4.1.4",
     "i18next": "^23.7.16",
     "js-cookie": "^3.0.5",
+    "mongoose-deep-populate": "^3.2.0",
     "react": "^18.2.0",
     "react-auth-kit": "^3.0.2-alpha.19",
     "react-day-picker": "^8.10.0",

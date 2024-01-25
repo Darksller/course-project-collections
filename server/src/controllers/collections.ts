@@ -32,6 +32,7 @@ export const getCollection = async (
 		const { id } = req.params
 
 		const collection = await getCollectionById(id)
+		console.log(collection)
 		return res.status(200).json(collection)
 	} catch (error) {
 		console.log(error)
@@ -106,23 +107,23 @@ export const addItemToCollection = async (
 		if (!name || !description || !user || tags.length === 0 || !id)
 			return res.status(403).json('Some fields are empty or invalid')
 
-		const filtredTags = tags.filter(tag => tag._id === '')
+		const collection = await getCollectionById(id)
+		if (!collection) return res.status(403).json(`The collection doesn't exist`)
+		const owner = await getUserById(user)
+		if (!owner) return res.status(403).json('No such user')
 
+		if (
+			collection.isClosed &&
+			collection.user._id.toString() != owner._id.toString()
+		)
+			return res.status(403).json('This collection is closed')
+
+		const filtredTags = tags.filter(tag => tag._id === '')
 		const newTags = await addAdditionalTags(
 			filtredTags.map(tag => ({ name: tag.name, color: tag.color }))
 		)
-
 		const oldTags = tags.filter(tag => tag._id !== '')
 		const tgs = [...newTags, ...oldTags]
-
-		const collection = await getCollectionById(id)
-
-		if (!collection) return res.status(403).json(`The collection doesn't exist`)
-		if (collection.isClosed)
-			return res.status(403).json('This collection is closed')
-
-		const owner = await getUserById(user)
-		if (!owner) return res.status(403).json('No such user')
 
 		const newItem = await createItem({
 			name,

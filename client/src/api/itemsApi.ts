@@ -36,6 +36,10 @@ export const itemsApi = createApi({
           : [{ type: 'Items', id: 'LIST' }],
     }),
 
+    getFiveLatestItems: build.query<Item[], void>({
+      query: () => '/items/latest',
+    }),
+
     addItem: build.mutation({
       query: (body) => ({
         url: '/collections/items/add',
@@ -46,4 +50,8 @@ export const itemsApi = createApi({
   }),
 })
 
-export const { useGetItemsQuery, useAddItemMutation } = itemsApi
+export const {
+  useGetItemsQuery,
+  useAddItemMutation,
+  useGetFiveLatestItemsQuery,
+} = itemsApi
