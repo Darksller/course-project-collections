@@ -1,6 +1,7 @@
 import { App } from '@/App'
 import { categoriesApi } from '@/api/categoriesApi'
 import { collectionsApi } from '@/api/collectionsApi'
+import { dataTypesApi } from '@/api/dataTypesApi'
 import { CollectionPage } from '@/pages/CollectionPage'
 import { Collections } from '@/pages/Collections'
 import { CreateCollection } from '@/pages/CreateCollection'
@@ -60,7 +61,10 @@ export const createCollectionsRoute = new Route({
     const response = await store.dispatch(
       categoriesApi.endpoints.getCategories.initiate(),
     )
-    return { categories: response.data }
+    const typesResponse = await store.dispatch(
+      dataTypesApi.endpoints.getDataTypes.initiate(),
+    )
+    return { categories: response.data, dataTypes: typesResponse.data }
   },
 })
 

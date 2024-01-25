@@ -6,7 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/shadcn-ui/popover'
-import { Switch } from '@/components/ui/switch'
+import { Switch } from '@/components/ui/shadcn-ui/switch'
 import { cn } from '@/lib/utils'
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format } from 'date-fns'

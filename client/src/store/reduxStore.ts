@@ -5,6 +5,7 @@ import { collectionsApi } from '@/api/collectionsApi'
 import { itemsApi } from '@/api/itemsApi'
 import { tagsApi } from '@/api/tagsApi'
 import { categoriesApi } from '@/api/categoriesApi'
+import { dataTypesApi } from '@/api/dataTypesApi'
 
 export const store = configureStore({
   reducer: {
@@ -13,12 +14,14 @@ export const store = configureStore({
     [itemsApi.reducerPath]: itemsApi.reducer,
     [tagsApi.reducerPath]: tagsApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
+    [dataTypesApi.reducerPath]: dataTypesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApi.middleware)
       .concat(collectionsApi.middleware)
       .concat(tagsApi.middleware)
+      .concat(dataTypesApi.middleware)
       .concat(categoriesApi.middleware)
       .concat(itemsApi.middleware),
 })

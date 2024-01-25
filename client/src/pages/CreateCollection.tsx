@@ -18,6 +18,8 @@ import {
   Cross1Icon,
   LockClosedIcon,
   LockOpen1Icon,
+  PlusCircledIcon,
+  TrashIcon,
 } from '@radix-ui/react-icons'
 import { storage } from '@/constants/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
@@ -25,7 +27,7 @@ import { v4 } from 'uuid'
 import { Link } from '@tanstack/react-router'
 import { SelectCategory } from '@/components/ui/collections/select-category'
 import { createCollectionsRoute } from '@/routes'
-import { Switch } from '@/components/ui/switch'
+import { Switch } from '@/components/ui/shadcn-ui/switch'
 import { Label } from '@/components/ui/shadcn-ui/label'
 import 'froala-editor/css/froala_style.min.css'
 import 'froala-editor/css/froala_editor.pkgd.min.css'
@@ -35,9 +37,17 @@ import { useCollectionForm } from '@/hooks/useCollectionForm'
 import { useFormResponse } from '@/hooks/useFormResponse'
 import { useImage } from '@/hooks/useImage'
 import { ErrorResponse } from '@/store/reduxStore'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/shadcn-ui/select'
+import { stateVariants } from '@/constants/stateVariants'
 
 export function CreateCollection() {
-  const { categories } = createCollectionsRoute.useLoaderData()
+  const { categories, dataTypes } = createCollectionsRoute.useLoaderData()
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
   const { form, register, user, fields, onAppendClicked, remove } =
@@ -206,35 +216,106 @@ export function CreateCollection() {
                   </FormItem>
                 )}
               />
-              <Button className="" type="button" onClick={onAppendClicked}>
-                Add additional field
-              </Button>
-              <div>
-                {fields.map((field, index) => {
-                  return (
-                    <div key={field.id} className="grid grid-cols-4">
-                      <Input
-                        type="text"
-                        {...register(
-                          `customFields.${index}.fieldType` as const,
-                        )}
-                      />
-                      <Input
-                        type="text"
-                        {...register(
-                          `customFields.${index}.fieldName` as const,
-                        )}
-                      />
-                      <Input
-                        type="text"
-                        {...register(
-                          `customFields.${index}.fieldState` as const,
-                        )}
-                      />
-                      {<Button onClick={() => remove(index)}>del</Button>}
-                    </div>
-                  )
-                })}
+              <Separator />
+              <div className="pt-2 ">
+                <div className="grid grid-cols-4 items-center justify-center gap-2 py-2">
+                  <div className="max-sm:text-[12px]">Type</div>
+                  <div className="max-sm:text-[12px]">Name</div>
+                  <div className="max-sm:text-[12px]">State</div>
+                  <Button
+                    className="w-full rounded-none"
+                    variant={'outline'}
+                    size={'icon'}
+                    type="button"
+                    onClick={onAppendClicked}
+                  >
+                    <PlusCircledIcon />
+                  </Button>
+                </div>
+
+                <div className="grid max-h-[200px] gap-2 overflow-x-hidden overflow-y-scroll scrollbar-thin max-sm:max-h-[150px]">
+                  {fields.map((field, index) => {
+                    return (
+                      <div key={field.id} className="grid grid-cols-4 gap-2 ">
+                        <FormField
+                          control={form.control}
+                          name={`customFields.${index}.fieldType`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Select
+                                  onValueChange={field.onChange}
+                                  defaultValue={field.value}
+                                >
+                                  <SelectTrigger className="rounded-none max-sm:text-[1px]">
+                                    <SelectValue placeholder="T" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {dataTypes?.map((dataType) => (
+                                      <SelectItem
+                                        key={v4()}
+                                        value={dataType.name}
+                                      >
+                                        {dataType.name}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <Input
+                          type="text"
+                          placeholder="N"
+                          className="rounded-none border-[1px] border-purple-700 bg-slate-200 transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white max-sm:text-[1px]  dark:border-white dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white"
+                          {...register(
+                            `customFields.${index}.fieldName` as const,
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name={`customFields.${index}.fieldState`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Select
+                                  onValueChange={field.onChange}
+                                  defaultValue={field.value}
+                                >
+                                  <SelectTrigger className="rounded-none max-sm:text-[1px]">
+                                    <SelectValue placeholder="S" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {stateVariants?.map((option) => (
+                                      <SelectItem key={v4()} value={option}>
+                                        {option}
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        {
+                          <Button
+                            variant={'outline'}
+                            size={'icon'}
+                            className="ml-1.5 w-full rounded-none"
+                            onClick={() => remove(index)}
+                          >
+                            <TrashIcon />
+                          </Button>
+                        }
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
             </div>
           </div>

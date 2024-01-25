@@ -17,11 +17,7 @@ import { useRegisterMutation } from '@/api/authApi'
 import { useState } from 'react'
 import { FormSuccess } from '../form-success'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
-
-type ErrorResponse = {
-  status: string
-  data: string
-}
+import { ErrorResponse } from '@/store/reduxStore'
 
 export function RegistrationForm() {
   const signIn = useSignIn()

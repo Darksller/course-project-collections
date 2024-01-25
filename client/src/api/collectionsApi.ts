@@ -25,7 +25,19 @@ export const collectionsApi = createApi({
     getCollectionById: build.query<Collection, string>({
       query: (_id) => `collections/${_id}`,
     }),
+
+    addCollection: build.mutation<Collection, any>({
+      query: (body) => ({
+        url: '/collections/add/',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 })
 
-export const { useGetCollectionsQuery } = collectionsApi
+export const {
+  useGetCollectionsQuery,
+  useGetCollectionByIdQuery,
+  useAddCollectionMutation,
+} = collectionsApi
