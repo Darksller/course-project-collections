@@ -7,8 +7,9 @@ import {
 import { createItem } from '../db/items'
 import { getUserById } from '../db/users'
 import { getCategoryById } from '../db/categories'
-import { TagModel, addAdditionalTags } from '../db/tags'
+import { addAdditionalTags } from '../db/tags'
 import { RequestBody } from '../types/request'
+import { removePTags } from '../helpers'
 
 export const getAllCollections = async (
 	req: express.Request,
@@ -50,20 +51,24 @@ export const addCollection = async (
 			user,
 			category,
 			customFields,
+			creationDate,
 			isClosed = false,
 		} = req.body
 
 		if (!name || !description || !user || !category)
 			return res.status(400).json('Fields are required')
 
-		const owner = await getUserById(user.id)
+		const owner = await getUserById(user)
 		if (!owner) return res.status(403).json('No such user')
-		const cat = await getCategoryById(category.id)
+		const cat = await getCategoryById(category)
 		if (!cat) return res.status(403).json('No such category')
+
+		const newDescription = removePTags(description)
 
 		const newCollection = await createCollection({
 			name,
-			description,
+			creationDate,
+			description: newDescription,
 			imageUrl,
 			user: owner._id,
 			category: cat._id,
@@ -92,6 +97,7 @@ export const addItemToCollection = async (
 			description,
 			imageUrl,
 			user,
+			creationDate,
 			tags,
 			customFields,
 			collection: id,
@@ -121,6 +127,7 @@ export const addItemToCollection = async (
 		const newItem = await createItem({
 			name,
 			description,
+			creationDate,
 			imageUrl,
 			user,
 			tgs,
@@ -138,6 +145,21 @@ export const addItemToCollection = async (
 	} catch (error) {
 		console.log(error.message)
 		return res.status(400).json('This items name is taken ')
+	}
+}
+
+export const getFiveBiggest = async (
+	req: express.Request,
+	res: express.Response
+) => {
+	try {
+		const collections = await getCollections()
+		collections.sort((a, b) => b.items.length - a.items.length)
+		const topFiveCollections = collections.slice(0, 5)
+		return res.status(200).json(topFiveCollections)
+	} catch (error) {
+		console.log(error.message)
+		return res.status(400)
 	}
 }
 

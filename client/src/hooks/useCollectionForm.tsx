@@ -13,6 +13,7 @@ export function useCollectionForm() {
       description: '',
       imageUrl: '',
       likeCount: 0,
+      creationDate: new Date(),
       isClosed: false,
       category: '',
       user: user?._id,

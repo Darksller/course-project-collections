@@ -57,12 +57,8 @@
     @apply scrollbar-thin;
     @apply scrollbar-track-white scrollbar-thumb-purple-700/80 dark:scrollbar-track-purple-700/80 dark:scrollbar-thumb-white;
 
-    #fr-logo {
-      @apply hidden
-    }
+
   }
-
-
 
   body {
     @apply bg-background text-foreground;

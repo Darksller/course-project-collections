@@ -2,21 +2,21 @@ import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons'
 import { Button } from './shadcn-ui/button'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
-
 type LikeButtonProps = {
-  isLikedByMe?: boolean
   className?: string
   iconProps?: string
+  liked: boolean
+  onChange: () => void
 }
 
 export function LikeButton({
-  isLikedByMe = false,
   className,
   iconProps,
+  liked,
+  onChange,
 }: LikeButtonProps) {
-  const [isLiked, setLiked] = useState(isLikedByMe)
-  function onLikeClicked() {
-    setLiked((prev) => !prev)
+  async function onLikeClicked() {
+    onChange()
   }
   return (
     <Button
@@ -24,7 +24,7 @@ export function LikeButton({
       className={cn('flex items-center justify-center align-middle', className)}
       onClick={onLikeClicked}
     >
-      {!isLiked ? (
+      {!liked ? (
         <HeartIcon
           className={cn(
             'size-9 rounded-full p-1 text-black transition-all duration-300 hover:scale-125',

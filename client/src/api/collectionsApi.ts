@@ -22,6 +22,11 @@ export const collectionsApi = createApi({
             ]
           : [{ type: 'Collections', id: 'LIST' }],
     }),
+
+    getBiggest: build.query<Collection[], void>({
+      query: () => '/collections/biggest',
+    }),
+
     getCollectionById: build.query<Collection, string>({
       query: (_id) => `collections/${_id}`,
     }),
@@ -40,4 +45,5 @@ export const {
   useGetCollectionsQuery,
   useGetCollectionByIdQuery,
   useAddCollectionMutation,
+  useGetBiggestQuery,
 } = collectionsApi

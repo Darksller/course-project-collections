@@ -18,13 +18,18 @@ import { Fragment } from 'react'
 import { ItemPage } from './ItemPage'
 import { DialogWrapper } from '@/components/ui/dialog-wrapper'
 import { AddItemPage } from './AddItemPage'
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
+import ReactMarkdown from 'react-markdown'
+import { format } from 'date-fns'
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
+import { User } from '@/schemas/dbSchemas'
+import { useLike } from '@/hooks/useLike'
 
 export function CollectionPage() {
-  const isAuthenticated = useIsAuthenticated()
+  const user = useAuthUser<User>()
   const { collection } = collectionRoute.useLoaderData()
+  const { collectionLiked, onLike } = useLike({ collectionId: collection?._id })
   if (!collection) return <h1 className="text-4xl">Collection not found</h1>
-
+  console.log(collectionLiked)
   return (
     <div className="h-full px-4 py-4 ">
       <Card className="flex w-full flex-col gap-5 border border-purple-700/50 p-5 max-sm:pb-0 sm:grid sm:grid-cols-3 sm:rounded-3xl">
@@ -74,7 +79,9 @@ export function CollectionPage() {
               </Label>
               <div className="w-full border-b-2 border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
               <div className="overflow-hidden text-ellipsis max-md:text-[14px] max-sm:text-[11px]">
-                {collection.description}
+                <ReactMarkdown className={'prose'}>
+                  {String(collection.description)}
+                </ReactMarkdown>
               </div>
             </div>
             <div className="col-span-2 flex h-full flex-col gap-2 rounded-xl border-white/30 py-4 max-md:text-[14px] max-sm:text-[11px] md:px-2">
@@ -104,8 +111,9 @@ export function CollectionPage() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex items-center justify-end border-t-[1px] border-purple-700/50 py-2 max-md:pr-0  sm:mx-6 dark:border-white/50">
-            <LikeButton />
+          <CardFooter className="flex items-center justify-between border-t-[1px] border-purple-700/50 py-2 max-md:pr-0  sm:mx-6 dark:border-white/50">
+            {format(collection.creationDate, 'PPP')}
+            <LikeButton onChange={onLike} liked={collectionLiked} />
           </CardFooter>
         </div>
       </Card>
@@ -113,12 +121,13 @@ export function CollectionPage() {
       <div className="px-10 pt-10">
         <div className="w-full border-b-[1px] border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
         <div className="flex w-full justify-end py-2">
-          {isAuthenticated() && (
+          {((!collection.isClosed && user) ||
+            user?.collections.includes(collection._id)) && (
             <DialogWrapper
               className="scrollbar-thin"
               contentClassName="sm:w-[50%] h-[70%] scrollbar-thin overflow-y-scrollbar overflow-y-scroll"
               dialogTitle={'Add Item'}
-              dialogDescription="There is the page where you can add your own item!"
+              dialogDescription="This is the page where you can add your own item!"
               dialogContent={
                 <AddItemPage
                   collectionId={collection._id}

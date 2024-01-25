@@ -6,8 +6,18 @@ import { HomeImageSection } from '@/components/ui/home/home-image-section'
 import { useTranslation } from 'react-i18next'
 import { SmoothArrow } from '@/components/ui/smooth-arrow'
 import { CheckAuthLink } from '@/components/ui/check-auth-link'
+import { useGetBiggestQuery } from '@/api/collectionsApi'
+import { CollectionCard } from '@/components/ui/collections/collection-card'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/shadcn-ui/carousel'
 
 export function Home() {
+  const { data } = useGetBiggestQuery()
   const { t } = useTranslation('global')
   return (
     <div className="absolute top-0 w-full">
@@ -40,8 +50,34 @@ export function Home() {
       </div>
 
       <HomeImageSection className="h-[125dvh]" imageSrc={secondImg}>
-        <div className="mt-2 p-4 text-center font-muli text-2xl">
-          {t('main.secondSectionDescription')}
+        <div className="absolute top-[10%] w-full">
+          <div className="text-5xl uppercase sm:text-9xl ">
+            {t('Five of the biggest collections')}
+          </div>
+          <div className="mt-[30%] flex items-center justify-center px-4 sm:mt-[5%]">
+            <Carousel
+              opts={{
+                align: 'start',
+              }}
+              className="w-full max-w-[80%] max-sm:scale-90"
+            >
+              <CarouselContent>
+                {data?.map((collection, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="md:basis-1/2 lg:basis-1/4"
+                  >
+                    <CollectionCard
+                      key={collection._id}
+                      collection={collection}
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
+          </div>
         </div>
       </HomeImageSection>
       <HomeImageSection className="h-[125dvh]" imageSrc={thirdImg}>

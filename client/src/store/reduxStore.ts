@@ -6,6 +6,7 @@ import { itemsApi } from '@/api/itemsApi'
 import { tagsApi } from '@/api/tagsApi'
 import { categoriesApi } from '@/api/categoriesApi'
 import { dataTypesApi } from '@/api/dataTypesApi'
+import { usersApi } from '@/api/usersApi'
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [collectionsApi.reducerPath]: collectionsApi.reducer,
     [itemsApi.reducerPath]: itemsApi.reducer,
     [tagsApi.reducerPath]: tagsApi.reducer,
+    [usersApi.reducerPath]: usersApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     [dataTypesApi.reducerPath]: dataTypesApi.reducer,
   },
@@ -21,6 +23,7 @@ export const store = configureStore({
       .concat(authApi.middleware)
       .concat(collectionsApi.middleware)
       .concat(tagsApi.middleware)
+      .concat(usersApi.middleware)
       .concat(dataTypesApi.middleware)
       .concat(categoriesApi.middleware)
       .concat(itemsApi.middleware),

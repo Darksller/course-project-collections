@@ -9,6 +9,7 @@ const CollectionSchema = new mongoose.Schema({
 		ref: 'User',
 		required: true,
 	},
+	creationDate: { type: Date, required: true },
 	isClosed: { type: Boolean, required: true },
 	category: {
 		type: mongoose.Schema.Types.ObjectId,

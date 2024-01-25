@@ -24,19 +24,19 @@ import {
 import { storage } from '@/constants/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { SelectCategory } from '@/components/ui/collections/select-category'
 import { createCollectionsRoute } from '@/routes'
 import { Switch } from '@/components/ui/shadcn-ui/switch'
 import { Label } from '@/components/ui/shadcn-ui/label'
-import 'froala-editor/css/froala_style.min.css'
-import 'froala-editor/css/froala_editor.pkgd.min.css'
-import 'froala-editor/js/plugins/markdown.min.js'
 import FroalaEditor from 'react-froala-wysiwyg'
 import { useCollectionForm } from '@/hooks/useCollectionForm'
 import { useFormResponse } from '@/hooks/useFormResponse'
 import { useImage } from '@/hooks/useImage'
 import { ErrorResponse } from '@/store/reduxStore'
+import 'froala-editor/css/froala_style.min.css'
+import 'froala-editor/css/froala_editor.pkgd.min.css'
+import 'froala-editor/js/plugins/markdown.min.js'
 import {
   Select,
   SelectContent,
@@ -45,28 +45,33 @@ import {
   SelectValue,
 } from '@/components/ui/shadcn-ui/select'
 import { stateVariants } from '@/constants/stateVariants'
+import { useAddCollectionMutation } from '@/api/collectionsApi'
 
 export function CreateCollection() {
+  const navigate = useNavigate()
   const { categories, dataTypes } = createCollectionsRoute.useLoaderData()
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
   const { form, register, user, fields, onAppendClicked, remove } =
     useCollectionForm()
-
+  const [addCollection] = useAddCollectionMutation()
   const onSubmit = async (values: z.infer<typeof CollectionSchema>) => {
     setError('')
     setSuccess('')
 
     try {
-      console.log(values)
       if (selectedFile) {
         const imageRef = ref(storage, `images/${selectedFile.name + v4()}`)
         await uploadBytes(imageRef, selectedFile)
         values.imageUrl = await getDownloadURL(imageRef)
       }
-
+      const response = await addCollection(values).unwrap()
       setSuccess('Collection added!')
-      // window.location.reload()
+      user?.collections.push(response._id)
+      navigate({
+        to: '/collections/$collectionId',
+        params: { collectionId: response._id },
+      })
     } catch (error) {
       console.log(error)
       setError(
@@ -157,6 +162,7 @@ export function CreateCollection() {
                   render={({ field }) => (
                     <FormItem className="">
                       <FormControl>
+                        {/* @ts-ignore */}
                         <SelectCategory field={field} options={categories} />
                       </FormControl>
                       <FormMessage />
@@ -302,7 +308,7 @@ export function CreateCollection() {
                           )}
                         />
 
-                        {
+                        {index > 0 && (
                           <Button
                             variant={'outline'}
                             size={'icon'}
@@ -311,7 +317,7 @@ export function CreateCollection() {
                           >
                             <TrashIcon />
                           </Button>
-                        }
+                        )}
                       </div>
                     )
                   })}

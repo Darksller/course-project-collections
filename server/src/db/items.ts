@@ -14,6 +14,7 @@ const ItemSchema = new mongoose.Schema({
 		ref: 'PersonalCollection',
 		required: true,
 	},
+	creationDate: { type: Date, required: true },
 	likeCount: { type: Number, required: true, default: 0 },
 	tags: [
 		{

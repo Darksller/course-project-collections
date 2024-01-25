@@ -135,6 +135,7 @@ module.exports = {
   },
 
   plugins: [
+    require('@tailwindcss/typography'),
     require('tailwindcss-animate'),
     require('tailwind-scrollbar'),
     require('tailwindcss-animation-delay'),

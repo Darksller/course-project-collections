@@ -6,6 +6,7 @@ export const CollectionSchema = z.object({
   imageUrl: z.string(),
   user: z.string().min(1),
   category: z.string().min(1),
+  creationDate: z.date(),
   likeCount: z.number().gte(0),
   isClosed: z.boolean(),
   customFields: z.array(
@@ -21,6 +22,7 @@ export type Collection = {
   _id: string
   category: Category
   description: string
+  creationDate: Date
   name: string
   isClosed: boolean
   user: User
@@ -45,6 +47,7 @@ export const ItemSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   description: z.string().min(1, { message: 'Description is required' }),
   imageUrl: z.string(),
+  creationDate: z.date(),
   user: z.string().min(1),
   collection: z.string().min(1),
   likeCount: z.number().gte(0),
@@ -74,6 +77,7 @@ export const ItemSchema = z.object({
 export type Item = {
   _id: string
   name: string
+  creationDate: Date
   description: string
   imageUrl?: string
   user: User
@@ -107,4 +111,9 @@ export type User = {
   email: string
   role: string
   imageUrl?: string
+  likedCollections: string[]
+  likedItems: []
+  likedComments: []
+  collections: string[]
+  items: string[]
 }

@@ -1,5 +1,6 @@
 export type RequestBody = {
 	name: string
+	creationDate: Date
 	description: string
 	imageUrl: string
 	user: string

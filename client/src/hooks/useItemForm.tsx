@@ -16,6 +16,7 @@ export function useItemForm({ collectionId, customFields }: AddItemPageProps) {
       collection: collectionId,
       description: '',
       imageUrl: '',
+      creationDate: new Date(),
       likeCount: 0,
       name: '',
       user: user!._id,

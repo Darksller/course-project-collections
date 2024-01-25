@@ -3,7 +3,7 @@ import createRefresh from 'react-auth-kit/createRefresh'
 import { authApi } from './authApi'
 
 export const refreshApi = createRefresh<object>({
-  interval: 0.5,
+  interval: 5,
   //@ts-ignore
   refreshApiCallback: async (param) => {
     try {
@@ -14,7 +14,7 @@ export const refreshApi = createRefresh<object>({
         isSuccess: true,
         //@ts-ignore
         newAuthToken: response.data,
-        newAuthTokenExpireIn: 0.5,
+        newAuthTokenExpireIn: 60,
       }
     } catch (error) {
       console.error(error)

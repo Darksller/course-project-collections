@@ -12,7 +12,6 @@ export const login = async (req: express.Request, res: express.Response) => {
 		const user = await getUserByEmail(email).select(
 			'+authentication.salt + authentication.password + authentication.refreshToken'
 		)
-
 		if (!user) return res.status(400).json('Invalid email or password')
 		const expectedHash = authentication(user.authentication.salt, password)
 
@@ -34,7 +33,6 @@ export const login = async (req: express.Request, res: express.Response) => {
 
 		user.authentication.refreshToken = refreshToken
 		await user.save()
-
 		return res
 			.status(200)
 			.json({
@@ -58,7 +56,6 @@ export const refresh = async (req: express.Request, res: express.Response) => {
 		const dbUser = await getUserByRefreshToken(refreshToken).select(
 			'+authentication.refreshToken'
 		)
-
 		if (refreshToken === dbUser.authentication.refreshToken) {
 			const u = _.omit(dbUser.toObject(), ['authentication'])
 			const accessToken = jwt.sign(u, process.env.SECRET, {
