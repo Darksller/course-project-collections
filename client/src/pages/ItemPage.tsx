@@ -173,7 +173,11 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
                     </Avatar>
                   </div>
                   <div className="col-span-6 max-h-20 overflow-y-scroll px-2 scrollbar-thin sm:col-span-8">
-                    <div className="text-[14px]">{comment.user.username}:</div>
+                    <div className="text-[14px]">
+                      {comment.user.username} @
+                      {comment.user != null ? comment.user.username : 'deleted'}
+                      :
+                    </div>
                     {comment.content}
                   </div>
                   <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 max-sm:col-span-2 dark:border-white">
