@@ -7,6 +7,9 @@ export const collectionsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
+    prepareHeaders(headers) {
+      return headers
+    },
   }),
   endpoints: (build) => ({
     getCollections: build.query<Collection[], void>({
@@ -56,6 +59,7 @@ export const collectionsApi = createApi({
         url: '/collections/add/',
         method: 'POST',
         body,
+        credentials: 'include',
       }),
     }),
   }),
