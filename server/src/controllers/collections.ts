@@ -279,7 +279,7 @@ export const deleteCollection = async (
 export const search = async (req: express.Request, res: express.Response) => {
 	const { id } = req.params
 	const collections = await searchC(id)
-	console.log(collections)
+
 	const items = await searchI(id)
 	res.status(200).json({ collections, items })
 }

@@ -86,11 +86,13 @@ export const isCollectionLiked = async (
 		const { id } = req.params
 		const { collectionId } = req.body
 		if (!collectionId) return res.sendStatus(400)
-		const user = await getUserById(id)
-		const isLikedIndex = user.likedCollections.findIndex(
-			likedId => likedId == collectionId
+		const user = (await getUserById(id)).toObject()
+		const isLikedIndex = user.likedCollections.filter(
+			pcId => pcId.toString() === collectionId
 		)
-		if (isLikedIndex === -1) {
+		console.log(user)
+		console.log(collectionId)
+		if (isLikedIndex) {
 			return res.status(200).json(false)
 		}
 		return res.status(200).json(true)

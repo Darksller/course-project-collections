@@ -63,7 +63,7 @@ export function EditCollectionPage() {
   const [deleteCol] = useDeleteCollectionMutation()
 
   if (!collection || !isCollectionOwner)
-    return navigate({
+    navigate({
       to: '/collections/',
     })
 

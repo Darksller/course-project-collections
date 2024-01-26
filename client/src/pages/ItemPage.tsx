@@ -178,7 +178,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
                       {comment.user != null ? comment.user.username : 'deleted'}
                       :
                     </div>
-                    {comment.content}
+                    <div className="break-all">{comment.content}</div>
                   </div>
                   <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 max-sm:col-span-2 dark:border-white">
                     <LikeButton

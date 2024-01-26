@@ -22,6 +22,7 @@ export function useLike({ collectionId }: UseIsLikedProps) {
         _id: user?._id,
         collectionId: collectionId,
       }).unwrap()
+      console.log(response)
       setCollectionLiked(response)
     }
   }

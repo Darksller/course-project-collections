@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema({
 			ref: 'PersonalCollection',
 			required: true,
 			select: true,
+			unique: true,
 		},
 	],
 	likedComments: [
@@ -29,6 +30,7 @@ const UserSchema = new mongoose.Schema({
 			ref: 'Comment',
 			required: true,
 			select: true,
+			unique: true,
 		},
 	],
 	likedItems: [

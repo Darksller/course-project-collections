@@ -17,7 +17,7 @@ export default function SearchBar({ className }: SearchBarProps) {
 
   const onSearchInputChange = useDebounce((event: ChangeInputEvent) => {
     setSearchText(event.target.value)
-  }, 300)
+  }, 100)
 
   function onKeyPressed(event: React.KeyboardEvent<HTMLInputElement>): void {
     if (event.key === 'Enter')
