@@ -5,8 +5,6 @@ import {
   SheetTrigger,
   SheetContent,
   SheetHeader,
-  SheetClose,
-  SheetFooter,
   SheetTitle,
 } from '@/components/ui/shadcn-ui/sheet'
 import { Item, UserComment } from '@/schemas/dbSchemas'

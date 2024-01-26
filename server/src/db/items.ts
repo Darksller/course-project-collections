@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import { CommentModel } from './comments'
+import { UserModel } from './users'
 
 const ItemSchema = new mongoose.Schema({
 	name: { type: String, required: true },
@@ -42,6 +44,11 @@ export const getItems = () =>
 		.populate('user')
 		.populate('tags')
 		.populate('personalCollection')
+		.populate({
+			path: 'comments',
+			model: CommentModel,
+			populate: { path: 'user', model: UserModel },
+		})
 export const getItemByIdDb = (id: string) =>
 	ItemModel.findById(id).populate('user').populate('tags')
 export const createItem = (values: Record<string, any>) =>
