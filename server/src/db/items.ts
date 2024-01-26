@@ -35,7 +35,10 @@ const ItemSchema = new mongoose.Schema({
 			fieldValue: { type: mongoose.Schema.Types.Mixed, required: true },
 		},
 	],
-})
+}).index(
+	{ name: 'text', description: 'text', 'customFields.fieldName': 'text' },
+	{ name: 'index' }
+)
 
 export const ItemModel = mongoose.model('Item', ItemSchema)
 
@@ -58,3 +61,14 @@ export const updateItemById = (id: string, values: Record<string, any>) =>
 
 export const itemsToDelete = (_id: any) =>
 	ItemModel.find({ personalCollection: _id })
+
+export const searchI = (text: string) =>
+	ItemModel.find({ $text: { $search: text } })
+		.populate('user')
+		.populate('tags')
+		.populate('personalCollection')
+		.populate({
+			path: 'comments',
+			model: CommentModel,
+			populate: { path: 'user', model: UserModel },
+		})

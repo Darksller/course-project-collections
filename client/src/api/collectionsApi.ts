@@ -1,4 +1,4 @@
-import { Collection } from '@/schemas/dbSchemas'
+import { Collection, Item } from '@/schemas/dbSchemas'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const collectionsApi = createApi({
@@ -29,6 +29,10 @@ export const collectionsApi = createApi({
 
     getCollectionById: build.query<Collection, string>({
       query: (_id) => `collections/${_id}`,
+    }),
+
+    search: build.query<{ collections: Collection[]; items: Item[] }, string>({
+      query: (_id) => `/search/${_id}`,
     }),
 
     deleteCollection: build.mutation<boolean, string>({
@@ -63,4 +67,5 @@ export const {
   useGetBiggestQuery,
   useUpdateCollectionMutation,
   useDeleteCollectionMutation,
+  useSearchQuery,
 } = collectionsApi

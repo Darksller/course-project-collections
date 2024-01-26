@@ -29,7 +29,10 @@ const CollectionSchema = new mongoose.Schema({
 	items: [
 		{ type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
 	],
-})
+}).index(
+	{ name: 'text', description: 'text', 'customFields.fieldName': 'text' },
+	{ name: 'index' }
+)
 
 export const PersonalCollectionModel = mongoose.model(
 	'PersonalCollection',
@@ -58,7 +61,6 @@ export const getCollectionById = (id: string) =>
 				},
 			],
 		})
-
 export const createCollection = (values: Record<string, any>) =>
 	new PersonalCollectionModel(values)
 		.save()
@@ -69,3 +71,20 @@ export const updateCollectionById = (id: string, values: Record<string, any>) =>
 
 export const deleteCollectionById = (id: string) =>
 	PersonalCollectionModel.findOneAndDelete({ _id: id })
+
+export const searchC = (text: string) =>
+	PersonalCollectionModel.find({ $text: { $search: text } })
+		.populate('user')
+		.populate('category')
+		.populate({
+			path: 'items',
+			populate: [
+				{ path: 'tags', model: TagModel },
+				{ path: 'user', model: UserModel },
+				{
+					path: 'comments',
+					model: CommentModel,
+					populate: { path: 'user', model: UserModel },
+				},
+			],
+		})

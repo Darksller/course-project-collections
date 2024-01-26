@@ -4,8 +4,9 @@ import {
 	deleteCollectionById,
 	getCollectionById,
 	getCollections,
+	searchC,
 } from '../db/collections'
-import { createItem, itemsToDelete } from '../db/items'
+import { createItem, itemsToDelete, searchI } from '../db/items'
 import {
 	findLikedByCollectionId,
 	findLikedItemsByCollectionId as findLikedItemsByItemId,
@@ -273,4 +274,12 @@ export const deleteCollection = async (
 		console.log(error)
 		return res.sendStatus(400)
 	}
+}
+
+export const search = async (req: express.Request, res: express.Response) => {
+	const { id } = req.params
+	const collections = await searchC(id)
+	console.log(collections)
+	const items = await searchI(id)
+	res.status(200).json({ collections, items })
 }

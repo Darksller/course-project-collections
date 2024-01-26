@@ -4,12 +4,14 @@ import { cn } from '@/lib/utils'
 import { useState } from 'react'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from '@tanstack/react-router'
 
 type ChangeInputEvent = React.ChangeEvent<HTMLInputElement>
 
 type SearchBarProps = React.HTMLAttributes<HTMLElement>
 
 export default function SearchBar({ className }: SearchBarProps) {
+  const navigate = useNavigate()
   const { t } = useTranslation('global')
   const [searchText, setSearchText] = useState<string>('')
 
@@ -18,7 +20,8 @@ export default function SearchBar({ className }: SearchBarProps) {
   }, 300)
 
   function onKeyPressed(event: React.KeyboardEvent<HTMLInputElement>): void {
-    if (event.key === 'Enter') console.log(searchText)
+    if (event.key === 'Enter')
+      navigate({ to: '/search/$searchText', params: { searchText } })
   }
   return (
     <div className={cn(className)}>

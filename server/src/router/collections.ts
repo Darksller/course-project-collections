@@ -6,6 +6,7 @@ import {
 	getFiveBiggest,
 	deleteCollection,
 	updateCollection,
+	search,
 } from '../controllers/collections'
 import express from 'express'
 import { isAuthenticated } from '../middlewares'
@@ -18,4 +19,5 @@ export default (router: express.Router) => {
 	router.post('/collections/items/add', isAuthenticated, addItemToCollection)
 	router.post('/collections/delete/:id', isAuthenticated, deleteCollection)
 	router.post('/collections/update/:id', isAuthenticated, updateCollection)
+	router.get('/search/:id', search)
 }

@@ -10,6 +10,7 @@ import { Users } from '@/pages/Users'
 import { store } from '@/store/reduxStore'
 import { Outlet, RootRoute, Route, Router } from '@tanstack/react-router'
 import { EditCollectionPage } from '@/pages/EditCollectionPage'
+import { SearchPage } from '@/pages/SearchPage'
 const rootRoute = new RootRoute({ component: App })
 
 const indexRoute = new Route({
@@ -26,6 +27,22 @@ export const collectionsLayoutRoute = new Route({
     </div>
   ),
   getParentRoute: () => rootRoute,
+})
+
+export const searchRoute = new Route({
+  path: '/search/$searchText',
+  component: SearchPage,
+  getParentRoute: () => rootRoute,
+  loader: async ({ params }) => {
+    const response = await store.dispatch(
+      collectionsApi.endpoints.search.initiate(params.searchText),
+    )
+
+    return {
+      collections: response.data?.collections,
+      items: response.data?.items,
+    }
+  },
 })
 
 export const collectionsRoute = new Route({
@@ -93,6 +110,7 @@ export const usersRoute = new Route({
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
+  searchRoute,
   collectionsLayoutRoute.addChildren([
     collectionsRoute,
     collectionRoute,
