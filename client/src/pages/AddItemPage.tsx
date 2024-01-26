@@ -40,7 +40,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
   const [imgLoad, setLoad] = useState<boolean>(false)
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
-  const [addItem, isLoading] = useAddItemMutation()
+  const [addItem] = useAddItemMutation()
   const { form, tags, setTags } = useItemForm({
     collectionId,
     customFields,
