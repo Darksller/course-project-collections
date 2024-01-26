@@ -21,19 +21,25 @@ type SelectCategory = {
       customFields: {
         fieldName: string
         fieldType: string
-        fieldState: string
       }[]
     },
     'category'
   >
   options: Category[] | undefined
   className?: string
+  disabled?: boolean
 }
 
-export function SelectCategory({ field, options, ...props }: SelectCategory) {
+export function SelectCategory({
+  field,
+  options,
+  disabled,
+  ...props
+}: SelectCategory) {
   return (
     <Select
       {...props}
+      disabled={disabled}
       onValueChange={field.onChange}
       defaultValue={field.value}
     >

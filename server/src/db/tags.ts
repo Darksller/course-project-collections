@@ -16,3 +16,8 @@ export const addAdditionalTags = (tags: Record<string, any>[]) =>
 export const updateTagById = (id: string, values: Record<string, any>) =>
 	TagModel.findByIdAndUpdate(id, values)
 export const getTagById = (id: string) => TagModel.findById(id)
+
+export const findTagsByCollectionId = (id: string) =>
+	TagModel.findOne({
+		items: id,
+	})

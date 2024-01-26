@@ -32,13 +32,6 @@ export const collectionsRoute = new Route({
   getParentRoute: () => collectionsLayoutRoute,
   path: '/',
   component: Collections,
-  loader: async () => {
-    const response = await store.dispatch(
-      collectionsApi.endpoints.getCollections.initiate(),
-    )
-
-    return { collections: response.data }
-  },
 })
 
 export const collectionRoute = new Route({

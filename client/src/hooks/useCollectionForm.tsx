@@ -1,23 +1,31 @@
-import { CollectionSchema, User } from '@/schemas/dbSchemas'
+import { Collection, CollectionSchema, User } from '@/schemas/dbSchemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-export function useCollectionForm() {
+type UseCollectionFormProps = {
+  collection?: Collection
+}
+
+export function useCollectionForm({
+  collection = undefined,
+}: UseCollectionFormProps) {
   const user = useAuthUser<User>()
   const form = useForm<z.infer<typeof CollectionSchema>>({
     resolver: zodResolver(CollectionSchema),
     defaultValues: {
-      name: '',
-      description: '',
-      imageUrl: '',
+      name: collection?.name || '',
+      description: collection?.description || '',
+      imageUrl: collection?.imageUrl || '',
       likeCount: 0,
-      creationDate: new Date(),
-      isClosed: false,
-      category: '',
+      creationDate: collection?.creationDate || new Date(),
+      isClosed: collection?.isClosed || false,
+      category: collection?.category._id || '',
       user: user?._id,
-      customFields: [{ fieldName: '', fieldType: '' }],
+      customFields: collection?.customFields || [
+        { fieldName: '', fieldType: '' },
+      ],
     },
   })
   const { fields, append, remove } = useFieldArray({

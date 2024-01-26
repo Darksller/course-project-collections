@@ -17,7 +17,7 @@ type ItemPageProps = {
   hideCollection?: boolean
 }
 
-export function ItemPage({ item, hideCollection }: ItemPageProps) {
+export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
   return (
     <ItemSheetToOpen itemId={item._id}>
       <>

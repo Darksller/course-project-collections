@@ -31,6 +31,21 @@ export const collectionsApi = createApi({
       query: (_id) => `collections/${_id}`,
     }),
 
+    deleteCollection: build.mutation<boolean, string>({
+      query: (_id) => ({
+        url: `/collections/delete/${_id}`,
+        method: 'POST',
+      }),
+    }),
+
+    updateCollection: build.mutation<Collection, { _id: string; body: any }>({
+      query: (data) => ({
+        url: `/collections/update/${data._id}`,
+        method: 'POST',
+        body: data.body,
+      }),
+    }),
+
     addCollection: build.mutation<Collection, any>({
       query: (body) => ({
         url: '/collections/add/',
@@ -46,4 +61,6 @@ export const {
   useGetCollectionByIdQuery,
   useAddCollectionMutation,
   useGetBiggestQuery,
+  useUpdateCollectionMutation,
+  useDeleteCollectionMutation,
 } = collectionsApi

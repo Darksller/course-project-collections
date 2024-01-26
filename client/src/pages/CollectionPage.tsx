@@ -24,10 +24,12 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import { User } from '@/schemas/dbSchemas'
 import { useLike } from '@/hooks/useLike'
 import { Link } from '@tanstack/react-router'
+import { useIsOwner } from '@/hooks/useIsOwner'
 
 export function CollectionPage() {
   const user = useAuthUser<User>()
   const { collection } = collectionRoute.useLoaderData()
+  const { isCollectionOwner } = useIsOwner({ collectionId: collection?._id })
   const { collectionLiked, onLike } = useLike({ collectionId: collection?._id })
   if (!collection) return <h1 className="text-4xl">Collection not found</h1>
 
@@ -126,8 +128,7 @@ export function CollectionPage() {
       <div className="px-10 pt-10">
         <div className="w-full border-b-[1px] border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
         <div className="flex w-full justify-end py-2">
-          {((!collection.isClosed && user) ||
-            user?.collections.includes(collection._id)) && (
+          {((!collection.isClosed && user) || isCollectionOwner) && (
             <DialogWrapper
               className="border border-purple-700 p-4 transition-all duration-300 scrollbar-thin hover:bg-purple-400 hover:text-white"
               contentClassName="sm:w-[50%] h-[70%] scrollbar-thin overflow-y-scrollbar overflow-y-scroll"

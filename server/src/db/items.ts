@@ -48,3 +48,6 @@ export const createItem = (values: Record<string, any>) =>
 	new ItemModel(values).save().then(item => item.toObject())
 export const updateCollectionById = (id: string, values: Record<string, any>) =>
 	ItemModel.findByIdAndUpdate(id, values)
+
+export const itemsToDelete = (_id: any) =>
+	ItemModel.find({ personalCollection: _id })

@@ -1,13 +1,24 @@
 import express from 'express'
 import {
 	createCollection,
+	deleteCollectionById,
 	getCollectionById,
 	getCollections,
 } from '../db/collections'
-import { createItem } from '../db/items'
-import { getUserById } from '../db/users'
-import { getCategoryById } from '../db/categories'
-import { addAdditionalTags, getTagById } from '../db/tags'
+import { createItem, itemsToDelete } from '../db/items'
+import {
+	findLikedByCollectionId,
+	findLikedItemsByCollectionId as findLikedItemsByItemId,
+	findOwnByCollectionId,
+	findOwnItemsByCollectionId as findOwnItemsByItemId,
+	getUserById,
+} from '../db/users'
+import { findByCollectionId, getCategoryById } from '../db/categories'
+import {
+	addAdditionalTags,
+	findTagsByCollectionId as findTagsByItemId,
+	getTagById,
+} from '../db/tags'
 import { RequestBody } from '../types/request'
 import { removePTags } from '../helpers'
 
@@ -40,55 +51,6 @@ export const getCollection = async (
 	}
 }
 
-export const addCollection = async (
-	req: express.Request,
-	res: express.Response
-) => {
-	try {
-		const {
-			name,
-			description,
-			imageUrl,
-			user,
-			category,
-			customFields,
-			creationDate,
-			isClosed = false,
-		} = req.body
-
-		if (!name || !description || !user || !category)
-			return res.status(400).json('Fields are required')
-
-		const owner = await getUserById(user)
-		if (!owner) return res.status(403).json('No such user')
-		const cat = await getCategoryById(category)
-		if (!cat) return res.status(403).json('No such category')
-
-		const newDescription = removePTags(description)
-
-		const newCollection = await createCollection({
-			name,
-			creationDate,
-			description: newDescription,
-			imageUrl,
-			user: owner._id,
-			category: cat._id,
-			customFields,
-			isClosed,
-		})
-		cat.personalCollections.push(newCollection._id)
-		await cat.save()
-		owner.collections.push(newCollection._id)
-		await owner.save()
-		return res.status(200).json(newCollection).end()
-	} catch (error) {
-		console.log(error)
-		return res
-			.status(400)
-			.json(error.message + ' or collection with this name already exists')
-	}
-}
-
 export const addItemToCollection = async (
 	req: express.Request,
 	res: express.Response
@@ -111,7 +73,7 @@ export const addItemToCollection = async (
 		const collection = await getCollectionById(id)
 		if (!collection) return res.status(403).json(`The collection doesn't exist`)
 		const owner = await getUserById(user)
-		if (!owner) return res.status(403).json('No such user')
+		if (!owner) return res.status(403).json('Are you logged in?')
 
 		if (
 			collection.isClosed &&
@@ -177,18 +139,136 @@ export const updateCollection = async (
 ) => {
 	try {
 		const { id } = req.params
-		const { name, description, imageUrl, category, customFields } = req.body
+		const { name, description, imageUrl, category, customFields, isClosed } =
+			req.body
+
 		if (!name || !description || !category)
 			return res.status(400).json('Fields are required')
+
 		const collection = await getCollectionById(id)
+
 		if (!collection) return res.status(403).json(`The collection doesn't exist`)
+
 		collection.name = name
 		collection.description = description
 		collection.imageUrl = imageUrl
 		collection.category = category
 		collection.customFields = customFields
+		collection.isClosed = isClosed
 		await collection.save()
 		return res.status(200).json(collection).end()
+	} catch (error) {
+		console.log(error)
+		return res.sendStatus(400)
+	}
+}
+
+export const addCollection = async (
+	req: express.Request,
+	res: express.Response
+) => {
+	try {
+		const {
+			name,
+			description,
+			imageUrl,
+			user,
+			category,
+			customFields,
+			creationDate,
+			isClosed = false,
+		} = req.body
+
+		if (!name || !description || !user || !category)
+			return res.status(400).json('Fields are required')
+
+		const owner = await getUserById(user)
+		if (!owner) return res.status(403).json('Are you logged in?')
+		const cat = await getCategoryById(category)
+		if (!cat) return res.status(403).json('No such category')
+
+		const newDescription = removePTags(description)
+
+		const newCollection = await createCollection({
+			name,
+			creationDate,
+			description: newDescription,
+			imageUrl,
+			user: owner._id,
+			category: cat._id,
+			customFields,
+			isClosed,
+		})
+
+		cat.personalCollections.push(newCollection._id)
+		await cat.save()
+		owner.collections.push(newCollection._id)
+		await owner.save()
+
+		return res.status(200).json(newCollection).end()
+	} catch (error) {
+		console.log(error)
+		return res
+			.status(400)
+			.json(error.message + ' or collection with this name already exists')
+	}
+}
+
+export const deleteCollection = async (
+	req: express.Request,
+	res: express.Response
+) => {
+	try {
+		const { id } = req.params
+
+		const category = await findByCollectionId(id)
+		category.personalCollections = category.personalCollections.filter(
+			pcId => pcId.toString() !== id
+		)
+		await category.save()
+
+		const userOwn = await findOwnByCollectionId(id)
+		userOwn.collections = userOwn.collections.filter(
+			pcId => pcId.toString() !== id
+		)
+		await userOwn.save()
+
+		const userLiked = await findLikedByCollectionId(id)
+		if (userLiked) {
+			userLiked.likedCollections = userLiked.likedCollections.filter(
+				pcId => pcId.toString() !== id
+			)
+			await userLiked.save()
+		}
+
+		const items = await itemsToDelete(id)
+		items.forEach(async item => {
+			const id = item._id
+			const userOwnItems = await findOwnItemsByItemId(id.toString())
+
+			userOwnItems.items = userOwnItems.items.filter(
+				pcId => pcId.toString() !== id.toString()
+			)
+			await userOwnItems.save()
+
+			const userLikedItems = await findLikedItemsByItemId(id.toString())
+			if (userLikedItems) {
+				userLikedItems.likedItems = userLikedItems.likedItems.filter(
+					pcId => pcId.toString() !== id.toString()
+				)
+				await userLikedItems.save()
+			}
+			const tag = await findTagsByItemId(id.toString())
+			tag.items = tag.items.filter(pcId => pcId.toString() !== id.toString())
+			await tag.save()
+		})
+
+		const deletionPromises = items.map(item => item.deleteOne())
+		await Promise.all(deletionPromises)
+
+		const deletedCollection = await deleteCollectionById(id)
+
+		return res.json(deletedCollection)
 	} catch (error) {
 		console.log(error)
 		return res.sendStatus(400)

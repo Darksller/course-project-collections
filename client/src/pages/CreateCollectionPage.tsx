@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/shadcn-ui/input'
 import { dummyCollectionImage } from '@/constants/media'
 import { CollectionSchema } from '@/schemas/dbSchemas'
-import { z } from 'zod'
+import { boolean, z } from 'zod'
 import { cn } from '@/lib/utils'
 import {
   Cross1Icon,
@@ -44,22 +44,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/shadcn-ui/select'
-import { stateVariants } from '@/constants/stateVariants'
 import { useAddCollectionMutation } from '@/api/collectionsApi'
+import { useState } from 'react'
 
 export function CreateCollection() {
   const navigate = useNavigate()
+  const [imgLoad, setImgLoad] = useState<boolean>(false)
   const { categories, dataTypes } = createCollectionsRoute.useLoaderData()
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
   const { form, register, user, fields, onAppendClicked, remove } =
-    useCollectionForm()
+    useCollectionForm({})
   const [addCollection] = useAddCollectionMutation()
   const onSubmit = async (values: z.infer<typeof CollectionSchema>) => {
     setError('')
     setSuccess('')
 
     try {
+      setImgLoad(true)
       if (selectedFile) {
         const imageRef = ref(storage, `images/${selectedFile.name + v4()}`)
         await uploadBytes(imageRef, selectedFile)
@@ -79,6 +81,7 @@ export function CreateCollection() {
           ? error.message
           : String((error as ErrorResponse).data),
       )
+      setImgLoad(false)
     }
   }
 
@@ -100,6 +103,7 @@ export function CreateCollection() {
                   <FormItem>
                     <FormControl>
                       <Input
+                        disabled={imgLoad}
                         {...field}
                         placeholder="Collection name"
                         type="name"
@@ -137,6 +141,7 @@ export function CreateCollection() {
                         )}
                       />
                       <Input
+                        disabled={imgLoad}
                         onChange={onSetImage}
                         type="file"
                         className="absolute z-[999] h-full cursor-pointer border-purple-700/50 opacity-0 dark:border-white/50"
@@ -162,8 +167,12 @@ export function CreateCollection() {
                   render={({ field }) => (
                     <FormItem className="">
                       <FormControl>
-                        {/* @ts-ignore */}
-                        <SelectCategory field={field} options={categories} />
+                        <SelectCategory
+                          //@ts-ignore
+                          field={field}
+                          options={categories}
+                          disabled={imgLoad}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -180,6 +189,7 @@ export function CreateCollection() {
                             <Switch
                               className="dark:thumb border-[1px] border-purple-700 max-sm:scale-75 dark:border-white"
                               checked={field.value}
+                              disabled={imgLoad}
                               onCheckedChange={field.onChange}
                               id="isClosed"
                             />
@@ -210,6 +220,7 @@ export function CreateCollection() {
                     <FormControl>
                       <FroalaEditor
                         // @ts-ignore
+                        disabled={imgLoad}
                         value={field.value}
                         onModelChange={field.onChange}
                         config={{
@@ -229,6 +240,7 @@ export function CreateCollection() {
                   <Button
                     className="w-full rounded-none"
                     variant={'outline'}
+                    disabled={imgLoad}
                     size={'icon'}
                     type="button"
                     onClick={onAppendClicked}
@@ -248,6 +260,7 @@ export function CreateCollection() {
                             <FormItem>
                               <FormControl>
                                 <Select
+                                  disabled={imgLoad}
                                   onValueChange={field.onChange}
                                   defaultValue={field.value}
                                 >
@@ -283,6 +296,7 @@ export function CreateCollection() {
                           <Button
                             variant={'outline'}
                             size={'icon'}
+                            disabled={imgLoad}
                             className="ml-1.5 w-full rounded-none"
                             onClick={() => remove(index)}
                           >
@@ -299,7 +313,11 @@ export function CreateCollection() {
 
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" className="w-full rounded-none">
+          <Button
+            type="submit"
+            className="w-full rounded-none"
+            disabled={imgLoad}
+          >
             Create new collection!
           </Button>
         </form>

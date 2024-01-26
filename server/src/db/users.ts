@@ -74,7 +74,12 @@ const UserSchema = new mongoose.Schema({
 export const UserModel = mongoose.model('User', UserSchema)
 
 export const getUsers = () => UserModel.find()
-export const getUserByEmail = (email: string) => UserModel.findOne({ email })
+export const getUserByEmail = (email: string) =>
+	UserModel.findOne({ email })
+		.populate('items')
+		.populate('collections')
+		.populate('likedItems')
+		.populate('likedCollections')
 export const getUserByRefreshToken = (refreshToken: string) =>
 	UserModel.findOne({ 'authentication.refreshToken': refreshToken })
 export const getUserById = (id: string) => UserModel.findById(id)
@@ -84,3 +89,23 @@ export const deleteUserById = (id: string) =>
 	UserModel.findOneAndDelete({ _id: id })
 export const updateUserById = (id: string, values: Record<string, any>) =>
 	UserModel.findByIdAndUpdate(id, values)
+
+export const findOwnByCollectionId = (id: string) =>
+	UserModel.findOne({
+		collections: id,
+	})
+
+export const findLikedByCollectionId = (id: string) =>
+	UserModel.findOne({
+		likedCollections: id,
+	})
+
+export const findOwnItemsByCollectionId = (id: string) =>
+	UserModel.findOne({
+		items: id,
+	})
+
+export const findLikedItemsByCollectionId = (id: string) =>
+	UserModel.findOne({
+		likedItems: id,
+	})

@@ -37,8 +37,7 @@ export type AddItemPageProps = {
 }
 
 export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
-  //@ts-ignore
-  const { imgLoad, setLoad } = useState<boolean>(false)
+  const [imgLoad, setLoad] = useState<boolean>(false)
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
   const [addItem, isLoading] = useAddItemMutation()
@@ -48,12 +47,12 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
   })
   const { data } = useGetTagsQuery()
   const onSubmit = async (values: z.infer<typeof ItemSchema>) => {
+    setLoad(true)
     setError('')
     setSuccess('')
     if (tags.length === 0) return setError('Tags are required')
 
     try {
-      setLoad(true)
       if (selectedFile) {
         const imageRef = ref(storage, `images/${selectedFile.name + v4()}`)
         await uploadBytes(imageRef, selectedFile)
@@ -221,11 +220,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
         <FormError message={error} />
         <FormSuccess message={success} />
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isLoading.isLoading || isLoading.isSuccess}
-        >
+        <Button type="submit" className="w-full" disabled={imgLoad}>
           Add item to collection
         </Button>
       </form>

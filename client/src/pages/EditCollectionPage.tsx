@@ -26,7 +26,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { SelectCategory } from '@/components/ui/collections/select-category'
-import { createCollectionsRoute, editCollectionRoute } from '@/routes'
+import { editCollectionRoute } from '@/routes'
 import { Switch } from '@/components/ui/shadcn-ui/switch'
 import { Label } from '@/components/ui/shadcn-ui/label'
 import FroalaEditor from 'react-froala-wysiwyg'
@@ -44,19 +44,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/shadcn-ui/select'
-import { useAddCollectionMutation } from '@/api/collectionsApi'
+import {
+  useDeleteCollectionMutation,
+  useUpdateCollectionMutation,
+} from '@/api/collectionsApi'
 
 export function EditCollectionPage() {
   const navigate = useNavigate()
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
-  const { form, register, user, fields, onAppendClicked, remove } =
-    useCollectionForm()
-
   const { categories, dataTypes, collection } =
     editCollectionRoute.useLoaderData()
+  const { form, register, user, fields, onAppendClicked, remove } =
+    useCollectionForm({ collection })
 
-  const [addCollection] = useAddCollectionMutation()
+  const [update] = useUpdateCollectionMutation()
+  const [deleteCol] = useDeleteCollectionMutation()
+
+  if (!collection)
+    navigate({
+      to: '/collections/',
+    })
 
   const onSubmit = async (values: z.infer<typeof CollectionSchema>) => {
     setError('')
@@ -68,8 +76,11 @@ export function EditCollectionPage() {
         await uploadBytes(imageRef, selectedFile)
         values.imageUrl = await getDownloadURL(imageRef)
       }
-      const response = await addCollection(values).unwrap()
-      setSuccess('Collection added!')
+      const response = await update({
+        _id: collection!._id,
+        body: values,
+      }).unwrap()
+      setSuccess('Collection edited!')
       user?.collections.push(response._id)
       navigate({
         to: '/collections/$collectionId',
@@ -85,9 +96,27 @@ export function EditCollectionPage() {
     }
   }
 
+  async function onDelete(): Promise<void> {
+    setError('')
+    setSuccess('')
+    try {
+      await deleteCol(collection!._id).unwrap()
+      navigate({
+        to: '/collections/',
+      })
+    } catch (error) {
+      console.log(error)
+      setError(
+        error instanceof Error
+          ? error.message
+          : String((error as ErrorResponse).data),
+      )
+    }
+  }
+
   return (
-    <div className="h-full sm:p-3">
-      <h1 className="p-4 text-7xl max-sm:text-3xl">Collection creating page</h1>
+    <div className="h-full overflow-y-hidden sm:p-3">
+      <h1 className="p-4 text-7xl max-sm:text-3xl">Collection edit page</h1>
       <Separator className="border-8 border-purple-700/90" />
       <Form {...form}>
         <form
@@ -302,9 +331,26 @@ export function EditCollectionPage() {
 
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" className="w-full rounded-none">
-            Create new collection!
-          </Button>
+          <div className="flex justify-between gap-4">
+            <Link
+              to={'/collections/$collectionId'}
+              className="w-full"
+              params={{ collectionId: collection?._id || '' }}
+            >
+              <Button type="submit" className="w-full rounded-none">
+                Cancel
+              </Button>
+            </Link>
+            <Button
+              onClick={onDelete}
+              className="w-full rounded-none bg-destructive transition-all duration-500 hover:animate-spin hover:bg-red-950"
+            >
+              Удалить
+            </Button>
+            <Button type="submit" className="w-full rounded-none">
+              Update collection!
+            </Button>
+          </div>
         </form>
       </Form>
       <Separator className=" border-8 border-purple-700/90" />

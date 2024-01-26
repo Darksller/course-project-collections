@@ -16,3 +16,7 @@ export const getCategories = () => CategoryModel.find()
 export const getCategoryById = (id: string) => CategoryModel.findById(id)
 export const createCategory = (values: Record<string, any>) =>
 	new CategoryModel(values).save().then(category => category.toObject())
+export const findByCollectionId = (id: string) =>
+	CategoryModel.findOne({
+		personalCollections: id,
+	})

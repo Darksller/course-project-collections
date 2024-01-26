@@ -56,3 +56,6 @@ export const createCollection = (values: Record<string, any>) =>
 
 export const updateCollectionById = (id: string, values: Record<string, any>) =>
 	PersonalCollectionModel.findByIdAndUpdate(id, values)
+
+export const deleteCollectionById = (id: string) =>
+	PersonalCollectionModel.findOneAndDelete({ _id: id })
