@@ -81,7 +81,7 @@ export function EditCollectionPage() {
         body: values,
       }).unwrap()
       setSuccess('Collection edited!')
-      user?.collections.push(response._id)
+      user?.collections.push(response)
       navigate({
         to: '/collections/$collectionId',
         params: { collectionId: response._id },

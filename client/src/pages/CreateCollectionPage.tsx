@@ -69,7 +69,7 @@ export function CreateCollection() {
       }
       const response = await addCollection(values).unwrap()
       setSuccess('Collection added!')
-      user?.collections.push(response._id)
+      user?.collections.push(response)
       navigate({
         to: '/collections/$collectionId',
         params: { collectionId: response._id },
