@@ -59,21 +59,26 @@ export function CollectionPage() {
                   <LockOpen1Icon className="ml-2 sm:size-7" />
                 )}
               </div>
-              <Link
-                to={'/collections/edit/$collectionId'}
-                params={{ collectionId: collection._id }}
-                className="border-[1px] border-white hover:border-purple-700"
-              >
-                <Button
-                  variant={'ghost'}
-                  className=" dark:hover: rounded-none border-[1px] border-purple-600 hover:border-white hover:bg-purple-500 hover:text-white "
+              {user && isCollectionOwner && (
+                <Link
+                  to={'/collections/edit/$collectionId'}
+                  params={{ collectionId: collection._id }}
+                  className="border-[1px] border-white hover:border-purple-700"
                 >
-                  Редактировать
-                </Button>
-              </Link>
+                  <Button
+                    variant={'ghost'}
+                    className="rounded-none border-[1px] border-purple-600 hover:border-white hover:bg-purple-500 hover:text-white "
+                  >
+                    Редактировать
+                  </Button>
+                </Link>
+              )}
             </CardTitle>
             <div className="flex justify-between text-[14px]">
-              <div>Author: {collection.user.username}</div>
+              <div>
+                Author: @
+                {collection.user != null ? collection.user.username : 'deleted'}
+              </div>
               <div>Category: {collection.category.name}</div>
             </div>
           </CardHeader>

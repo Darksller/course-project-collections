@@ -61,7 +61,7 @@ export const refresh = async (req: express.Request, res: express.Response) => {
 			const accessToken = jwt.sign(u, process.env.SECRET, {
 				expiresIn: +process.env.TOKEN_EXPIRATION,
 			})
-			return res.status(200).json(accessToken)
+			return res.status(200).json({ accessToken: accessToken, user: u })
 		}
 		return res.sendStatus(403)
 	} catch (error) {

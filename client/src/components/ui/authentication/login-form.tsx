@@ -46,7 +46,6 @@ export function LoginForm() {
         refresh: response.refreshToken,
         userState: response.user,
       })
-      console.log(response.user)
       window.location.reload()
     } catch (error) {
       setError(

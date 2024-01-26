@@ -76,7 +76,7 @@ export const dataType: DataType = {
 type CustomProps = {
   placeholder: string
   className?: string
-  disabled: boolean
+  disabled?: boolean
   type?: string
   field: ControllerRenderProps<
     {

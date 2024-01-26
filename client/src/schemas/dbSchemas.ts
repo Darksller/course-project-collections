@@ -82,13 +82,14 @@ export type Item = {
   collection: Collection
   likeCount: number
   tags: Tag[]
-  comments: Comment[]
+  comments: UserComment[]
   customFields?: CustomFieldWithValue[]
 }
 
-export type Comment = {
+export type UserComment = {
+  _id?: string
   content: string
-  date: Date
+  creationDate: Date
   user: User
   likeCount: number
 }

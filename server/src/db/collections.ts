@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 import { TagModel } from './tags'
+import { UserModel } from './users'
+import { CommentModel } from './comments'
 
 const CollectionSchema = new mongoose.Schema({
 	name: { type: String, required: true, unique: true },
@@ -46,7 +48,15 @@ export const getCollectionById = (id: string) =>
 		.populate('category')
 		.populate({
 			path: 'items',
-			populate: { path: 'tags', model: TagModel },
+			populate: [
+				{ path: 'tags', model: TagModel },
+				{ path: 'user', model: UserModel },
+				{
+					path: 'comments',
+					model: CommentModel,
+					populate: { path: 'user', model: UserModel },
+				},
+			],
 		})
 
 export const createCollection = (values: Record<string, any>) =>

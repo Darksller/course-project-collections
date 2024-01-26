@@ -53,7 +53,7 @@ export function CollectionCard({ collection }: CollectionCardProps) {
             #{collection.category.name}
           </div>
           <div className="absolute bottom-2 right-3 max-w-[39%] translate-x-[300%] truncate rounded-lg border pl-2 pr-2 text-sm text-white opacity-70 backdrop-blur  transition-all duration-1000 group-hover/img:translate-x-0 group-hover:translate-x-0 hover:opacity-100 dark:border-white">
-            {collection.user.username}
+            @{collection.user != null ? collection.user.username : 'deleted'}
           </div>
         </div>
       </Link>

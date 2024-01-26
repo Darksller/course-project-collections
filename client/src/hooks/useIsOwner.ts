@@ -31,5 +31,5 @@ export function useIsOwner({ collectionId, itemId }: UseIsOwnerProps) {
     checkItemOwner()
   }, [])
 
-  return { isCollectionOwner, isItemOwner }
+  return { isCollectionOwner, isItemOwner, user }
 }

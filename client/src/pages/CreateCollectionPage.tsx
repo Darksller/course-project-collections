@@ -56,6 +56,13 @@ export function CreateCollection() {
   const { form, register, user, fields, onAppendClicked, remove } =
     useCollectionForm({})
   const [addCollection] = useAddCollectionMutation()
+
+  if (!user) {
+    return navigate({
+      to: '/collections/',
+    })
+  }
+
   const onSubmit = async (values: z.infer<typeof CollectionSchema>) => {
     setError('')
     setSuccess('')

@@ -48,6 +48,7 @@ import {
   useDeleteCollectionMutation,
   useUpdateCollectionMutation,
 } from '@/api/collectionsApi'
+import { useIsOwner } from '@/hooks/useIsOwner'
 
 export function EditCollectionPage() {
   const navigate = useNavigate()
@@ -57,12 +58,12 @@ export function EditCollectionPage() {
     editCollectionRoute.useLoaderData()
   const { form, register, user, fields, onAppendClicked, remove } =
     useCollectionForm({ collection })
-
+  const { isCollectionOwner } = useIsOwner({ collectionId: collection?._id })
   const [update] = useUpdateCollectionMutation()
   const [deleteCol] = useDeleteCollectionMutation()
 
-  if (!collection)
-    navigate({
+  if (!collection || !isCollectionOwner)
+    return navigate({
       to: '/collections/',
     })
 

@@ -18,3 +18,5 @@ export const deleteCommentById = (id: string) =>
 	CommentModel.findOneAndDelete({ _id: id })
 export const updateCommentById = (id: string, values: Record<string, any>) =>
 	CommentModel.findByIdAndUpdate(id, values)
+export const createComment = (values: Record<string, any>) =>
+	new CommentModel(values).save().then(comment => comment.toObject())

@@ -17,6 +17,10 @@ export function ItemCard({ item, hideCollection = true }: ItemCardProps) {
                 item.tags?.slice(0, 2).map((tag) => (
                   <Link
                     to="/"
+                    style={{
+                      color: `${tag.color}`,
+                      borderColor: `${tag.color}`,
+                    }}
                     key={tag._id}
                     className={`rounded-[27px] border-[1px] border-[${tag.color}] bg-[#212121] px-[10px] py-[5px] text-[10px] font-bold text-[${tag.color}] opacity-30 transition-all duration-500 ease-in-out group-hover:opacity-100`}
                   >

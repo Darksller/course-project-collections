@@ -203,8 +203,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
                     {dataType[customField.fieldType] &&
                       dataType[customField.fieldType]({
                         field: { ...field },
-                        //@ts-ignore
-                        disabled: { imgLoad },
+
                         placeholder: `${customField.fieldType}`,
                         className:
                           'border-purple-700/50 dark:border-white/50 max-sm:w-[60%] w-[80%] max-sm:placeholder:text-[9px]',

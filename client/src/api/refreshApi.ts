@@ -6,14 +6,16 @@ export const refreshApi = createRefresh<object>({
   interval: 5,
   //@ts-ignore
   refreshApiCallback: async (param) => {
+    console.log(param)
     try {
       if (param.authToken === undefined) return { isSuccess: false }
       const promise = store.dispatch(authApi.endpoints.refresh.initiate(param))
       const response = await promise
+      console.log(response)
       return {
         isSuccess: true,
         //@ts-ignore
-        newAuthToken: response.data,
+        newAuthToken: response.data.refreshToken,
         newAuthTokenExpireIn: 60,
       }
     } catch (error) {
