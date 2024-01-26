@@ -60,7 +60,7 @@ export const collectionLike = async (
 		if (!collectionId) return res.sendStatus(400)
 		const user = await getUserById(id)
 		const isLikedIndex = user.likedCollections.findIndex(
-			likedId => likedId == collectionId
+			likedId => likedId._id == collectionId
 		)
 
 		if (isLikedIndex === -1) {
@@ -86,13 +86,12 @@ export const isCollectionLiked = async (
 		const { id } = req.params
 		const { collectionId } = req.body
 		if (!collectionId) return res.sendStatus(400)
-		const user = (await getUserById(id)).toObject()
+		const user = await getUserById(id)
 		const isLikedIndex = user.likedCollections.filter(
-			pcId => pcId.toString() === collectionId
+			pcId => pcId._id.toString() === collectionId
 		)
-		console.log(user)
-		console.log(collectionId)
-		if (isLikedIndex) {
+
+		if (isLikedIndex.length === 0) {
 			return res.status(200).json(false)
 		}
 		return res.status(200).json(true)
