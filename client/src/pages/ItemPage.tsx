@@ -12,6 +12,7 @@ import {
 import { Item } from '@/schemas/dbSchemas'
 import { dummyItemImage } from '@/constants/media'
 import { Separator } from '@/components/ui/separator'
+import { useIsOwner } from '@/hooks/useIsOwner'
 
 type ItemPageProps = {
   item: Item
@@ -19,6 +20,8 @@ type ItemPageProps = {
 }
 
 export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
+  const { isItemOwner } = useIsOwner({ itemId: item._id })
+
   return (
     <ItemSheetToOpen itemId={item._id}>
       <>
@@ -26,13 +29,21 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
           <ItemCard item={item} hideCollection={hideCollection} />
         </SheetTrigger>
         <SheetContent className="overflow-y-scroll scroll-smooth backdrop-blur scrollbar-thin scrollbar-track-white/50 scrollbar-thumb-purple-700/80 lg:w-[40%] dark:bg-purple-950/80 dark:scrollbar-track-white/50 dark:scrollbar-thumb-purple-700/80">
-          <SheetHeader className="pb-7">
-            <SheetTitle className="text-3xl uppercase md:text-6xl">
+          <SheetHeader className="py-4">
+            <SheetTitle className="flex items-center justify-between text-3xl uppercase md:text-6xl">
               {item.name}
+              {isItemOwner && (
+                <Button
+                  variant={'ghost'}
+                  className="dark:hover: h-full rounded-none border-[1px] border-purple-600 hover:border-white hover:bg-purple-500 hover:text-white "
+                >
+                  Редактировать
+                </Button>
+              )}
             </SheetTitle>
           </SheetHeader>
-          <Separator />
-          <div className="grid grid-cols-2 gap-2 p-4 first-line:rounded-xl">
+          <Separator className="rounded-xl border-8" />
+          <div className="grid grid-cols-2 gap-2 p-2 first-line:rounded-xl">
             <div>some</div>
             <img
               className="overflow-hiddenobject-cover h-full w-full  max-sm:h-[200px] "

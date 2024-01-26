@@ -114,5 +114,5 @@ export type User = {
   likedItems: []
   likedComments: []
   collections: Collection[]
-  items: string[]
+  items: Item[]
 }

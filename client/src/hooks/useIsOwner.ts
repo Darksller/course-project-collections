@@ -22,7 +22,7 @@ export function useIsOwner({ collectionId, itemId }: UseIsOwnerProps) {
     }
   }
   function checkItemOwner() {
-    if (user && itemId && user.items.includes(itemId)) {
+    if (user && itemId && user.items.some((items) => items._id === itemId)) {
       setIsItemOwner(true)
     }
   }

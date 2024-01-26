@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/shadcn-ui/input'
 import { dummyCollectionImage } from '@/constants/media'
 import { CollectionSchema } from '@/schemas/dbSchemas'
-import { boolean, z } from 'zod'
+import { z } from 'zod'
 import { cn } from '@/lib/utils'
 import {
   Cross1Icon,
