@@ -1,6 +1,5 @@
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons'
 import { Button } from './shadcn-ui/button'
-import { useState } from 'react'
 import { cn } from '@/lib/utils'
 type LikeButtonProps = {
   className?: string

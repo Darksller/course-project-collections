@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/shadcn-ui/sheet'
 import { Item } from '@/schemas/dbSchemas'
 import { dummyItemImage } from '@/constants/media'
+import { Separator } from '@/components/ui/separator'
 
 type ItemPageProps = {
   item: Item
@@ -26,8 +27,11 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
         </SheetTrigger>
         <SheetContent className="overflow-y-scroll scroll-smooth backdrop-blur scrollbar-thin scrollbar-track-white/50 scrollbar-thumb-purple-700/80 lg:w-[40%] dark:bg-purple-950/80 dark:scrollbar-track-white/50 dark:scrollbar-thumb-purple-700/80">
           <SheetHeader className="pb-7">
-            <SheetTitle className="md:text-6xl">{item.name}</SheetTitle>
+            <SheetTitle className="text-3xl uppercase md:text-6xl">
+              {item.name}
+            </SheetTitle>
           </SheetHeader>
+          <Separator />
           <div className="grid grid-cols-2 gap-2 p-4 first-line:rounded-xl">
             <div>some</div>
             <img
