@@ -1,4 +1,7 @@
-import { TRoute } from './routes.types'
+export type TRoute = {
+  href: string
+  label: string
+}
 
 export const routes: TRoute[] = [
   {
@@ -9,8 +12,4 @@ export const routes: TRoute[] = [
     href: '/collections',
     label: 'collections',
   },
-  // {
-  // 	href: '/users',
-  // 	label: 'Users',
-  // },
 ]
