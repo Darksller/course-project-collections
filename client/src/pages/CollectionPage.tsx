@@ -1,4 +1,4 @@
-import { collectionRoute } from '@/routes'
+import { collectionRoute } from '@/router'
 import { Button } from '@/components/ui/shadcn-ui/button'
 import {
   Card,
@@ -48,7 +48,7 @@ export function CollectionPage() {
             />
           </div>
         </div>
-        <div className="grid grid-rows-3 border-purple-700/50 max-sm:flex max-sm:flex-col max-sm:border-t-[1px] sm:col-span-2 sm:border-l-[1px] dark:border-white/50">
+        <div className="grid grid-rows-3 border-purple-700/50 dark:border-white/50 max-sm:flex max-sm:flex-col max-sm:border-t-[1px] sm:col-span-2 sm:border-l-[1px]">
           <CardHeader className="flex p-0 pt-7 max-sm:py-4 sm:p-3 sm:px-6">
             <CardTitle className="flex w-full items-center justify-between">
               <div className="flex text-3xl max-lg:text-2xl max-sm:text-xl lg:items-center">
@@ -83,7 +83,7 @@ export function CollectionPage() {
             </div>
           </CardHeader>
 
-          <CardContent className="row-span-2 grid grid-cols-2 gap-4 border-t-[1px] border-purple-700/50 max-md:p-0 sm:mx-6 dark:border-white/50">
+          <CardContent className="row-span-2 grid grid-cols-2 gap-4 border-t-[1px] border-purple-700/50 dark:border-white/50 max-md:p-0 sm:mx-6">
             <div className="flex h-full max-h-[250px] flex-col gap-2  border-white/30 py-4 ">
               <Label
                 htmlFor="description"
@@ -123,7 +123,7 @@ export function CollectionPage() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex items-center justify-between border-t-[1px] border-purple-700/50 py-2 max-md:pr-0  sm:mx-6 dark:border-white/50">
+          <CardFooter className="flex items-center justify-between border-t-[1px] border-purple-700/50 py-2 dark:border-white/50  max-md:pr-0 sm:mx-6">
             <div>{format(String(collection.creationDate), 'PPP')}</div>
             <LikeButton onChange={onLike} liked={collectionLiked} />
           </CardFooter>

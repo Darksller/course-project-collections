@@ -26,7 +26,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { SelectCategory } from '@/components/ui/collections/select-category'
-import { createCollectionsRoute } from '@/routes'
+import { createCollectionsRoute } from '@/router'
 import { Switch } from '@/components/ui/shadcn-ui/switch'
 import { Label } from '@/components/ui/shadcn-ui/label'
 import FroalaEditor from 'react-froala-wysiwyg'
@@ -115,7 +115,7 @@ export function CreateCollection() {
                         placeholder="Collection name"
                         type="name"
                         className={cn(
-                          'rounded-none border-2 border-purple-700/50 bg-slate-200 py-6 text-3xl transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white max-sm:text-base max-sm:placeholder:text-base dark:border-white dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white ',
+                          'rounded-none border-2 border-purple-700/50 bg-slate-200 py-6 text-3xl transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white dark:border-white dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white max-sm:text-base max-sm:placeholder:text-base ',
                           field.value && 'bg-white dark:bg-purple-700',
                         )}
                       />
@@ -127,7 +127,7 @@ export function CreateCollection() {
             </div>
             <Link
               to={'/users'}
-              className="flex items-center justify-center border-[1px] border-purple-700/50 p-1 underline underline-offset-4 max-sm:text-base sm:p-2 dark:border-white"
+              className="flex items-center justify-center border-[1px] border-purple-700/50 p-1 underline underline-offset-4 dark:border-white max-sm:text-base sm:p-2"
             >
               Author: {user?.username}
             </Link>
@@ -191,10 +191,10 @@ export function CreateCollection() {
                   render={({ field }) => (
                     <FormItem className="flex items-center">
                       <FormControl>
-                        <div className="flex h-full w-full items-center justify-between border-[1px] border-purple-700 sm:space-x-2 sm:px-4 dark:border-white">
+                        <div className="flex h-full w-full items-center justify-between border-[1px] border-purple-700 dark:border-white sm:space-x-2 sm:px-4">
                           <div className="flex sm:items-center sm:space-x-2 ">
                             <Switch
-                              className="dark:thumb border-[1px] border-purple-700 max-sm:scale-75 dark:border-white"
+                              className="dark:thumb border-[1px] border-purple-700 dark:border-white max-sm:scale-75"
                               checked={field.value}
                               disabled={imgLoad}
                               onCheckedChange={field.onChange}
@@ -293,7 +293,7 @@ export function CreateCollection() {
                         <Input
                           type="text"
                           placeholder="N"
-                          className="rounded-none border-[1px] border-purple-700 bg-slate-200 transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white max-sm:text-[1px]  dark:border-white dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white"
+                          className="rounded-none border-[1px] border-purple-700 bg-slate-200 transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white dark:border-white  dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white max-sm:text-[1px]"
                           {...register(
                             `customFields.${index}.fieldName` as const,
                           )}
