@@ -16,6 +16,7 @@ import {
   createCollectionsRoute,
   editCollectionRoute,
 } from './collection-routes'
+import { Layout } from '@/components/Layout'
 
 export const rootRoute = createRootRoute({ component: App })
 
@@ -27,11 +28,7 @@ const indexRoute = createRoute({
 
 export const LayoutRoute = createRoute({
   path: '/collections',
-  component: () => (
-    <div className="mx-auto mt-4 max-w-1440 rounded-xl bg-slate-200 bg-opacity-40 backdrop-blur dark:bg-purple-500/60 sm:mt-12">
-      <Outlet />
-    </div>
-  ),
+  component: Layout,
   getParentRoute: () => rootRoute,
 })
 
@@ -51,22 +48,15 @@ export const searchRoute = createRoute({
   },
 })
 
-export const usersRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/users',
-  component: Users,
-})
-
 const routeTree = rootRoute.addChildren([
   indexRoute,
-  searchRoute,
   LayoutRoute.addChildren([
     collectionsRoute,
     collectionRoute,
     createCollectionsRoute,
     editCollectionRoute,
+    searchRoute,
   ]),
-  usersRoute,
 ])
 
 export const router = createRouter({ routeTree })
