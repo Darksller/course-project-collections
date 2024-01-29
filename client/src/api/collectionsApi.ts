@@ -10,6 +10,7 @@ export const collectionsApi = createApi({
     mode: 'cors',
     headers: {
       Cookie: '_auth:nkdfajjnkfdnjkadf',
+      hnhub: '_dsadsdsa:adfhfsdhjbkfsd',
     },
   }),
   endpoints: (build) => ({
