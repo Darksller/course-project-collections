@@ -8,7 +8,7 @@ import {
   SheetTitle,
 } from '@/components/ui/shadcn-ui/sheet'
 import { Item, UserComment } from '@/schemas/dbSchemas'
-import { dummyItemImage } from '@/constants/media'
+import dummyItemImage from '@/assets/images/dummyItemImage.jpg'
 import { Separator } from '@/components/ui/separator'
 import { useIsOwner } from '@/hooks/useIsOwner'
 import { Link } from '@tanstack/react-router'

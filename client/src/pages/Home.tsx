@@ -1,4 +1,4 @@
-import { introVideo } from '@/constants/media'
+import introVideo from '@/assets/videos/intro.mp4'
 import secondImg from '@/assets/images/second.png'
 import fourthImg from '@/assets/images/fourth.jpg'
 import thirdImg from '@/assets/images/third.jpeg'

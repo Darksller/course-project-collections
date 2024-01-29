@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/shadcn-ui/form'
 import { Input } from '@/components/ui/shadcn-ui/input'
 import { Textarea } from '@/components/ui/shadcn-ui/textarea'
-import { dummyItemImage } from '@/constants/media'
+import dummyItemImage from '@/assets/images/dummyItemImage.jpg'
 import { CustomField, ItemSchema } from '@/schemas/dbSchemas'
 import { z } from 'zod'
 import ReactSelectCreatable from 'react-select/creatable'

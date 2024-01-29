@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/shadcn-ui/form'
 import { Input } from '@/components/ui/shadcn-ui/input'
-import { dummyCollectionImage } from '@/constants/media'
+import dummyCollectionImage from '@/assets/images/dummyCollectionImage.jpg'
 import { CollectionSchema } from '@/schemas/dbSchemas'
 import { z } from 'zod'
 import { cn } from '@/lib/utils'

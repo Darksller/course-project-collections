@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/shadcn-ui/card'
 import { Label } from '@/components/ui/shadcn-ui/label'
 import { LockClosedIcon, LockOpen1Icon } from '@radix-ui/react-icons'
-import { dummyCollectionImage } from '@/constants/media'
+import dummyCollectionImage from '@/assets/images/dummyCollectionImage.jpg'
 import { LikeButton } from '@/components/ui/like-button'
 import { LanguageSelect } from '@/components/ui/header/language-select'
 import SearchBar from '@/components/ui/header/search-bar'
