@@ -9,7 +9,8 @@ const TagCloudComponent: React.FC = () => {
   const { data, isLoading, isError } = useGetTagsQuery()
   const customRenderer = (tag: Tag, size: number) => (
     <Link
-      to="/"
+      to="/search/$searchText"
+      params={{ searchText: tag.name }}
       key={tag._id}
       style={{
         fontSize: `${size / 2}em`,
@@ -28,7 +29,7 @@ const TagCloudComponent: React.FC = () => {
   return (
     <div>
       {isLoading && <p>Loading tags...</p>}
-      {isError && <p>Error loading tags: </p>}
+      {isError && <p>Theres no tags yet :) </p>}
       {data && (
         //@ts-ignore
         <TagCloud

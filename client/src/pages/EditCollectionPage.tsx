@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/shadcn-ui/form'
 import { Input } from '@/components/ui/shadcn-ui/input'
-import { dummyCollectionImage } from '@/constants/media'
+import dummyCollectionImage from '@/assets/images/dummyCollectionImage.jpg'
 import { CollectionSchema } from '@/schemas/dbSchemas'
 import { z } from 'zod'
 import { cn } from '@/lib/utils'
@@ -26,7 +26,6 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { SelectCategory } from '@/components/ui/collections/select-category'
-import { editCollectionRoute } from '@/routes'
 import { Switch } from '@/components/ui/shadcn-ui/switch'
 import { Label } from '@/components/ui/shadcn-ui/label'
 import FroalaEditor from 'react-froala-wysiwyg'
@@ -49,8 +48,11 @@ import {
   useUpdateCollectionMutation,
 } from '@/api/collectionsApi'
 import { useIsOwner } from '@/hooks/useIsOwner'
+import { editCollectionRoute } from '@/router/routes/collections.routes'
+import { useTranslation } from 'react-i18next'
 
 export function EditCollectionPage() {
+  const { t } = useTranslation('global')
   const navigate = useNavigate()
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
@@ -81,7 +83,7 @@ export function EditCollectionPage() {
         _id: collection!._id,
         body: values,
       }).unwrap()
-      setSuccess('Collection edited!')
+      setSuccess(t('forms.collectionEdited'))
       user?.collections.push(response)
       navigate({
         to: '/collections/$collectionId',
@@ -134,10 +136,10 @@ export function EditCollectionPage() {
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Collection name"
+                        placeholder={t('forms.collectionName')}
                         type="name"
                         className={cn(
-                          'rounded-none border-2 border-purple-700/50 bg-slate-200 py-6 text-3xl transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white max-sm:text-base max-sm:placeholder:text-base dark:border-white dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white ',
+                          'rounded-none border-2 border-purple-700/50 bg-slate-200 py-6 text-3xl transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white dark:border-white dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white max-sm:text-base max-sm:placeholder:text-base ',
                           field.value && 'bg-white dark:bg-purple-700',
                         )}
                       />
@@ -149,9 +151,9 @@ export function EditCollectionPage() {
             </div>
             <Link
               to={'/users'}
-              className="flex items-center justify-center border-[1px] border-purple-700/50 p-1 underline underline-offset-4 max-sm:text-base sm:p-2 dark:border-white"
+              className="flex items-center justify-center border-[1px] border-purple-700/50 p-1 underline underline-offset-4 dark:border-white max-sm:text-base sm:p-2"
             >
-              Author: {user?.username}
+              {t('forms.author')}: {user?.username}
             </Link>
           </div>
           <div className="grid h-[500px] grid-cols-2 gap-4 pb-4">
@@ -193,9 +195,8 @@ export function EditCollectionPage() {
                   control={form.control}
                   name="category"
                   render={({ field }) => (
-                    <FormItem className="">
+                    <FormItem>
                       <FormControl>
-                        {/* @ts-ignore */}
                         <SelectCategory field={field} options={categories} />
                       </FormControl>
                       <FormMessage />
@@ -208,10 +209,10 @@ export function EditCollectionPage() {
                   render={({ field }) => (
                     <FormItem className="flex items-center">
                       <FormControl>
-                        <div className="flex h-full w-full items-center justify-between border-[1px] border-purple-700 sm:space-x-2 sm:px-4 dark:border-white">
+                        <div className="flex h-full w-full items-center justify-between border-[1px] border-purple-700 dark:border-white sm:space-x-2 sm:px-4">
                           <div className="flex sm:items-center sm:space-x-2 ">
                             <Switch
-                              className="dark:thumb border-[1px] border-purple-700 max-sm:scale-75 dark:border-white"
+                              className="dark:thumb border-[1px] border-purple-700 dark:border-white max-sm:scale-75"
                               checked={field.value}
                               onCheckedChange={field.onChange}
                               id="isClosed"
@@ -220,7 +221,7 @@ export function EditCollectionPage() {
                               htmlFor="isClosed"
                               className="max-sm:text-[8px]"
                             >
-                              Closed Mode
+                              {t('forms.closedMode')}
                             </Label>
                           </div>
                           {field.value ? (
@@ -242,11 +243,9 @@ export function EditCollectionPage() {
                   <FormItem className="max-h-[250px] overflow-y-auto py-4 scrollbar-thin">
                     <FormControl>
                       <FroalaEditor
-                        // @ts-ignore
-                        value={field.value}
                         onModelChange={field.onChange}
                         config={{
-                          placeholderText: 'Start writing :0',
+                          placeholderText: t('forms.startWriting'),
                         }}
                       />
                     </FormControl>
@@ -306,7 +305,7 @@ export function EditCollectionPage() {
                         <Input
                           type="text"
                           placeholder="N"
-                          className="rounded-none border-[1px] border-purple-700 bg-slate-200 transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white max-sm:text-[1px]  dark:border-white dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white"
+                          className="rounded-none border-[1px] border-purple-700 bg-slate-200 transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white dark:border-white  dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white max-sm:text-[1px]"
                           {...register(
                             `customFields.${index}.fieldName` as const,
                           )}
@@ -339,17 +338,17 @@ export function EditCollectionPage() {
               params={{ collectionId: collection?._id || '' }}
             >
               <Button type="submit" className="w-full rounded-none">
-                Cancel
+                {t('forms.cancel')}
               </Button>
             </Link>
             <Button
               onClick={onDelete}
               className="w-full rounded-none bg-destructive transition-all duration-500 hover:animate-spin hover:bg-red-950"
             >
-              Удалить
+              {t('forms.delete')}
             </Button>
             <Button type="submit" className="w-full rounded-none">
-              Update collection!
+              {t('forms.updateCollection')}
             </Button>
           </div>
         </form>

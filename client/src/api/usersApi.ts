@@ -12,7 +12,6 @@ export const usersApi = createApi({
       boolean,
       { _id: string; collectionId: string }
     >({
-      // @ts-ignore
       query: (data) => ({
         url: `/users/likeCollection/${data._id}`,
         method: 'PATCH',
@@ -24,7 +23,6 @@ export const usersApi = createApi({
       boolean,
       { _id: string; collectionId: string }
     >({
-      // @ts-ignore
       query: (data) => ({
         url: `/users/isCollectionLiked/${data._id}`,
         method: 'POST',

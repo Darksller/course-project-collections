@@ -2,7 +2,7 @@ import { InfoCircledIcon, LockClosedIcon } from '@radix-ui/react-icons'
 import { Link } from '@tanstack/react-router'
 import { LikeButton } from '../like-button'
 import { Collection, User } from '@/schemas/dbSchemas'
-import { dummyCollectionImage } from '@/constants/media'
+import dummyCollectionImage from '@/assets/images/dummyCollectionImage.jpg'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import { useLike } from '@/hooks/useLike'
 import ReactMarkdown from 'react-markdown'
@@ -15,7 +15,6 @@ export function CollectionCard({ collection }: CollectionCardProps) {
   const { collectionLiked, onLike } = useLike({
     collectionId: collection._id,
   })
-
   return (
     <div className="group relative m-auto h-[250px] w-[225px] scale-95 cursor-pointer overflow-hidden rounded-md border-purple-300 transition-all duration-500 hover:scale-105 hover:shadow-2xl">
       <div className="absolute right-0 top-0 z-50 h-14 w-11 translate-x-[10px] translate-y-[-22px] rounded-xl border border-white/50 backdrop-blur hover:animate-pulse md:hidden">

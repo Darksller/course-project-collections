@@ -31,6 +31,11 @@ export const login = async (req: express.Request, res: express.Response) => {
 			}
 		)
 
+		res.cookie(process.env.AUTH_COOKIE, accessToken, {
+			httpOnly: false,
+			secure: true,
+		})
+
 		user.authentication.refreshToken = refreshToken
 		await user.save()
 		return res
@@ -56,12 +61,19 @@ export const refresh = async (req: express.Request, res: express.Response) => {
 		const dbUser = await getUserByRefreshToken(refreshToken).select(
 			'+authentication.refreshToken'
 		)
+
 		if (refreshToken === dbUser.authentication.refreshToken) {
 			const u = _.omit(dbUser.toObject(), ['authentication'])
 			const accessToken = jwt.sign(u, process.env.SECRET, {
 				expiresIn: +process.env.TOKEN_EXPIRATION,
 			})
-			return res.status(200).json({ accessToken: accessToken, user: u })
+
+			res.cookie(process.env.AUTH_COOKIE, accessToken, {
+				httpOnly: false,
+				secure: true,
+			})
+
+			return res.status(200).json(accessToken)
 		}
 		return res.sendStatus(403)
 	} catch (error) {
@@ -94,28 +106,30 @@ export const register = async (req: express.Request, res: express.Response) => {
 		)
 
 		const salt = random()
-		try {
-			const user = await createUser({
-				..._user,
-				authentication: {
-					refreshToken,
-					salt,
-					password: authentication(salt, password),
-				},
+
+		res.cookie(process.env.AUTH_COOKIE, accessToken, {
+			httpOnly: false,
+			secure: true,
+		})
+
+		const user = await createUser({
+			..._user,
+			authentication: {
+				refreshToken,
+				salt,
+				password: authentication(salt, password),
+			},
+		})
+		return res
+			.status(200)
+			.json({
+				user: _.omit(user, ['authentication']),
+				accessToken,
+				refreshToken,
 			})
-			return res
-				.status(200)
-				.json({
-					user: _.omit(user, ['authentication']),
-					accessToken,
-					refreshToken,
-				})
-				.end()
-		} catch (error) {
-			return res.status(400).json('User with this username already exists')
-		}
+			.end()
 	} catch (error) {
-		console.log(error)
-		return res.sendStatus(400)
+		console.log(error.message)
+		return res.status(400).json('Something went wrong...')
 	}
 }

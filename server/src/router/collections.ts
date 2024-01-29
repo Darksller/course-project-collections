@@ -15,9 +15,10 @@ export default (router: express.Router) => {
 	router.get('/collections', getAllCollections)
 	router.get('/collections/biggest', getFiveBiggest)
 	router.get('/collections/:id', getCollection)
-	router.post('/collections/add', addCollection)
-	router.post('/collections/items/add', addItemToCollection)
-	router.post('/collections/delete/:id', deleteCollection)
-	router.post('/collections/update/:id', updateCollection)
+	router.post('/collections/add', isAuthenticated, addCollection)
+	router.post('/collections/items/add', isAuthenticated, addItemToCollection)
+	//TODO: add isOwner checking
+	router.post('/collections/delete/:id', isAuthenticated, deleteCollection)
+	router.post('/collections/update/:id', isAuthenticated, updateCollection)
 	router.get('/search/:id', search)
 }

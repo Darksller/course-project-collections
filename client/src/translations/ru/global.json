@@ -21,5 +21,52 @@
   "settings": "Настройки",
   "settingsDescription": "Выберите язык и смените тему",
   "en": "Английский",
-  "ru": "Русский"
+  "ru": "Русский",
+  "forms": {
+    "successLogin": "Авторизовано успешно!",
+    "successRegister": "Успешная регистрация!",
+    "password": "Пароль",
+    "login": "Войти",
+    "register": "Регистрация",
+    "tagsAreRequired": "Теги обязательны",
+    "itemAdded": "Предмет добавлен!",
+    "collectionAdded": "Коллекция добавлена!",
+    "collectionEdited": "Коллекция изменена!",
+    "image": "Картинка",
+    "name": "Название",
+    "itemName": "Название предмета",
+    "description": "Описание",
+    "tags": "Теги",
+    "addItem": "Добавить предмет в коллекцию",
+    "edit": "Изменить",
+    "category": "Категория",
+    "addFields": "Дополнительные поля",
+    "type": "Тип",
+    "dialogDescription": "На этой странице ты можешь добавить свой собственный предмет в коллекцию!",
+    "items": "Предметы",
+    "collectionName": "Название коллекции",
+    "author": "Автор",
+    "closedMode": "Приватный режим",
+    "createCollection": "Создать новую коллекцию!",
+    "startWriting": "Начинай писать :0",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "apply": "Применить",
+    "updateCollection": "Обновить коллекцию!"
+  },
+  "home": {
+    "five": "Пять самых больших коллекций",
+    "fiveItems": "Пять последних предмета",
+    "collectionsNotFound": "Коллекции не найдены :( ...",
+    "itemsNotFound": "Предметы не найдены :( ...",
+    "tagCloud": "Облако тегов"
+  },
+  "itemPage": {
+    "leaveComment": "Оставить комментарий ...",
+    "comments": "Комментарии"
+  },
+  "profile": {
+    "myCollections": "Mои коллекции",
+    "logout": "Выйти"
+  }
 }

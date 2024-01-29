@@ -6,7 +6,6 @@ export function App() {
     <div className="font-cgr">
       <Header />
       <Outlet />
-      {/* <Footer /> */}
     </div>
   )
 }

@@ -6,7 +6,7 @@ export const CollectionSchema = z.object({
   imageUrl: z.string(),
   user: z.string().min(1),
   category: z.string().min(1),
-  creationDate: z.date(),
+  creationDate: z.date().default(new Date()),
   likeCount: z.number().gte(0),
   isClosed: z.boolean(),
   customFields: z.array(
@@ -79,7 +79,7 @@ export type Item = {
   description: string
   imageUrl?: string
   user: User
-  collection: Collection
+  personalCollection: Collection
   likeCount: number
   tags: Tag[]
   comments: UserComment[]

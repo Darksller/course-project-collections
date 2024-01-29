@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
-// eslint-disable-next-line no-undef
+
 module.exports = {
   darkMode: ['class'],
   content: [
@@ -9,6 +8,7 @@ module.exports = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
+  cssNesting: true,
   prefix: '',
   theme: {
     container: {

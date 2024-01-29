@@ -3,25 +3,30 @@ import createRefresh from 'react-auth-kit/createRefresh'
 import { authApi } from './authApi'
 
 export const refreshApi = createRefresh<object>({
-  interval: 5,
-  //@ts-ignore
+  interval: 0.5,
   refreshApiCallback: async (param) => {
-    console.log(param)
     try {
-      if (param.authToken === undefined) return { isSuccess: false }
+      if (param.authToken === undefined)
+        return { isSuccess: false, newAuthToken: '' }
       const promise = store.dispatch(authApi.endpoints.refresh.initiate(param))
       const response = await promise
-      console.log(response)
+      if ('data' in response) {
+        return {
+          isSuccess: true,
+          newAuthToken: response.data,
+          newAuthTokenExpireIn: 60,
+        }
+      }
+      console.error(response.error)
       return {
-        isSuccess: true,
-        //@ts-ignore
-        newAuthToken: response.data.refreshToken,
-        newAuthTokenExpireIn: 60,
+        isSuccess: false,
+        newAuthToken: '',
       }
     } catch (error) {
       console.error(error)
       return {
         isSuccess: false,
+        newAuthToken: '',
       }
     }
   },

@@ -14,11 +14,16 @@ import {
 	findOwnItemsByCollectionId as findOwnItemsByItemId,
 	getUserById,
 } from '../db/users'
-import { findByCollectionId, getCategoryById } from '../db/categories'
+import {
+	findByCollectionId,
+	getCategoryById,
+	searchCategory,
+} from '../db/categories'
 import {
 	addAdditionalTags,
 	findTagsByCollectionId as findTagsByItemId,
 	getTagById,
+	searchTags,
 } from '../db/tags'
 import { RequestBody } from '../types/request'
 import { removePTags } from '../helpers'
@@ -279,7 +284,14 @@ export const deleteCollection = async (
 export const search = async (req: express.Request, res: express.Response) => {
 	const { id } = req.params
 	const collections = await searchC(id)
-
+	const collectionsByCategory = await searchCategory(id)
+	const itemsByTags = await searchTags(id)
 	const items = await searchI(id)
-	res.status(200).json({ collections, items })
+	res.status(200).json({
+		collections: [
+			...collections,
+			...collectionsByCategory.map(item => item.personalCollections).flat(),
+		],
+		items: [...items, ...itemsByTags.map(item => item.items).flat()],
+	})
 }

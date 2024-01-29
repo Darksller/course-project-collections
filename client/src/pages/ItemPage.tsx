@@ -8,7 +8,7 @@ import {
   SheetTitle,
 } from '@/components/ui/shadcn-ui/sheet'
 import { Item, UserComment } from '@/schemas/dbSchemas'
-import { dummyItemImage } from '@/constants/media'
+import dummyItemImage from '@/assets/images/dummyItemImage.jpg'
 import { Separator } from '@/components/ui/separator'
 import { useIsOwner } from '@/hooks/useIsOwner'
 import { Link } from '@tanstack/react-router'
@@ -19,6 +19,7 @@ import { Textarea } from '@/components/ui/shadcn-ui/textarea'
 import { useEffect, useState } from 'react'
 import { joinRoom, onComment, sendComment } from '@/constants/socket'
 import { LikeButton } from '@/components/ui/like-button'
+import { useTranslation } from 'react-i18next'
 
 type ItemPageProps = {
   item: Item
@@ -26,6 +27,7 @@ type ItemPageProps = {
 }
 
 export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
+  const { t } = useTranslation('global')
   const [comments, setComments] = useState<UserComment[]>(item.comments)
   const [comment, setComment] = useState<string>('')
   const { isItemOwner, user } = useIsOwner({ itemId: item._id })
@@ -45,7 +47,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
         <SheetTrigger>
           <ItemCard item={item} hideCollection={hideCollection} />
         </SheetTrigger>
-        <SheetContent className="overflow-y-scroll scroll-smooth backdrop-blur scrollbar-thin scrollbar-track-white/50 scrollbar-thumb-purple-700/80 lg:w-[40%] dark:bg-purple-950/80 dark:scrollbar-track-white/50 dark:scrollbar-thumb-purple-700/80">
+        <SheetContent className="overflow-y-scroll scroll-smooth backdrop-blur scrollbar-thin scrollbar-track-white/50 scrollbar-thumb-purple-700/80 dark:bg-purple-950/80 dark:scrollbar-track-white/50 dark:scrollbar-thumb-purple-700/80 lg:w-[40%]">
           <SheetHeader className="py-4">
             <SheetTitle className="flex flex-wrap items-center justify-between text-3xl uppercase  text-purple-700 md:text-6xl">
               {item.name}
@@ -55,13 +57,13 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
                   onClick={onEdit}
                   className="h-full rounded-xl border-[1px] border-purple-600 text-purple-700 hover:border-white hover:bg-purple-500 hover:text-white"
                 >
-                  Редактировать
+                  {t('forms.edit')}
                 </Button>
               )}
               {edit && (
                 <div>
-                  <Button className="">Cancel</Button>
-                  <Button className="">Edit</Button>
+                  <Button>{t('forms.cancel')}</Button>
+                  <Button>{t('forms.apply')}</Button>
                 </div>
               )}
             </SheetTitle>
@@ -70,7 +72,10 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
           <div className="grid grid-cols-2 gap-2 rounded-xl p-2 md:h-[500px]">
             <div className="h-full ">
               <div className="flex flex-wrap justify-between  py-2">
-                <Link>
+                <Link
+                  to="/users/$userId"
+                  params={{ userId: item.user._id || '/' }}
+                >
                   @{item.user != null ? item.user.username : 'deleted'}
                 </Link>
                 <div>{format(item.creationDate, 'PPP')}</div>
@@ -83,7 +88,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
             </div>
 
             <img
-              className="h-full w-full overflow-hidden rounded-xl object-cover py-2   max-sm:h-[200px] "
+              className="h-full w-full overflow-hidden rounded-xl object-cover py-2 max-sm:h-[200px] "
               src={item.imageUrl}
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null
@@ -109,7 +114,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
           {user && (
             <>
               <div className="mt-4 grid h-20 w-full grid-cols-10 rounded-3xl border-[1px] border-purple-700 p-2 dark:border-white">
-                <div className="flex items-center justify-center border-r-[1px] border-purple-700 p-2 max-sm:col-span-2 dark:border-white">
+                <div className="flex items-center justify-center border-r-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
                   <Avatar>
                     <AvatarImage
                       className="size-9 rounded-full border border-purple-700 p-2 dark:border-white"
@@ -124,11 +129,11 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
                   <Textarea
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    placeholder="Leave a comment..."
+                    placeholder={t('itemPage.leaveComment')}
                     className="h-full w-full rounded-none border-none focus:border-none"
                   ></Textarea>
                 </div>
-                <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 max-sm:col-span-2 dark:border-white">
+                <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
                   <Button
                     onClick={() => {
                       const data = {
@@ -153,7 +158,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
           )}
           {comments.length > 0 && (
             <>
-              <div className="pt-4">Comments:</div>
+              <div className="pt-4">{t('itemPage.comments')}:</div>
               <Separator className="py-2" />
             </>
           )}
@@ -161,7 +166,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
             comments.map((comment) => (
               <div key={comment._id}>
                 <div className="mt-4 grid h-20 w-full grid-cols-10 rounded-3xl border-[1px] border-purple-700 p-2 dark:border-white">
-                  <div className="flex items-center justify-center border-r-[1px] border-purple-700 p-2 max-sm:col-span-2 dark:border-white">
+                  <div className="flex items-center justify-center border-r-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
                     <Avatar>
                       <AvatarImage
                         className="size-9 rounded-full border border-purple-700 p-2 dark:border-white"
@@ -180,7 +185,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
                     </div>
                     <div className="break-all">{comment.content}</div>
                   </div>
-                  <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 max-sm:col-span-2 dark:border-white">
+                  <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
                     <LikeButton
                       liked={false}
                       onChange={function (): void {

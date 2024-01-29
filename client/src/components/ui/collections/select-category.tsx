@@ -16,6 +16,7 @@ type SelectCategory = {
       imageUrl: string
       user: string
       category: string
+      creationDate: Date
       likeCount: number
       isClosed: boolean
       customFields: {

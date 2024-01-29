@@ -7,7 +7,6 @@ export const collectionsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
-    mode: 'cors',
   }),
   endpoints: (build) => ({
     getCollections: build.query<Collection[], void>({

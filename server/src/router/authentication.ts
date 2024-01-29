@@ -6,5 +6,5 @@ import { isAuthenticated } from '../middlewares'
 export default (router: express.Router) => {
 	router.post('/auth/register', register)
 	router.post('/auth/login', login)
-	router.post('/auth/refresh', isAuthenticated, refresh)
+	router.post('/auth/refresh', refresh)
 }

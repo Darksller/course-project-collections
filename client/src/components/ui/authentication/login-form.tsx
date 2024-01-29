@@ -18,13 +18,14 @@ import { useState } from 'react'
 import { FormSuccess } from '../form-success'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
 import { ErrorResponse } from '@/store/reduxStore'
+import { useTranslation } from 'react-i18next'
 
 export function LoginForm() {
   const signIn = useSignIn()
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
   const [login, isLoading] = useLoginMutation()
-
+  const { t } = useTranslation('global')
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -37,7 +38,7 @@ export function LoginForm() {
     setSuccess('')
     try {
       const response = await login(values).unwrap()
-      setSuccess('Success login!')
+      setSuccess(`${t('forms.successLogin')}`)
       signIn({
         auth: {
           token: response.accessToken,
@@ -84,7 +85,7 @@ export function LoginForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{t('forms.password')}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -106,7 +107,7 @@ export function LoginForm() {
           className="w-full"
           disabled={isLoading.isLoading || isLoading.isSuccess}
         >
-          Login
+          {t('forms.login')}
         </Button>
       </form>
     </Form>

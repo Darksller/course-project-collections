@@ -14,10 +14,10 @@ import {
 } from '@/components/ui/shadcn-ui/form'
 import { Input } from '@/components/ui/shadcn-ui/input'
 import { Textarea } from '@/components/ui/shadcn-ui/textarea'
-import { dummyItemImage } from '@/constants/media'
+import dummyItemImage from '@/assets/images/dummyItemImage.jpg'
 import { CustomField, ItemSchema } from '@/schemas/dbSchemas'
 import { z } from 'zod'
-import Select from 'react-select/creatable'
+import ReactSelectCreatable from 'react-select/creatable'
 import { dataType } from '@/constants/dataTypes'
 import { cn } from '@/lib/utils'
 import { Cross1Icon } from '@radix-ui/react-icons'
@@ -30,6 +30,7 @@ import { ErrorResponse } from '@/store/reduxStore'
 import { useImage } from '@/hooks/useImage'
 import { useFormResponse } from '@/hooks/useFormResponse'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export type AddItemPageProps = {
   collectionId: string
@@ -37,6 +38,7 @@ export type AddItemPageProps = {
 }
 
 export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
+  const { t } = useTranslation('global')
   const [imgLoad, setLoad] = useState<boolean>(false)
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
@@ -50,7 +52,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
     setLoad(true)
     setError('')
     setSuccess('')
-    if (tags.length === 0) return setError('Tags are required')
+    if (tags.length === 0) return setError(t('forms.tagsAreRequired'))
 
     try {
       if (selectedFile) {
@@ -60,7 +62,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
       }
       values.tags = mapStringTagsToObjectArray(tags)
       await addItem(values).unwrap()
-      setSuccess('Item added!')
+      setSuccess(t('forms.itemAdded'))
       window.location.reload()
     } catch (error) {
       console.log(error)
@@ -86,7 +88,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
             name="imageUrl"
             render={(_) => (
               <FormItem>
-                <FormLabel>Image</FormLabel>
+                <FormLabel>{t('forms.image')}</FormLabel>
                 <FormControl>
                   <div className="group relative h-[87%] w-full rounded-xl">
                     <img
@@ -120,12 +122,12 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t('forms.name')}</FormLabel>
                   <FormControl>
                     <Input
                       disabled={imgLoad}
                       {...field}
-                      placeholder="Item name"
+                      placeholder={t('forms.itemName')}
                       type="name"
                       className="border-purple-700/50 dark:border-white/50"
                     />
@@ -138,8 +140,8 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem className="">
-                  <FormLabel>Description</FormLabel>
+                <FormItem>
+                  <FormLabel>{t('forms.description')}</FormLabel>
                   <FormControl>
                     <Textarea
                       disabled={imgLoad}
@@ -157,12 +159,11 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
               control={form.control}
               name="tags"
               render={(_) => (
-                <FormItem className="">
-                  <FormLabel>Tags</FormLabel>
+                <FormItem>
+                  <FormLabel>{t('forms.tags')}</FormLabel>
                   <FormControl>
-                    <Select
-                      //@ts-ignore
-                      disabled={imgLoad}
+                    <ReactSelectCreatable
+                      isDisabled={imgLoad}
                       backspaceRemovesValue
                       isMulti
                       onChange={(value) =>
@@ -220,7 +221,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
         <FormSuccess message={success} />
 
         <Button type="submit" className="w-full" disabled={imgLoad}>
-          Add item to collection
+          {t('forms.addItem')}
         </Button>
       </form>
     </Form>

@@ -15,8 +15,10 @@ import { PersonIcon } from '@radix-ui/react-icons'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
 import { User } from '@/schemas/dbSchemas'
+import { useTranslation } from 'react-i18next'
 
 export function ProfileButton() {
+  const { t } = useTranslation('global')
   const user = useAuthUser<User>()
   const signOut = useSignOut()
   function onSignOut() {
@@ -38,11 +40,11 @@ export function ProfileButton() {
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
         <DropdownMenuItem className="cursor-pointer">
-          My collections
+          {t('profile.myCollections')}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={onSignOut}>
-          Log Out
+          {t('forms.logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
