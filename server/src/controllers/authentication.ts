@@ -31,6 +31,11 @@ export const login = async (req: express.Request, res: express.Response) => {
 			}
 		)
 
+		res.cookie(process.env.AUTH_COOKIE, accessToken, {
+			httpOnly: false,
+			secure: true,
+		})
+
 		user.authentication.refreshToken = refreshToken
 		await user.save()
 		return res
