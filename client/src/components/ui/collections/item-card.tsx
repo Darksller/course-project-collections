@@ -42,10 +42,10 @@ export function ItemCard({ item, hideCollection = true }: ItemCardProps) {
               <Link
                 className="relative"
                 to={'/collections/$collectionId'}
-                params={{ collectionId: item.collection._id }}
+                params={{ collectionId: item.personalCollection._id }}
               >
                 <div className="absolute left-[50%]  translate-x-[-50%]  translate-y-[-120%] rounded-[27px] border-[1px] border-black bg-[#212121] px-[30px] py-[12px] text-[12px] font-bold text-white shadow-big transition-all duration-75 ease-in-out group-hover:border-white group-hover:px-[28px] group-hover:py-[11px] group-hover:shadow-none">
-                  {item.collection.name}
+                  {item.personalCollection.name}
                 </div>
               </Link>
             )}

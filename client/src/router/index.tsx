@@ -12,6 +12,7 @@ import {
 } from './routes/collections.routes'
 import { Root } from './__root'
 import { userRoute, usersLayoutRoute, usersRoute } from './routes/users.routes'
+import { Layout } from '@/components/Layout'
 
 const indexRoute = createRoute({
   getParentRoute: () => Root,
@@ -19,10 +20,16 @@ const indexRoute = createRoute({
   component: Home,
 })
 
-export const searchRoute = createRoute({
-  path: '/search/$searchText',
-  component: SearchPage,
+export const searchLayout = createRoute({
+  path: '/search',
+  component: Layout,
   getParentRoute: () => Root,
+})
+
+export const searchRoute = createRoute({
+  path: '$searchText',
+  component: SearchPage,
+  getParentRoute: () => searchLayout,
   loader: async ({ params }) => {
     const response = await store.dispatch(
       collectionsApi.endpoints.search.initiate(params.searchText),
@@ -45,6 +52,7 @@ const routeTree = Root.addChildren([
     searchRoute,
   ]),
   usersLayoutRoute.addChildren([usersRoute, userRoute]),
+  searchLayout.addChildren([searchRoute]),
 ])
 
 export const router = createRouter({

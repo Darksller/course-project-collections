@@ -11,17 +11,16 @@ import { Server } from 'socket.io'
 import { createComment } from './db/comments'
 import { getUserById } from './db/users'
 import { getItemByIdDb } from './db/items'
+import { credentials } from './middlewares'
 
 const app = express()
 
+app.use(credentials)
 app.use(
 	cors({
 		credentials: true,
-		origin: [
-			'http://localhost:5173',
-			'https://dunk-vault.vercel.app',
-			'https://vercel.live/link/dunk-vault-git-dev-darksllers-projects.vercel.app?via=deployment-domains-list-branch',
-		],
+		origin: true,
+		optionsSuccessStatus: 200,
 	})
 )
 app.use(compression())
@@ -37,6 +36,7 @@ export const io = new Server(server, {
 			'https://dunk-vault.vercel.app',
 			'https://vercel.live/link/dunk-vault-git-dev-darksllers-projects.vercel.app?via=deployment-domains-list-branch',
 		],
+		credentials: true,
 	},
 })
 

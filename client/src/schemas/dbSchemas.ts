@@ -79,7 +79,7 @@ export type Item = {
   description: string
   imageUrl?: string
   user: User
-  collection: Collection
+  personalCollection: Collection
   likeCount: number
   tags: Tag[]
   comments: UserComment[]

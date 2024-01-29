@@ -2,7 +2,16 @@ import express from 'express'
 import { get, merge } from 'lodash'
 import jwt from 'jsonwebtoken'
 
-export const isAuthenticated = async (
+export const credentials = (
+	req: express.Request,
+	res: express.Response,
+	next: express.NextFunction
+) => {
+	res.header('Access-Control-Allow-Origin', 'true')
+	next()
+}
+
+export const isAuthenticated = (
 	req: express.Request,
 	res: express.Response,
 	next: express.NextFunction
@@ -22,7 +31,7 @@ export const isAuthenticated = async (
 	}
 }
 
-export const isOwner = async (
+export const isOwner = (
 	req: express.Request,
 	res: express.Response,
 	next: express.NextFunction
@@ -39,7 +48,7 @@ export const isOwner = async (
 	}
 }
 
-export const isAdmin = async (
+export const isAdmin = (
 	req: express.Request,
 	res: express.Response,
 	next: express.NextFunction
