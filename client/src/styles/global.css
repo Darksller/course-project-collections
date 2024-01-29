@@ -57,13 +57,7 @@
     @apply scrollbar-thin;
     @apply scrollbar-track-white scrollbar-thumb-purple-700/80 dark:scrollbar-track-purple-700/80 dark:scrollbar-thumb-white;
 
-    .fr-element>* {
-      @apply dark:text-purple-700
-    }
 
-    .fr-wrapper>div>a {
-      @apply hidden
-    }
 
   }
 
