@@ -241,7 +241,6 @@ export function EditCollectionPage() {
                   <FormItem className="max-h-[250px] overflow-y-auto py-4 scrollbar-thin">
                     <FormControl>
                       <FroalaEditor
-                        value={field.value}
                         onModelChange={field.onChange}
                         config={{
                           placeholderText: 'Start writing :0',
