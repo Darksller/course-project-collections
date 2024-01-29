@@ -11,15 +11,3 @@ const store = createStore<object>({
 })
 
 export default store
-
-import { create } from 'zustand'
-
-export const useAuthStore = create<authStore>((set) => ({
-  isAuth: !!Cookies.get('_auth'),
-  setIsAuth: (isAuth: boolean) => set({ isAuth }),
-}))
-
-type authStore = {
-  isAuth: boolean
-  setIsAuth: (isAuth: boolean) => void
-}
