@@ -17,7 +17,7 @@ import { Textarea } from '@/components/ui/shadcn-ui/textarea'
 import { dummyItemImage } from '@/constants/media'
 import { CustomField, ItemSchema } from '@/schemas/dbSchemas'
 import { z } from 'zod'
-import Select from 'react-select/creatable'
+import ReactSelectCreatable from 'react-select/creatable'
 import { dataType } from '@/constants/dataTypes'
 import { cn } from '@/lib/utils'
 import { Cross1Icon } from '@radix-ui/react-icons'
@@ -160,8 +160,8 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
                 <FormItem className="">
                   <FormLabel>Tags</FormLabel>
                   <FormControl>
-                    <Select
-                      disabled={imgLoad}
+                    <ReactSelectCreatable
+                      isDisabled={imgLoad}
                       backspaceRemovesValue
                       isMulti
                       onChange={(value) =>
