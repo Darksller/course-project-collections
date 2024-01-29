@@ -20,9 +20,8 @@ app.use(
 		origin: [
 			'http://localhost:5173',
 			'https://dunk-vault.vercel.app',
-			'https://dunk-vault-git-dev-darksllers-projects.vercel.app/',
+			'https://vercel.live/link/dunk-vault-git-dev-darksllers-projects.vercel.app?via=deployment-domains-list-branch',
 		],
-		allowedHeaders: ['Access-Control-Allow-Origin: *'],
 	})
 )
 app.use(compression())
@@ -33,8 +32,11 @@ const server = http.createServer(app)
 
 export const io = new Server(server, {
 	cors: {
-		origin: '*',
-		credentials: true,
+		origin: [
+			'http://localhost:5173',
+			'https://dunk-vault.vercel.app',
+			'https://vercel.live/link/dunk-vault-git-dev-darksllers-projects.vercel.app?via=deployment-domains-list-branch',
+		],
 	},
 })
 
