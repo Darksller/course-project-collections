@@ -166,7 +166,7 @@ export function CreateCollection() {
                   control={form.control}
                   name="category"
                   render={({ field }) => (
-                    <FormItem className="">
+                    <FormItem>
                       <FormControl>
                         <SelectCategory
                           field={field}

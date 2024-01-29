@@ -138,7 +138,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem className="">
+                <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
@@ -157,7 +157,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
               control={form.control}
               name="tags"
               render={(_) => (
-                <FormItem className="">
+                <FormItem>
                   <FormLabel>Tags</FormLabel>
                   <FormControl>
                     <ReactSelectCreatable

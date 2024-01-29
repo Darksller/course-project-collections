@@ -193,7 +193,7 @@ export function EditCollectionPage() {
                   control={form.control}
                   name="category"
                   render={({ field }) => (
-                    <FormItem className="">
+                    <FormItem>
                       <FormControl>
                         <SelectCategory field={field} options={categories} />
                       </FormControl>

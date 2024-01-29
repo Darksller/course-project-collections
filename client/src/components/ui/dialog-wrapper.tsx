@@ -40,7 +40,7 @@ export function DialogWrapper({
     >
       <DialogTrigger className={className}>{children}</DialogTrigger>
       <DialogContent className={contentClassName}>
-        <DialogHeader className="">
+        <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>{dialogDescription}</DialogDescription>
         </DialogHeader>

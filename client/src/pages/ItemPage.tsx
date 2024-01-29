@@ -60,8 +60,8 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
               )}
               {edit && (
                 <div>
-                  <Button className="">Cancel</Button>
-                  <Button className="">Edit</Button>
+                  <Button>Cancel</Button>
+                  <Button>Edit</Button>
                 </div>
               )}
             </SheetTitle>
