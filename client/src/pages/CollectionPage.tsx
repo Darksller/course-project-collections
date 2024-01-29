@@ -24,7 +24,7 @@ import { User } from '@/schemas/dbSchemas'
 import { useLike } from '@/hooks/useLike'
 import { Link } from '@tanstack/react-router'
 import { useIsOwner } from '@/hooks/useIsOwner'
-import { collectionRoute } from '@/router/routes/collection.routes'
+import { collectionRoute } from '@/router/routes/collections.routes'
 
 export function CollectionPage() {
   const user = useAuthUser<User>()

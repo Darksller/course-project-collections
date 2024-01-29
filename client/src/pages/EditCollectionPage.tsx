@@ -48,7 +48,7 @@ import {
   useUpdateCollectionMutation,
 } from '@/api/collectionsApi'
 import { useIsOwner } from '@/hooks/useIsOwner'
-import { editCollectionRoute } from '@/router/routes/collection.routes'
+import { editCollectionRoute } from '@/router/routes/collections.routes'
 
 export function EditCollectionPage() {
   const navigate = useNavigate()

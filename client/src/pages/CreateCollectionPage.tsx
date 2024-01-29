@@ -45,7 +45,7 @@ import {
 } from '@/components/ui/shadcn-ui/select'
 import { useAddCollectionMutation } from '@/api/collectionsApi'
 import { useState } from 'react'
-import { createCollectionsRoute } from '@/router/routes/collection.routes'
+import { createCollectionsRoute } from '@/router/routes/collections.routes'
 
 export function CreateCollection() {
   const navigate = useNavigate()
@@ -120,7 +120,8 @@ export function CreateCollection() {
               />
             </div>
             <Link
-              to={'/users'}
+              to={'/users/$userId'}
+              params={{ userId: user?._id! }}
               className="flex items-center justify-center border-[1px] border-purple-700/50 p-1 underline underline-offset-4 dark:border-white max-sm:text-base sm:p-2"
             >
               Author: {user?.username}

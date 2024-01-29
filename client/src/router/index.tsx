@@ -4,24 +4,19 @@ import { store } from '@/store/reduxStore'
 import { createRoute, createRouter } from '@tanstack/react-router'
 import { SearchPage } from '@/pages/SearchPage'
 import {
+  collectionsLayoutRoute,
   collectionRoute,
   collectionsRoute,
   createCollectionsRoute,
   editCollectionRoute,
-} from './routes/collection.routes'
-import { Layout } from '@/components/Layout'
+} from './routes/collections.routes'
 import { Root } from './__root'
+import { userRoute, usersLayoutRoute, usersRoute } from './routes/users.routes'
 
 const indexRoute = createRoute({
   getParentRoute: () => Root,
   path: '/',
   component: Home,
-})
-
-export const LayoutRoute = createRoute({
-  path: '/collections',
-  component: Layout,
-  getParentRoute: () => Root,
 })
 
 export const searchRoute = createRoute({
@@ -42,19 +37,21 @@ export const searchRoute = createRoute({
 
 const routeTree = Root.addChildren([
   indexRoute,
-  LayoutRoute.addChildren([
+  collectionsLayoutRoute.addChildren([
     collectionsRoute,
     collectionRoute,
     createCollectionsRoute,
     editCollectionRoute,
     searchRoute,
   ]),
+  usersLayoutRoute.addChildren([usersRoute, userRoute]),
 ])
 
 export const router = createRouter({
   routeTree,
   context: {
     isAuthenticated: undefined!,
+    uiStore: undefined!,
   },
 })
 

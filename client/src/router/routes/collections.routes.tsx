@@ -6,19 +6,26 @@ import { CollectionPage } from '@/pages/CollectionPage'
 import { CreateCollection } from '@/pages/CreateCollectionPage'
 import { EditCollectionPage } from '@/pages/EditCollectionPage'
 import { store } from '@/store/reduxStore'
-import { Outlet, createRoute } from '@tanstack/react-router'
-import { LayoutRoute } from '..'
+import { createRoute } from '@tanstack/react-router'
 import { AuthenticationForm } from '@/components/AuthenticationForm'
 import { Users } from '@/pages/Users'
+import { Layout } from '@/components/Layout'
+import { Root } from '../__root'
+
+export const collectionsLayoutRoute = createRoute({
+  path: '/collections',
+  component: Layout,
+  getParentRoute: () => Root,
+})
 
 export const collectionsRoute = createRoute({
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => collectionsLayoutRoute,
   path: '/',
   component: Collections,
 })
 
 export const collectionRoute = createRoute({
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => collectionsLayoutRoute,
   path: '$collectionId',
   component: CollectionPage,
   loader: async ({ params }) => {
@@ -31,7 +38,7 @@ export const collectionRoute = createRoute({
 })
 
 export const editCollectionRoute = createRoute({
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => collectionsLayoutRoute,
   path: '/edit/$collectionId',
   component: EditCollectionPage,
   loader: async ({ params }) => {
@@ -54,7 +61,7 @@ export const editCollectionRoute = createRoute({
 })
 
 export const createCollectionsRoute = createRoute({
-  getParentRoute: () => LayoutRoute,
+  getParentRoute: () => collectionsLayoutRoute,
   path: '/create',
   component: CreateCollection,
   beforeLoad: ({ context }) => {
