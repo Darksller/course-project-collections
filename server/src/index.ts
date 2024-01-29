@@ -34,7 +34,7 @@ export const io = new Server(server, {
 		origin: [
 			'http://localhost:5173',
 			'https://dunk-vault.vercel.app',
-			'https://dunk-vault-git-dev-darksllers-projects.vercel.app/',
+			'https://dunk-vault-git-dev-darksllers-projects.vercel.app',
 		],
 		credentials: true,
 	},
