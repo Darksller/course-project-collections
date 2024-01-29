@@ -70,7 +70,10 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
           <div className="grid grid-cols-2 gap-2 rounded-xl p-2 md:h-[500px]">
             <div className="h-full ">
               <div className="flex flex-wrap justify-between  py-2">
-                <Link>
+                <Link
+                  to="/users/$userId"
+                  params={{ userId: item.user._id || '/' }}
+                >
                   @{item.user != null ? item.user.username : 'deleted'}
                 </Link>
                 <div>{format(item.creationDate, 'PPP')}</div>

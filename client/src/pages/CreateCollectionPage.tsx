@@ -121,7 +121,7 @@ export function CreateCollection() {
             </div>
             <Link
               to={'/users/$userId'}
-              params={{ userId: user?._id! }}
+              params={{ userId: user?._id || '/' }}
               className="flex items-center justify-center border-[1px] border-purple-700/50 p-1 underline underline-offset-4 dark:border-white max-sm:text-base sm:p-2"
             >
               Author: {user?.username}
