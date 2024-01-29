@@ -161,7 +161,6 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
                   <FormLabel>Tags</FormLabel>
                   <FormControl>
                     <Select
-                      //@ts-ignore
                       disabled={imgLoad}
                       backspaceRemovesValue
                       isMulti

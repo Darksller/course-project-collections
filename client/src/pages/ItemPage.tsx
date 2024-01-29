@@ -26,6 +26,7 @@ type ItemPageProps = {
 }
 
 export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
+  console.log(item)
   const [comments, setComments] = useState<UserComment[]>(item.comments)
   const [comment, setComment] = useState<string>('')
   const { isItemOwner, user } = useIsOwner({ itemId: item._id })
@@ -45,7 +46,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
         <SheetTrigger>
           <ItemCard item={item} hideCollection={hideCollection} />
         </SheetTrigger>
-        <SheetContent className="overflow-y-scroll scroll-smooth backdrop-blur scrollbar-thin scrollbar-track-white/50 scrollbar-thumb-purple-700/80 lg:w-[40%] dark:bg-purple-950/80 dark:scrollbar-track-white/50 dark:scrollbar-thumb-purple-700/80">
+        <SheetContent className="overflow-y-scroll scroll-smooth backdrop-blur scrollbar-thin scrollbar-track-white/50 scrollbar-thumb-purple-700/80 dark:bg-purple-950/80 dark:scrollbar-track-white/50 dark:scrollbar-thumb-purple-700/80 lg:w-[40%]">
           <SheetHeader className="py-4">
             <SheetTitle className="flex flex-wrap items-center justify-between text-3xl uppercase  text-purple-700 md:text-6xl">
               {item.name}
@@ -109,7 +110,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
           {user && (
             <>
               <div className="mt-4 grid h-20 w-full grid-cols-10 rounded-3xl border-[1px] border-purple-700 p-2 dark:border-white">
-                <div className="flex items-center justify-center border-r-[1px] border-purple-700 p-2 max-sm:col-span-2 dark:border-white">
+                <div className="flex items-center justify-center border-r-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
                   <Avatar>
                     <AvatarImage
                       className="size-9 rounded-full border border-purple-700 p-2 dark:border-white"
@@ -128,7 +129,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
                     className="h-full w-full rounded-none border-none focus:border-none"
                   ></Textarea>
                 </div>
-                <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 max-sm:col-span-2 dark:border-white">
+                <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
                   <Button
                     onClick={() => {
                       const data = {
@@ -161,7 +162,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
             comments.map((comment) => (
               <div key={comment._id}>
                 <div className="mt-4 grid h-20 w-full grid-cols-10 rounded-3xl border-[1px] border-purple-700 p-2 dark:border-white">
-                  <div className="flex items-center justify-center border-r-[1px] border-purple-700 p-2 max-sm:col-span-2 dark:border-white">
+                  <div className="flex items-center justify-center border-r-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
                     <Avatar>
                       <AvatarImage
                         className="size-9 rounded-full border border-purple-700 p-2 dark:border-white"
@@ -180,7 +181,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
                     </div>
                     <div className="break-all">{comment.content}</div>
                   </div>
-                  <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 max-sm:col-span-2 dark:border-white">
+                  <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
                     <LikeButton
                       liked={false}
                       onChange={function (): void {

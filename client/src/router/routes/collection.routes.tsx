@@ -6,8 +6,10 @@ import { CollectionPage } from '@/pages/CollectionPage'
 import { CreateCollection } from '@/pages/CreateCollectionPage'
 import { EditCollectionPage } from '@/pages/EditCollectionPage'
 import { store } from '@/store/reduxStore'
-import { createRoute } from '@tanstack/react-router'
+import { Outlet, createRoute } from '@tanstack/react-router'
 import { LayoutRoute } from '..'
+import { AuthenticationForm } from '@/components/AuthenticationForm'
+import { Users } from '@/pages/Users'
 
 export const collectionsRoute = createRoute({
   getParentRoute: () => LayoutRoute,
@@ -55,6 +57,11 @@ export const createCollectionsRoute = createRoute({
   getParentRoute: () => LayoutRoute,
   path: '/create',
   component: CreateCollection,
+  beforeLoad: ({ context }) => {
+    console.log(context.isAuthenticated())
+    if (context.isAuthenticated()) return <AuthenticationForm />
+    return <Users />
+  },
   loader: async () => {
     const response = await store.dispatch(
       categoriesApi.endpoints.getCategories.initiate(),

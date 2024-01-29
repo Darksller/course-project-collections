@@ -56,10 +56,6 @@
     @apply dark:text-white;
     @apply scrollbar-thin;
     @apply scrollbar-track-white scrollbar-thumb-purple-700/80 dark:scrollbar-track-purple-700/80 dark:scrollbar-thumb-white;
-
-    .fr-wrapper.show-placeholder>div:nth-child(1) {
-      @apply hidden
-    }
   }
 
   body {

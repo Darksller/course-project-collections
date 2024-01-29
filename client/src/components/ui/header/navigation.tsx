@@ -1,4 +1,4 @@
-import { routes } from '@/router/routes'
+import { routes } from '@/router/navigation-routes'
 import { cn } from '@/lib/utils'
 import { Button } from '../shadcn-ui/button'
 import { Link } from '@tanstack/react-router'

@@ -1,4 +1,3 @@
-import { collectionRoute } from '@/router'
 import { Button } from '@/components/ui/shadcn-ui/button'
 import {
   Card,
@@ -25,6 +24,7 @@ import { User } from '@/schemas/dbSchemas'
 import { useLike } from '@/hooks/useLike'
 import { Link } from '@tanstack/react-router'
 import { useIsOwner } from '@/hooks/useIsOwner'
+import { collectionRoute } from '@/router/routes/collection.routes'
 
 export function CollectionPage() {
   const user = useAuthUser<User>()

@@ -26,7 +26,6 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { SelectCategory } from '@/components/ui/collections/select-category'
-import { editCollectionRoute } from '@/router'
 import { Switch } from '@/components/ui/shadcn-ui/switch'
 import { Label } from '@/components/ui/shadcn-ui/label'
 import FroalaEditor from 'react-froala-wysiwyg'
@@ -49,6 +48,7 @@ import {
   useUpdateCollectionMutation,
 } from '@/api/collectionsApi'
 import { useIsOwner } from '@/hooks/useIsOwner'
+import { editCollectionRoute } from '@/router/routes/collection.routes'
 
 export function EditCollectionPage() {
   const navigate = useNavigate()
@@ -195,7 +195,6 @@ export function EditCollectionPage() {
                   render={({ field }) => (
                     <FormItem className="">
                       <FormControl>
-                        {/* @ts-ignore */}
                         <SelectCategory field={field} options={categories} />
                       </FormControl>
                       <FormMessage />
@@ -242,7 +241,6 @@ export function EditCollectionPage() {
                   <FormItem className="max-h-[250px] overflow-y-auto py-4 scrollbar-thin">
                     <FormControl>
                       <FroalaEditor
-                        // @ts-ignore
                         value={field.value}
                         onModelChange={field.onChange}
                         config={{

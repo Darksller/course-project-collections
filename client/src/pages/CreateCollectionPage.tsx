@@ -26,7 +26,6 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { SelectCategory } from '@/components/ui/collections/select-category'
-import { createCollectionsRoute } from '@/router'
 import { Switch } from '@/components/ui/shadcn-ui/switch'
 import { Label } from '@/components/ui/shadcn-ui/label'
 import FroalaEditor from 'react-froala-wysiwyg'
@@ -46,6 +45,7 @@ import {
 } from '@/components/ui/shadcn-ui/select'
 import { useAddCollectionMutation } from '@/api/collectionsApi'
 import { useState } from 'react'
+import { createCollectionsRoute } from '@/router/routes/collection.routes'
 
 export function CreateCollection() {
   const navigate = useNavigate()
@@ -56,12 +56,6 @@ export function CreateCollection() {
   const { form, register, user, fields, onAppendClicked, remove } =
     useCollectionForm({})
   const [addCollection] = useAddCollectionMutation()
-
-  if (!user) {
-    return navigate({
-      to: '/collections/',
-    })
-  }
 
   const onSubmit = async (values: z.infer<typeof CollectionSchema>) => {
     setError('')
@@ -175,7 +169,6 @@ export function CreateCollection() {
                     <FormItem className="">
                       <FormControl>
                         <SelectCategory
-                          //@ts-ignore
                           field={field}
                           options={categories}
                           disabled={imgLoad}
@@ -226,7 +219,6 @@ export function CreateCollection() {
                   <FormItem className="max-h-[250px] overflow-y-auto py-4 scrollbar-thin">
                     <FormControl>
                       <FroalaEditor
-                        // @ts-ignore
                         disabled={imgLoad}
                         value={field.value}
                         onModelChange={field.onChange}

@@ -5,7 +5,6 @@ import thirdImg from '@/assets/images/third.jpeg'
 import { HomeImageSection } from '@/components/ui/home/home-image-section'
 import { useTranslation } from 'react-i18next'
 import { SmoothArrow } from '@/components/ui/smooth-arrow'
-import { CheckAuthLink } from '@/components/ui/check-auth-link'
 import { useGetBiggestQuery } from '@/api/collectionsApi'
 import { CollectionCard } from '@/components/ui/collections/collection-card'
 import {
@@ -18,6 +17,7 @@ import {
 import { useGetFiveLatestItemsQuery } from '@/api/itemsApi'
 import { ItemPage } from './ItemPage'
 import TagCloud from '@/components/ui/home/tag-cloud'
+import { Link } from '@tanstack/react-router'
 
 export function Home() {
   const { data } = useGetBiggestQuery()
@@ -35,22 +35,20 @@ export function Home() {
         />
 
         <div className="absolute top-[50%] z-[100] flex w-full translate-y-[-80%] flex-col  lg:left-[50%] lg:top-[50%] lg:translate-x-[-50%] lg:translate-y-[-80%] ">
-          <div className="bg-white/40 p-4 text-left font-cgb text-5xl font-extrabold backdrop-blur transition-all duration-500 lg:text-center lg:text-7xl dark:bg-purple-500/50 dark:text-white">
+          <div className="bg-white/40 p-4 text-left font-cgb text-5xl font-extrabold backdrop-blur transition-all duration-500 dark:bg-purple-500/50 dark:text-white lg:text-center lg:text-7xl">
             {t('main.enterText')}
           </div>
         </div>
-        <CheckAuthLink
+        <Link
           to="/collections/create"
-          className="group absolute top-[70%] flex w-full max-w-3xl cursor-pointer items-center justify-center bg-white/50 px-5 backdrop-blur lg:rounded-full dark:bg-purple-500/50"
+          className="group absolute top-[70%] flex w-full max-w-3xl cursor-pointer items-center justify-center bg-white/50 px-5 backdrop-blur dark:bg-purple-500/50 lg:rounded-full"
         >
-          <>
-            <SmoothArrow className="right-[85%]" />
-            <div className="flex py-2 text-4xl italic transition-all duration-300 lg:text-6xl lg:group-hover:scale-110 ">
-              {t('main.exploreButton')}
-            </div>
-            <SmoothArrow className="left-[80%]" />
-          </>
-        </CheckAuthLink>
+          <SmoothArrow className="right-[85%]" />
+          <div className="flex py-2 text-4xl italic transition-all duration-300 lg:text-6xl lg:group-hover:scale-110 ">
+            {t('main.exploreButton')}
+          </div>
+          <SmoothArrow className="left-[80%]" />
+        </Link>
       </div>
 
       <HomeImageSection className="h-[125dvh]" imageSrc={secondImg}>
@@ -129,7 +127,7 @@ export function Home() {
       <HomeImageSection className="h-[105dvh]" imageSrc={fourthImg}>
         <div className="w-[50%]">
           <div className="top-[50%] z-[100] flex w-full translate-y-[-80%] flex-col lg:left-[50%] lg:top-[50%] ">
-            <div className="bg-white/40 p-4 text-left font-cgb text-5xl font-extrabold backdrop-blur transition-all duration-500 lg:text-center lg:text-7xl dark:bg-purple-500/50 dark:text-white">
+            <div className="bg-white/40 p-4 text-left font-cgb text-5xl font-extrabold backdrop-blur transition-all duration-500 dark:bg-purple-500/50 dark:text-white lg:text-center lg:text-7xl">
               {t('Tag Cloud')}
             </div>
           </div>

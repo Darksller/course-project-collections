@@ -1,27 +1,19 @@
-import { App } from '@/App'
 import { collectionsApi } from '@/api/collectionsApi'
 import { Home } from '@/pages/Home'
-import { Users } from '@/pages/Users'
 import { store } from '@/store/reduxStore'
-import {
-  Outlet,
-  createRootRoute,
-  createRoute,
-  createRouter,
-} from '@tanstack/react-router'
+import { createRoute, createRouter } from '@tanstack/react-router'
 import { SearchPage } from '@/pages/SearchPage'
 import {
   collectionRoute,
   collectionsRoute,
   createCollectionsRoute,
   editCollectionRoute,
-} from './collection-routes'
+} from './routes/collection.routes'
 import { Layout } from '@/components/Layout'
-
-export const rootRoute = createRootRoute({ component: App })
+import { Root } from './__root'
 
 const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => Root,
   path: '/',
   component: Home,
 })
@@ -29,13 +21,13 @@ const indexRoute = createRoute({
 export const LayoutRoute = createRoute({
   path: '/collections',
   component: Layout,
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => Root,
 })
 
 export const searchRoute = createRoute({
   path: '/search/$searchText',
   component: SearchPage,
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => Root,
   loader: async ({ params }) => {
     const response = await store.dispatch(
       collectionsApi.endpoints.search.initiate(params.searchText),
@@ -48,7 +40,7 @@ export const searchRoute = createRoute({
   },
 })
 
-const routeTree = rootRoute.addChildren([
+const routeTree = Root.addChildren([
   indexRoute,
   LayoutRoute.addChildren([
     collectionsRoute,
@@ -59,7 +51,12 @@ const routeTree = rootRoute.addChildren([
   ]),
 ])
 
-export const router = createRouter({ routeTree })
+export const router = createRouter({
+  routeTree,
+  context: {
+    isAuthenticated: undefined!,
+  },
+})
 
 declare module '@tanstack/react-router' {
   interface Register {

@@ -1,9 +1,9 @@
-export type TRoute = {
+export type NavRoute = {
   href: string
   label: string
 }
 
-export const routes: TRoute[] = [
+export const routes: NavRoute[] = [
   {
     href: '/',
     label: 'home',
