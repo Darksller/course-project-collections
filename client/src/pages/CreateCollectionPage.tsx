@@ -217,11 +217,9 @@ export function CreateCollection() {
                 control={form.control}
                 name="description"
                 render={({ field }) => (
-                  <FormItem className="max-h-[250px] overflow-y-auto py-4 scrollbar-thin">
+                  <FormItem className="max-h-[250px] overflow-y-auto py-4 !text-purple-700 scrollbar-thin">
                     <FormControl>
                       <FroalaEditor
-                        isDisabled={imgLoad}
-                        value={field.value}
                         onModelChange={field.onChange}
                         config={{
                           placeholderText: 'Start writing :0',
