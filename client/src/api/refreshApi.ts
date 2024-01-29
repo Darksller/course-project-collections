@@ -6,19 +6,27 @@ export const refreshApi = createRefresh<object>({
   interval: 0.5,
   refreshApiCallback: async (param) => {
     try {
-      if (param.authToken === undefined) return { isSuccess: false }
+      if (param.authToken === undefined)
+        return { isSuccess: false, newAuthToken: '' }
       const promise = store.dispatch(authApi.endpoints.refresh.initiate(param))
       const response = await promise
-      console.log(response)
+      if ('data' in response) {
+        return {
+          isSuccess: true,
+          newAuthToken: response.data,
+          newAuthTokenExpireIn: 60,
+        }
+      }
+      console.error(response.error)
       return {
-        isSuccess: true,
-        newAuthToken: response.data.accessToken,
-        newAuthTokenExpireIn: 60,
+        isSuccess: false,
+        newAuthToken: '',
       }
     } catch (error) {
       console.error(error)
       return {
         isSuccess: false,
+        newAuthToken: '',
       }
     }
   },

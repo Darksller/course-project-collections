@@ -26,7 +26,6 @@ type ItemPageProps = {
 }
 
 export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
-  console.log(item)
   const [comments, setComments] = useState<UserComment[]>(item.comments)
   const [comment, setComment] = useState<string>('')
   const { isItemOwner, user } = useIsOwner({ itemId: item._id })
