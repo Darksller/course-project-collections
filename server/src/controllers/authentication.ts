@@ -67,6 +67,12 @@ export const refresh = async (req: express.Request, res: express.Response) => {
 			const accessToken = jwt.sign(u, process.env.SECRET, {
 				expiresIn: +process.env.TOKEN_EXPIRATION,
 			})
+
+			res.cookie(process.env.AUTH_COOKIE, accessToken, {
+				httpOnly: false,
+				secure: true,
+			})
+
 			return res.status(200).json(accessToken)
 		}
 		return res.sendStatus(403)
@@ -100,6 +106,11 @@ export const register = async (req: express.Request, res: express.Response) => {
 		)
 
 		const salt = random()
+
+		res.cookie(process.env.AUTH_COOKIE, accessToken, {
+			httpOnly: false,
+			secure: true,
+		})
 
 		const user = await createUser({
 			..._user,
