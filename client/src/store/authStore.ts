@@ -1,5 +1,4 @@
 import createStore from 'react-auth-kit/createStore'
-import Cookies from 'js-cookie'
 import { refreshApi } from '@/api/refreshApi'
 
 const store = createStore<object>({
