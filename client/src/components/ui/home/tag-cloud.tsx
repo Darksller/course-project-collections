@@ -28,7 +28,7 @@ const TagCloudComponent: React.FC = () => {
   return (
     <div>
       {isLoading && <p>Loading tags...</p>}
-      {isError && <p>Error loading tags: </p>}
+      {isError && <p>Theres no tags yet :) </p>}
       {data && (
         //@ts-ignore
         <TagCloud
