@@ -7,10 +7,9 @@ export const collectionsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
-    mode: 'cors',
-    headers: {
-      Cookie: '_auth:nkdfajjnkfdnjkadf',
-      hnhub: '_dsadsdsa:adfhfsdhjbkfsd',
+    prepareHeaders: (headers) => {
+      headers.set('credentials', 'include')
+      headers.set('dsadas', 'incldsadsaude')
     },
   }),
   endpoints: (build) => ({
