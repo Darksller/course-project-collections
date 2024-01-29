@@ -33,6 +33,7 @@ export const io = new Server(server, {
 			'https://dunk-vault.vercel.app',
 			'https://dunk-vault-git-dev-darksllers-projects.vercel.app/',
 		],
+		allowedHeaders: ['Access-Control-Allow-Origin'],
 	},
 })
 
