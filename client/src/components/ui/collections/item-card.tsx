@@ -16,7 +16,8 @@ export function ItemCard({ item, hideCollection = true }: ItemCardProps) {
               {item &&
                 item.tags?.slice(0, 2).map((tag) => (
                   <Link
-                    to="/"
+                    to="/search/$searchText"
+                    params={{ searchText: tag.name }}
                     style={{
                       color: `${tag.color}`,
                       borderColor: `${tag.color}`,

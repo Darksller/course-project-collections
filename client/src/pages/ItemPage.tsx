@@ -100,7 +100,8 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
             {item &&
               item.tags?.map((tag) => (
                 <Link
-                  to="/"
+                  to="/search/$searchText"
+                  params={{ searchText: tag.name }}
                   style={{ color: `${tag.color}`, borderColor: `${tag.color}` }}
                   key={tag._id}
                   className={`rounded-[27px] border-[1px] p-1 px-4  transition-all duration-500 ease-in-out`}
