@@ -15,6 +15,7 @@ export function useCollectionForm({
   const form = useForm<z.infer<typeof CollectionSchema>>({
     resolver: zodResolver(CollectionSchema),
     defaultValues: {
+      _id: collection?._id || '',
       name: collection?.name || '',
       description: collection?.description || '',
       imageUrl: collection?.imageUrl || '',

@@ -44,7 +44,7 @@ export function ProfileButton() {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={onSignOut}>
-          {t('forms.logout')}
+          {t('profile.logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

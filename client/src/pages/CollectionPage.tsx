@@ -34,7 +34,6 @@ export function CollectionPage() {
   const { isCollectionOwner } = useIsOwner({ collectionId: collection?._id })
   const { collectionLiked, onLike } = useLike({ collectionId: collection?._id })
   if (!collection) return <h1 className="text-4xl">Collection not found</h1>
-
   return (
     <div className="h-full px-4 py-4 ">
       <Card className="flex w-full flex-col gap-5 border border-purple-700/50 p-5 max-sm:pb-0 sm:grid sm:grid-cols-3 sm:rounded-3xl">
@@ -61,7 +60,7 @@ export function CollectionPage() {
                   <LockOpen1Icon className="ml-2 sm:size-7" />
                 )}
               </div>
-              {user && isCollectionOwner && (
+              {isCollectionOwner && (
                 <Link
                   to={'/collections/edit/$collectionId'}
                   params={{ collectionId: collection._id }}

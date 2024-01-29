@@ -27,10 +27,6 @@ export function Header() {
               className="duration-600 ml-2 flex max-w-28 transition-all hover:tracking-widest max-sm:mr-5"
             >
               <h1 className="text-2xl font-bold ">DunkVault</h1>
-              <img
-                src="logo.svg"
-                className="ml-3 mt-0.5 h-[30px] w-[30px] text-white "
-              />
             </Link>
           </div>
 

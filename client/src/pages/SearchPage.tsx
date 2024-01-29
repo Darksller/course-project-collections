@@ -8,7 +8,7 @@ export function SearchPage() {
   console.log(items)
   return (
     <>
-      <div className="text-5xl"> Search result:</div>
+      <div className="p-4 text-5xl"> Search result:</div>
       {collections?.map((collection) => (
         <CollectionCard key={collection._id} collection={collection} />
       ))}
