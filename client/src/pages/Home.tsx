@@ -18,17 +18,11 @@ import { useGetFiveLatestItemsQuery } from '@/api/itemsApi'
 import { ItemPage } from './ItemPage'
 import TagCloud from '@/components/ui/home/tag-cloud'
 import { Link } from '@tanstack/react-router'
-import { useState } from 'react'
-import { Loading } from '@/components/Loading'
 
 export function Home() {
-  const [videoLoading, setVideoLoading] = useState(true)
   const { data } = useGetBiggestQuery()
   const { data: items } = useGetFiveLatestItemsQuery()
   const { t } = useTranslation('global')
-  function handleLoad(): void {
-    setVideoLoading(false)
-  }
 
   return (
     <>
@@ -37,7 +31,6 @@ export function Home() {
           <video
             src={introVideo}
             autoPlay
-            onCanPlayThrough={handleLoad}
             loop
             muted
             className="absolute left-0 top-0 h-full w-full object-cover "
