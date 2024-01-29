@@ -8,6 +8,9 @@ export const collectionsApi = createApi({
     baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
     mode: 'cors',
+    headers: {
+      Cookie: '_auth:nkdfajjnkfdnjkadf',
+    },
   }),
   endpoints: (build) => ({
     getCollections: build.query<Collection[], void>({
