@@ -21,5 +21,52 @@
   "settings": "Settings",
   "settingsDescription": "Choose language and change theme",
   "en": "English",
-  "ru": "Russian"
+  "ru": "Russian",
+  "forms": {
+    "successLogin": "Success Login!",
+    "successRegister": "Success Register!",
+    "password": "Password",
+    "login": "Login",
+    "register": "Register",
+    "tagsAreRequired": "Tags are required",
+    "itemAdded": "Item added!",
+    "collectionAdded": "Collection added!",
+    "collectionEdited": "Collection edited!",
+    "image": "Image",
+    "name": "Name",
+    "itemName": "Item name",
+    "description": "Description",
+    "tags": "Tags",
+    "addItem": "Add item to collection",
+    "edit": "Edit",
+    "category": "Category",
+    "addFields": "Additional fields",
+    "type": "Type",
+    "dialogDescription": "This is the page where you can add your own item!",
+    "items": "Items",
+    "collectionName": "Collection Name",
+    "author": "Author",
+    "closedMode": "Closed Mode",
+    "createCollection": "Create new collection!",
+    "startWriting": "Start writing :0",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "apply": "apply",
+    "updateCollection": "Update collection!"
+  },
+  "home": {
+    "five": "Five of the biggest collections",
+    "fiveItems": "Five latest items",
+    "collectionsNotFound": "Collections was not found...",
+    "itemsNotFound": "Items was not found...",
+    "tagCloud": "Tag Cloud"
+  },
+  "itemPage": {
+    "leaveComment": "Leave a comment ...",
+    "comments": "Comments"
+  },
+  "profile": {
+    "myCollections": "My collections",
+    "logout": "Logout"
+  }
 }

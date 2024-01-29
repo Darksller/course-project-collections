@@ -9,7 +9,8 @@ const TagCloudComponent: React.FC = () => {
   const { data, isLoading, isError } = useGetTagsQuery()
   const customRenderer = (tag: Tag, size: number) => (
     <Link
-      to="/"
+      to="/search/$searchText"
+      params={{ searchText: tag.name }}
       key={tag._id}
       style={{
         fontSize: `${size / 2}em`,

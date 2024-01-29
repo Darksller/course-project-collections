@@ -46,8 +46,10 @@ import {
 import { useAddCollectionMutation } from '@/api/collectionsApi'
 import { useState } from 'react'
 import { createCollectionsRoute } from '@/router/routes/collections.routes'
+import { useTranslation } from 'react-i18next'
 
 export function CreateCollection() {
+  const { t } = useTranslation('global')
   const navigate = useNavigate()
   const [imgLoad, setImgLoad] = useState<boolean>(false)
   const { categories, dataTypes } = createCollectionsRoute.useLoaderData()
@@ -69,7 +71,7 @@ export function CreateCollection() {
         values.imageUrl = await getDownloadURL(imageRef)
       }
       const response = await addCollection(values).unwrap()
-      setSuccess('Collection added!')
+      setSuccess(t('forms.collectionAdded'))
       user?.collections.push(response)
       navigate({
         to: '/collections/$collectionId',
@@ -106,7 +108,7 @@ export function CreateCollection() {
                       <Input
                         disabled={imgLoad}
                         {...field}
-                        placeholder="Collection name"
+                        placeholder={t('forms.collectionName')}
                         type="name"
                         className={cn(
                           'rounded-none border-2 border-purple-700/50 bg-slate-200 py-6 text-3xl transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white dark:border-white dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white max-sm:text-base max-sm:placeholder:text-base ',
@@ -124,7 +126,7 @@ export function CreateCollection() {
               params={{ userId: user?._id || '/' }}
               className="flex items-center justify-center border-[1px] border-purple-700/50 p-1 underline underline-offset-4 dark:border-white max-sm:text-base sm:p-2"
             >
-              Author: {user?.username}
+              {t('forms.author')}: {user?.username}
             </Link>
           </div>
           <div className="grid h-[500px] grid-cols-2 gap-4 pb-4">
@@ -198,7 +200,7 @@ export function CreateCollection() {
                               htmlFor="isClosed"
                               className="max-sm:text-[8px]"
                             >
-                              Closed Mode
+                              {t('forms.closedMode')}
                             </Label>
                           </div>
                           {field.value ? (
@@ -316,7 +318,7 @@ export function CreateCollection() {
             className="w-full rounded-none"
             disabled={imgLoad}
           >
-            Create new collection!
+            {t('forms.createCollection')}
           </Button>
         </form>
       </Form>

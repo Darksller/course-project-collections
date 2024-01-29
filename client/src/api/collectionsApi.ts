@@ -7,10 +7,6 @@ export const collectionsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
-    prepareHeaders: (headers) => {
-      headers.set('credentials', 'include')
-      headers.set('dsadas', 'incldsadsaude')
-    },
   }),
   endpoints: (build) => ({
     getCollections: build.query<Collection[], void>({

@@ -25,8 +25,10 @@ import { useLike } from '@/hooks/useLike'
 import { Link } from '@tanstack/react-router'
 import { useIsOwner } from '@/hooks/useIsOwner'
 import { collectionRoute } from '@/router/routes/collections.routes'
+import { useTranslation } from 'react-i18next'
 
 export function CollectionPage() {
+  const { t } = useTranslation('global')
   const user = useAuthUser<User>()
   const { collection } = collectionRoute.useLoaderData()
   const { isCollectionOwner } = useIsOwner({ collectionId: collection?._id })
@@ -69,17 +71,19 @@ export function CollectionPage() {
                     variant={'ghost'}
                     className="rounded-none border-[1px] border-purple-600 hover:border-white hover:bg-purple-500 hover:text-white "
                   >
-                    Редактировать
+                    {t('forms.edit')}
                   </Button>
                 </Link>
               )}
             </CardTitle>
             <div className="flex justify-between text-[14px]">
               <div>
-                Author: @
+                {t('forms.author')}: @
                 {collection.user != null ? collection.user.username : 'deleted'}
               </div>
-              <div>Category: {collection.category.name}</div>
+              <div>
+                {t('forms.category')}: {collection.category.name}
+              </div>
             </div>
           </CardHeader>
 
@@ -89,7 +93,7 @@ export function CollectionPage() {
                 htmlFor="description"
                 className="overflow-hidden text-ellipsis break-all text-2xl max-md:text-base max-md:font-bold"
               >
-                Описание
+                {t('forms.description')}
               </Label>
               <div className="w-full border-b-2 border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
               <div className="overflow-hidden overflow-y-scroll text-ellipsis scrollbar-thin max-md:text-[14px] max-sm:text-[11px]">
@@ -103,12 +107,12 @@ export function CollectionPage() {
                 htmlFor="description"
                 className="overflow-hidden text-ellipsis break-all text-2xl max-md:text-base max-md:font-bold"
               >
-                Дополнительные поля
+                {t('forms.addFields')}
               </Label>
               <div className="w-full border-b-2  border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
               <div className="grid w-full grid-cols-2 overflow-hidden text-ellipsis break-all">
-                <div>Name</div>
-                <div>Type</div>
+                <div>{t('forms.name')}</div>
+                <div>{t('forms.type')}</div>
               </div>
               <div className="w-full border-b-2  border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
               <div className="overflow-hidden text-ellipsis break-all">
@@ -137,8 +141,8 @@ export function CollectionPage() {
             <DialogWrapper
               className="border border-purple-700 p-4 transition-all duration-300 scrollbar-thin hover:bg-purple-400 hover:text-white"
               contentClassName="sm:w-[50%] h-[70%] scrollbar-thin overflow-y-scrollbar overflow-y-scroll"
-              dialogTitle={'Add Item'}
-              dialogDescription="This is the page where you can add your own item!"
+              dialogTitle={t('forms.addItem')}
+              dialogDescription={t('forms.dialogDescription')}
               dialogContent={
                 <AddItemPage
                   collectionId={collection._id}
@@ -146,14 +150,14 @@ export function CollectionPage() {
                 />
               }
             >
-              Add Item
+              {t('forms.addItem')}
             </DialogWrapper>
           )}
         </div>
         {collection.items.length > 0 && (
           <div>
             <div className="flex py-2">
-              <div className="text-3xl">Items:</div>
+              <div className="text-3xl">{t('forms.items')}:</div>
               <div className="flex w-full justify-end gap-4">
                 <div>
                   <SearchBar />

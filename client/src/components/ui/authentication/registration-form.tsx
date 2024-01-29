@@ -18,12 +18,14 @@ import { useState } from 'react'
 import { FormSuccess } from '../form-success'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
 import { ErrorResponse } from '@/store/reduxStore'
+import { useTranslation } from 'react-i18next'
 
 export function RegistrationForm() {
   const signIn = useSignIn()
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
   const [register, isLoading] = useRegisterMutation()
+  const { t } = useTranslation('global')
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -37,7 +39,7 @@ export function RegistrationForm() {
     setError('')
     try {
       const response = await register(values).unwrap()
-      setSuccess('Success register!')
+      setSuccess(t('forms.successRegister'))
       signIn({
         auth: {
           token: response.accessToken,
@@ -65,7 +67,7 @@ export function RegistrationForm() {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>{t('forms.login')}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -103,7 +105,7 @@ export function RegistrationForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{t('forms.password')}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -125,7 +127,7 @@ export function RegistrationForm() {
           className="w-full"
           disabled={isLoading.isLoading || isLoading.isSuccess}
         >
-          Register
+          {t('forms.register')}
         </Button>
       </form>
     </Form>

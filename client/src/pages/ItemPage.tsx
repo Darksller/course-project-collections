@@ -19,6 +19,7 @@ import { Textarea } from '@/components/ui/shadcn-ui/textarea'
 import { useEffect, useState } from 'react'
 import { joinRoom, onComment, sendComment } from '@/constants/socket'
 import { LikeButton } from '@/components/ui/like-button'
+import { useTranslation } from 'react-i18next'
 
 type ItemPageProps = {
   item: Item
@@ -26,6 +27,7 @@ type ItemPageProps = {
 }
 
 export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
+  const { t } = useTranslation('global')
   const [comments, setComments] = useState<UserComment[]>(item.comments)
   const [comment, setComment] = useState<string>('')
   const { isItemOwner, user } = useIsOwner({ itemId: item._id })
@@ -55,13 +57,13 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
                   onClick={onEdit}
                   className="h-full rounded-xl border-[1px] border-purple-600 text-purple-700 hover:border-white hover:bg-purple-500 hover:text-white"
                 >
-                  Редактировать
+                  {t('forms.edit')}
                 </Button>
               )}
               {edit && (
                 <div>
-                  <Button>Cancel</Button>
-                  <Button>Edit</Button>
+                  <Button>{t('forms.cancel')}</Button>
+                  <Button>{t('forms.apply')}</Button>
                 </div>
               )}
             </SheetTitle>
@@ -86,7 +88,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
             </div>
 
             <img
-              className="h-full w-full overflow-hidden rounded-xl object-cover py-2   max-sm:h-[200px] "
+              className="h-full w-full overflow-hidden rounded-xl object-cover py-2 max-sm:h-[200px] "
               src={item.imageUrl}
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null
@@ -127,7 +129,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
                   <Textarea
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    placeholder="Leave a comment..."
+                    placeholder={t('itemPage.leaveComment')}
                     className="h-full w-full rounded-none border-none focus:border-none"
                   ></Textarea>
                 </div>
@@ -156,7 +158,7 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
           )}
           {comments.length > 0 && (
             <>
-              <div className="pt-4">Comments:</div>
+              <div className="pt-4">{t('itemPage.comments')}:</div>
               <Separator className="py-2" />
             </>
           )}

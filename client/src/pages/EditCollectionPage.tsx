@@ -49,8 +49,10 @@ import {
 } from '@/api/collectionsApi'
 import { useIsOwner } from '@/hooks/useIsOwner'
 import { editCollectionRoute } from '@/router/routes/collections.routes'
+import { useTranslation } from 'react-i18next'
 
 export function EditCollectionPage() {
+  const { t } = useTranslation('global')
   const navigate = useNavigate()
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
@@ -81,7 +83,7 @@ export function EditCollectionPage() {
         _id: collection!._id,
         body: values,
       }).unwrap()
-      setSuccess('Collection edited!')
+      setSuccess(t('forms.collectionEdited'))
       user?.collections.push(response)
       navigate({
         to: '/collections/$collectionId',
@@ -134,7 +136,7 @@ export function EditCollectionPage() {
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Collection name"
+                        placeholder={t('forms.collectionName')}
                         type="name"
                         className={cn(
                           'rounded-none border-2 border-purple-700/50 bg-slate-200 py-6 text-3xl transition-all duration-700 placeholder:text-purple-700 focus:animate-pulse focus:border focus:bg-white dark:border-white dark:bg-purple-700/50 dark:text-white dark:placeholder:text-white/70 dark:focus:bg-purple-600 dark:focus:text-white max-sm:text-base max-sm:placeholder:text-base ',
@@ -151,7 +153,7 @@ export function EditCollectionPage() {
               to={'/users'}
               className="flex items-center justify-center border-[1px] border-purple-700/50 p-1 underline underline-offset-4 dark:border-white max-sm:text-base sm:p-2"
             >
-              Author: {user?.username}
+              {t('forms.author')}: {user?.username}
             </Link>
           </div>
           <div className="grid h-[500px] grid-cols-2 gap-4 pb-4">
@@ -219,7 +221,7 @@ export function EditCollectionPage() {
                               htmlFor="isClosed"
                               className="max-sm:text-[8px]"
                             >
-                              Closed Mode
+                              {t('forms.closedMode')}
                             </Label>
                           </div>
                           {field.value ? (
@@ -243,7 +245,7 @@ export function EditCollectionPage() {
                       <FroalaEditor
                         onModelChange={field.onChange}
                         config={{
-                          placeholderText: 'Start writing :0',
+                          placeholderText: t('forms.startWriting'),
                         }}
                       />
                     </FormControl>
@@ -336,17 +338,17 @@ export function EditCollectionPage() {
               params={{ collectionId: collection?._id || '' }}
             >
               <Button type="submit" className="w-full rounded-none">
-                Cancel
+                {t('forms.cancel')}
               </Button>
             </Link>
             <Button
               onClick={onDelete}
               className="w-full rounded-none bg-destructive transition-all duration-500 hover:animate-spin hover:bg-red-950"
             >
-              Удалить
+              {t('forms.delete')}
             </Button>
             <Button type="submit" className="w-full rounded-none">
-              Update collection!
+              {t('forms.updateCollection')}
             </Button>
           </div>
         </form>

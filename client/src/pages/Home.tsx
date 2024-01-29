@@ -54,7 +54,7 @@ export function Home() {
       <HomeImageSection className="h-[125dvh]" imageSrc={secondImg}>
         <div className="absolute top-[10%] w-full">
           <div className="text-5xl uppercase sm:text-7xl lg:text-9xl ">
-            {t('Five of the biggest collections')}
+            {t('home.five')}
           </div>
           <div className="mt-[30%] flex items-center justify-center px-4 sm:mt-[5%]">
             {data?.length && data?.length > 0 ? (
@@ -82,7 +82,7 @@ export function Home() {
               </Carousel>
             ) : (
               <h2 className="mt-[10%] text-6xl">
-                Collections was not found...
+                {t('home.collectionsNotFound')}
               </h2>
             )}
           </div>
@@ -91,7 +91,7 @@ export function Home() {
       <HomeImageSection className="h-[125dvh]" imageSrc={thirdImg}>
         <div className="absolute top-[10%] w-full">
           <div className="text-5xl uppercase sm:text-9xl ">
-            {t('Five latest items')}
+            {t('home.fiveItems')}
           </div>
           <div className="mt-[30%] flex items-center justify-center px-4 sm:mt-[5%]">
             {items?.length && items?.length > 0 ? (
@@ -119,7 +119,7 @@ export function Home() {
                 <CarouselNext />
               </Carousel>
             ) : (
-              <h2 className="mt-[10%] text-6xl">Items was not found...</h2>
+              <h2 className="mt-[10%] text-6xl">{t('home.itemsNotFound')}</h2>
             )}
           </div>
         </div>
@@ -128,7 +128,7 @@ export function Home() {
         <div className="w-[50%]">
           <div className="top-[50%] z-[100] flex w-full translate-y-[-80%] flex-col lg:left-[50%] lg:top-[50%] ">
             <div className="bg-white/40 p-4 text-left font-cgb text-5xl font-extrabold backdrop-blur transition-all duration-500 dark:bg-purple-500/50 dark:text-white lg:text-center lg:text-7xl">
-              {t('Tag Cloud')}
+              {t('home.tagCloud')}
             </div>
           </div>
           <div className=" bg-black/50">
