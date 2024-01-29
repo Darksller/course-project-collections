@@ -6,7 +6,6 @@ export const authApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
-    mode: 'cors',
   }),
   endpoints: (build) => ({
     register: build.mutation({
