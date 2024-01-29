@@ -47,33 +47,29 @@ import {
   useDeleteCollectionMutation,
   useUpdateCollectionMutation,
 } from '@/api/collectionsApi'
-import { useIsOwner } from '@/hooks/useIsOwner'
 import { editCollectionRoute } from '@/router/routes/collections.routes'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
 
 export function EditCollectionPage() {
   const { t } = useTranslation('global')
   const navigate = useNavigate()
+  const [imgLoad, setImgLoad] = useState<boolean>(false)
   const { error, setError, success, setSuccess } = useFormResponse()
   const { image, onSetImage, selectedFile, setImage } = useImage()
   const { categories, dataTypes, collection } =
     editCollectionRoute.useLoaderData()
   const { form, register, user, fields, onAppendClicked, remove } =
     useCollectionForm({ collection })
-  const { isCollectionOwner } = useIsOwner({ collectionId: collection?._id })
   const [update] = useUpdateCollectionMutation()
   const [deleteCol] = useDeleteCollectionMutation()
-
-  if (!collection || !isCollectionOwner)
-    navigate({
-      to: '/collections/',
-    })
 
   const onSubmit = async (values: z.infer<typeof CollectionSchema>) => {
     setError('')
     setSuccess('')
 
     try {
+      setImgLoad(true)
       if (selectedFile) {
         const imageRef = ref(storage, `images/${selectedFile.name + v4()}`)
         await uploadBytes(imageRef, selectedFile)
@@ -96,6 +92,7 @@ export function EditCollectionPage() {
           ? error.message
           : String((error as ErrorResponse).data),
       )
+      setImgLoad(false)
     }
   }
 
@@ -135,6 +132,7 @@ export function EditCollectionPage() {
                   <FormItem>
                     <FormControl>
                       <Input
+                        disabled={imgLoad}
                         {...field}
                         placeholder={t('forms.collectionName')}
                         type="name"
@@ -172,6 +170,7 @@ export function EditCollectionPage() {
                         )}
                       />
                       <Input
+                        disabled={imgLoad}
                         onChange={onSetImage}
                         type="file"
                         className="absolute z-[999] h-full cursor-pointer border-purple-700/50 opacity-0 dark:border-white/50"
@@ -197,7 +196,11 @@ export function EditCollectionPage() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <SelectCategory field={field} options={categories} />
+                        <SelectCategory
+                          field={field}
+                          options={categories}
+                          disabled={imgLoad}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -214,6 +217,7 @@ export function EditCollectionPage() {
                             <Switch
                               className="dark:thumb border-[1px] border-purple-700 dark:border-white max-sm:scale-75"
                               checked={field.value}
+                              disabled={imgLoad}
                               onCheckedChange={field.onChange}
                               id="isClosed"
                             />
@@ -240,12 +244,12 @@ export function EditCollectionPage() {
                 control={form.control}
                 name="description"
                 render={({ field }) => (
-                  <FormItem className="max-h-[250px] overflow-y-auto py-4 scrollbar-thin">
+                  <FormItem className="max-h-[190px] overflow-y-auto py-4 !text-purple-700 scrollbar-thin">
                     <FormControl>
                       <FroalaEditor
                         onModelChange={field.onChange}
                         config={{
-                          placeholderText: t('forms.startWriting'),
+                          placeholderText: 'Start writing :0',
                         }}
                       />
                     </FormControl>
@@ -280,6 +284,7 @@ export function EditCollectionPage() {
                             <FormItem>
                               <FormControl>
                                 <Select
+                                  disabled={imgLoad}
                                   onValueChange={field.onChange}
                                   defaultValue={field.value}
                                 >
@@ -337,7 +342,7 @@ export function EditCollectionPage() {
               className="w-full"
               params={{ collectionId: collection?._id || '' }}
             >
-              <Button type="submit" className="w-full rounded-none">
+              <Button className="w-full rounded-none">
                 {t('forms.cancel')}
               </Button>
             </Link>
@@ -347,7 +352,11 @@ export function EditCollectionPage() {
             >
               {t('forms.delete')}
             </Button>
-            <Button type="submit" className="w-full rounded-none">
+            <Button
+              type="submit"
+              className="w-full rounded-none"
+              disabled={imgLoad}
+            >
               {t('forms.updateCollection')}
             </Button>
           </div>

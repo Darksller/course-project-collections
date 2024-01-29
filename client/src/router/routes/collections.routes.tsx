@@ -6,9 +6,7 @@ import { CollectionPage } from '@/pages/CollectionPage'
 import { CreateCollection } from '@/pages/CreateCollectionPage'
 import { EditCollectionPage } from '@/pages/EditCollectionPage'
 import { store } from '@/store/reduxStore'
-import { createRoute } from '@tanstack/react-router'
-import { AuthenticationForm } from '@/components/AuthenticationForm'
-import { Users } from '@/pages/Users'
+import { createRoute, redirect } from '@tanstack/react-router'
 import { Layout } from '@/components/Layout'
 import { Root } from '../__root'
 
@@ -41,6 +39,15 @@ export const editCollectionRoute = createRoute({
   getParentRoute: () => collectionsLayoutRoute,
   path: '/edit/$collectionId',
   component: EditCollectionPage,
+  beforeLoad: async ({ context }) => {
+    console.log(context.isAuthenticated())
+    if (!context.isAuthenticated()) {
+      context.uiStore.setIsAuthModelOpen(true)
+      throw redirect({
+        to: '/',
+      })
+    }
+  },
   loader: async ({ params }) => {
     const response = await store.dispatch(
       collectionsApi.endpoints.getCollectionById.initiate(params.collectionId),
@@ -64,10 +71,13 @@ export const createCollectionsRoute = createRoute({
   getParentRoute: () => collectionsLayoutRoute,
   path: '/create',
   component: CreateCollection,
-  beforeLoad: ({ context }) => {
-    console.log(context.isAuthenticated())
-    if (context.isAuthenticated()) return <AuthenticationForm />
-    return <Users />
+  beforeLoad: async ({ context }) => {
+    if (!context.isAuthenticated()) {
+      context.uiStore.setIsAuthModelOpen(true)
+      throw redirect({
+        to: '/',
+      })
+    }
   },
   loader: async () => {
     const response = await store.dispatch(

@@ -11,6 +11,7 @@ import { ControllerRenderProps } from 'react-hook-form'
 type SelectCategory = {
   field: ControllerRenderProps<
     {
+      _id:string
       name: string
       description: string
       imageUrl: string

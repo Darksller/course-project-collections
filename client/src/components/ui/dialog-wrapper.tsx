@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import {
   Dialog,
   DialogContent,
@@ -39,7 +40,7 @@ export function DialogWrapper({
       }}
     >
       <DialogTrigger className={className}>{children}</DialogTrigger>
-      <DialogContent className={contentClassName}>
+      <DialogContent className={cn('max-w-[97%]', contentClassName)}>
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>{dialogDescription}</DialogDescription>

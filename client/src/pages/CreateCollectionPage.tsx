@@ -219,7 +219,7 @@ export function CreateCollection() {
                 control={form.control}
                 name="description"
                 render={({ field }) => (
-                  <FormItem className="max-h-[250px] overflow-y-auto py-4 !text-purple-700 scrollbar-thin">
+                  <FormItem className="max-h-[190px] overflow-y-auto py-4 !text-purple-700 scrollbar-thin">
                     <FormControl>
                       <FroalaEditor
                         onModelChange={field.onChange}
@@ -249,7 +249,7 @@ export function CreateCollection() {
                   </Button>
                 </div>
 
-                <div className="grid max-h-[200px] gap-2 overflow-x-hidden overflow-y-scroll scrollbar-thin max-sm:max-h-[150px]">
+                <div className="grid  max-h-[200px] gap-2 overflow-x-hidden overflow-y-scroll scrollbar-thin">
                   {fields.map((field, index) => {
                     return (
                       <div key={field.id} className="grid grid-cols-3 gap-2 ">
