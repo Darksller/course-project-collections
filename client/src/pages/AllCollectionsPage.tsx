@@ -1,5 +1,5 @@
 import { useGetCollectionsQuery } from '@/api/collectionsApi'
-import { CollectionCard } from '@/components/ui/collections/collection-card'
+import { CollectionCard } from '@/components/ui/collection-card'
 
 export function Collections() {
   const { data, isLoading } = useGetCollectionsQuery()

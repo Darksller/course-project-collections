@@ -105,6 +105,11 @@ export type Tag = {
   items: Item[]
 }
 
+export type DataType = {
+  _id: string
+  name: string
+}
+
 export type User = {
   _id: string
   username: string

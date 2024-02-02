@@ -1,4 +1,7 @@
+import { storage } from '@/constants/firebase'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { ChangeEvent, useState } from 'react'
+import { v4 } from 'uuid'
 
 export function useImage() {
   const [image, setImage] = useState<string>('')
@@ -12,5 +15,12 @@ export function useImage() {
       setImage(url)
     }
   }
-  return { image, selectedFile, onSetImage, setImage, setFile }
+
+  const uploadImage = async (selectedFile: File) => {
+    const imageRef = ref(storage, `images/${selectedFile.name + v4()}`)
+    await uploadBytes(imageRef, selectedFile)
+    return await getDownloadURL(imageRef)
+  }
+
+  return { image, selectedFile, onSetImage, setImage, setFile, uploadImage }
 }

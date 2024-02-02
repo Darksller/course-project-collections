@@ -1,6 +1,6 @@
 import { InfoCircledIcon, LockClosedIcon } from '@radix-ui/react-icons'
 import { Link } from '@tanstack/react-router'
-import { LikeButton } from '../like-button'
+import { LikeButton } from './like-button'
 import { Collection, User } from '@/schemas/dbSchemas'
 import dummyCollectionImage from '@/assets/images/dummyCollectionImage.jpg'
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser'

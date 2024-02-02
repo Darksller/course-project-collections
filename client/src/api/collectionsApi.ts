@@ -43,7 +43,10 @@ export const collectionsApi = createApi({
       }),
     }),
 
-    updateCollection: build.mutation<Collection, { _id: string; body: any }>({
+    updateCollection: build.mutation<
+      Collection,
+      { _id: string; body: Collection }
+    >({
       query: (data) => ({
         url: `/collections/update/${data._id}`,
         method: 'POST',
@@ -51,7 +54,7 @@ export const collectionsApi = createApi({
       }),
     }),
 
-    addCollection: build.mutation<Collection, any>({
+    addCollection: build.mutation<Collection, Collection>({
       query: (body) => ({
         url: '/collections/add/',
         method: 'POST',

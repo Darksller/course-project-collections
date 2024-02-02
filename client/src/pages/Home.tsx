@@ -6,7 +6,7 @@ import { HomeImageSection } from '@/components/ui/home/home-image-section'
 import { useTranslation } from 'react-i18next'
 import { SmoothArrow } from '@/components/ui/smooth-arrow'
 import { useGetBiggestQuery } from '@/api/collectionsApi'
-import { CollectionCard } from '@/components/ui/collections/collection-card'
+import { CollectionCard } from '@/components/ui/collection-card'
 import {
   Carousel,
   CarouselContent,

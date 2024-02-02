@@ -1,7 +1,7 @@
 import { useAddItemMutation } from '@/api/itemsApi'
 import { useGetTagsQuery } from '@/api/tagsApi'
-import { FormError } from '@/components/ui/form-error'
-import { FormSuccess } from '@/components/ui/form-success'
+import { FormError } from '@/components/ui/forms/form-error'
+import { FormSuccess } from '@/components/ui/forms/form-success'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/shadcn-ui/button'
 import {
