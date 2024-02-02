@@ -5,11 +5,11 @@ export const CollectionSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   description: z.string().min(1, { message: 'Description is required' }),
   imageUrl: z.string(),
+  creationDate: z.date().default(new Date()),
+  isClosed: z.boolean(),
+  likeCount: z.number().gte(0),
   user: z.string().min(1),
   category: z.string().min(1),
-  creationDate: z.date().default(new Date()),
-  likeCount: z.number().gte(0),
-  isClosed: z.boolean(),
   customFields: z.array(
     z.object({
       fieldName: z.string().min(1),
@@ -20,16 +20,24 @@ export const CollectionSchema = z.object({
 
 export type Collection = {
   _id: string
-  category: Category
-  description: string
-  creationDate: Date
   name: string
-  isClosed: boolean
-  user: User
-  items: Item[]
+  description: string
   imageUrl?: string
+  creationDate: Date
+  isClosed: boolean
+  likeCount: number
+  items?: Item[]
+  user: User
+  category: Category
   customFields?: CustomField[]
 }
+
+export type CollectionEdit =
+  | Collection
+  | {
+      user: string
+      category: string
+    }
 
 export type Category = {
   _id: string

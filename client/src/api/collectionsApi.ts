@@ -1,4 +1,4 @@
-import { Collection, Item } from '@/schemas/dbSchemas'
+import { Collection, CollectionEdit, Item } from '@/schemas/dbSchemas'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const collectionsApi = createApi({
@@ -45,7 +45,7 @@ export const collectionsApi = createApi({
 
     updateCollection: build.mutation<
       Collection,
-      { _id: string; body: Collection }
+      { _id: string; body: CollectionEdit }
     >({
       query: (data) => ({
         url: `/collections/update/${data._id}`,
@@ -54,7 +54,7 @@ export const collectionsApi = createApi({
       }),
     }),
 
-    addCollection: build.mutation<Collection, Collection>({
+    addCollection: build.mutation<Collection, CollectionEdit>({
       query: (body) => ({
         url: '/collections/add/',
         method: 'POST',

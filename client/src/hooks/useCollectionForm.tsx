@@ -28,7 +28,7 @@ export function useCollectionForm(collection?: Collection) {
       creationDate: collection?.creationDate || new Date(),
       isClosed: collection?.isClosed || false,
       category: collection?.category._id || '',
-      user: user?._id,
+      user: user!._id,
       customFields: collection?.customFields || [
         { fieldName: '', fieldType: '' },
       ],
