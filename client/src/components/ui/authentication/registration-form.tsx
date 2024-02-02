@@ -17,7 +17,6 @@ import { useRegisterMutation } from '@/api/authApi'
 import { useState } from 'react'
 import { FormSuccess } from '../forms/form-success'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
-import { ErrorResponse } from '@/store/reduxStore'
 import { useTranslation } from 'react-i18next'
 
 export function RegistrationForm() {
@@ -53,7 +52,7 @@ export function RegistrationForm() {
       setError(
         error instanceof Error
           ? error.message
-          : String((error as ErrorResponse).data),
+          : (error as { data: string }).data,
       )
     }
   }
