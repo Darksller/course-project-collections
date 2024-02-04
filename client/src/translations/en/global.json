@@ -23,6 +23,14 @@
   "en": "English",
   "ru": "Russian",
   "forms": {
+    "create": {
+      "success": "Collection added!",
+      "submit": "Create new collection!"
+    },
+    "update": {
+      "success": "Collection edited!",
+      "submit": "Update collection!"
+    },
     "successLogin": "Success Login!",
     "successRegister": "Success Register!",
     "password": "Password",
@@ -30,8 +38,6 @@
     "register": "Register",
     "tagsAreRequired": "Tags are required",
     "itemAdded": "Item added!",
-    "collectionAdded": "Collection added!",
-    "collectionEdited": "Collection edited!",
     "image": "Image",
     "name": "Name",
     "itemName": "Item name",
@@ -47,12 +53,10 @@
     "collectionName": "Collection Name",
     "author": "Author",
     "closedMode": "Closed Mode",
-    "createCollection": "Create new collection!",
     "startWriting": "Start writing :0",
     "cancel": "Cancel",
     "delete": "Delete",
-    "apply": "apply",
-    "updateCollection": "Update collection!"
+    "apply": "apply"
   },
   "home": {
     "five": "Five of the biggest collections",

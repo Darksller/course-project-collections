@@ -153,7 +153,7 @@ export function CollectionPage() {
             </DialogWrapper>
           )}
         </div>
-        {collection.items.length > 0 && (
+        {collection.items && collection.items.length > 0 && (
           <div>
             <div className="flex py-2">
               <div className="text-3xl">{t('forms.items')}:</div>

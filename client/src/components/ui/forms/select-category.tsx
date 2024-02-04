@@ -6,27 +6,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../shadcn-ui/select'
-import { ControllerRenderProps } from 'react-hook-form'
+import { CollectionsControllerProps } from '@/schemas/formField.types'
 
 type SelectCategory = {
-  field: ControllerRenderProps<
-    {
-      _id:string
-      name: string
-      description: string
-      imageUrl: string
-      user: string
-      category: string
-      creationDate: Date
-      likeCount: number
-      isClosed: boolean
-      customFields: {
-        fieldName: string
-        fieldType: string
-      }[]
-    },
-    'category'
-  >
+  field: CollectionsControllerProps
   options: Category[] | undefined
   className?: string
   disabled?: boolean

@@ -1,4 +1,4 @@
-import { CollectionCard } from '@/components/ui/collections/collection-card'
+import { CollectionCard } from '@/components/ui/collection-card'
 import { searchRoute } from '@/router'
 import { ItemPage } from './ItemPage'
 import { v4 } from 'uuid'

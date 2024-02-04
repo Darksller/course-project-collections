@@ -1,3 +1,4 @@
+import { DataType } from '@/schemas/dbSchemas'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const dataTypesApi = createApi({
@@ -8,7 +9,7 @@ export const dataTypesApi = createApi({
     credentials: 'include',
   }),
   endpoints: (build) => ({
-    getDataTypes: build.query<{ _id: string; name: string }[], void>({
+    getDataTypes: build.query<DataType[], void>({
       query: () => 'dataTypes',
       providesTags: (result) =>
         result

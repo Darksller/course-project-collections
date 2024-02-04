@@ -1,7 +1,7 @@
 import { useAddItemMutation } from '@/api/itemsApi'
 import { useGetTagsQuery } from '@/api/tagsApi'
-import { FormError } from '@/components/ui/form-error'
-import { FormSuccess } from '@/components/ui/form-success'
+import { FormError } from '@/components/ui/forms/form-error'
+import { FormSuccess } from '@/components/ui/forms/form-success'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/shadcn-ui/button'
 import {
@@ -26,7 +26,6 @@ import { storage } from '@/constants/firebase'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { v4 } from 'uuid'
 import { useItemForm } from '@/hooks/useItemForm'
-import { ErrorResponse } from '@/store/reduxStore'
 import { useImage } from '@/hooks/useImage'
 import { useFormResponse } from '@/hooks/useFormResponse'
 import { useState } from 'react'
@@ -69,7 +68,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
       setError(
         error instanceof Error
           ? error.message
-          : String((error as ErrorResponse).data),
+          : (error as { data: string }).data,
       )
       setLoad(false)
     }
@@ -86,7 +85,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
           <FormField
             control={form.control}
             name="imageUrl"
-            render={(_) => (
+            render={() => (
               <FormItem>
                 <FormLabel>{t('forms.image')}</FormLabel>
                 <FormControl>
@@ -158,7 +157,7 @@ export function AddItemPage({ collectionId, customFields }: AddItemPageProps) {
             <FormField
               control={form.control}
               name="tags"
-              render={(_) => (
+              render={() => (
                 <FormItem>
                   <FormLabel>{t('forms.tags')}</FormLabel>
                   <FormControl>

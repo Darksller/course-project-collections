@@ -12,12 +12,11 @@ import {
 } from '../shadcn-ui/form'
 import { Input } from '../shadcn-ui/input'
 import { Button } from '../shadcn-ui/button'
-import { FormError } from '../form-error'
+import { FormError } from '../forms/form-error'
 import { useLoginMutation } from '@/api/authApi'
 import { useState } from 'react'
-import { FormSuccess } from '../form-success'
+import { FormSuccess } from '../forms/form-success'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
-import { ErrorResponse } from '@/store/reduxStore'
 import { useTranslation } from 'react-i18next'
 
 export function LoginForm() {
@@ -52,7 +51,7 @@ export function LoginForm() {
       setError(
         error instanceof Error
           ? error.message
-          : String((error as ErrorResponse).data),
+          : (error as { data: string }).data,
       )
     }
   }
