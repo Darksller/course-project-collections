@@ -22,22 +22,29 @@ export type Collection = {
   _id: string
   name: string
   description: string
-  imageUrl?: string
+  imageUrl: string
   creationDate: Date
   isClosed: boolean
   likeCount: number
   items?: Item[]
   user: User
   category: Category
-  customFields?: CustomField[]
+  customFields: CustomField[]
 }
 
-export type CollectionEdit =
-  | Collection
-  | {
-      user: string
-      category: string
-    }
+export type CollectionEdit = {
+  _id: string
+  name: string
+  description: string
+  imageUrl: string
+  creationDate: Date
+  isClosed: boolean
+  likeCount: number
+  items?: Item[]
+  user: string
+  category: string
+  customFields: CustomField[]
+}
 
 export type Category = {
   _id: string

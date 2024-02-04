@@ -17,7 +17,7 @@ export function useCollectionForm(collection?: Collection) {
   const [addCollection] = useAddCollectionMutation()
   const [update] = useUpdateCollectionMutation()
 
-  const form = useForm<z.infer<typeof CollectionSchema>>({
+  const form = useForm<z.infer<typeof CollectionSchema>, void>({
     resolver: zodResolver(CollectionSchema),
     defaultValues: {
       _id: collection?._id || '',
