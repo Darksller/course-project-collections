@@ -38,15 +38,15 @@ export function LoginForm() {
     try {
       const response = await login(values).unwrap()
       setSuccess(`${t('forms.successLogin')}`)
+
       signIn({
         auth: {
           token: response.accessToken,
-          type: 'bearer',
+          type: 'Bearer',
         },
         refresh: response.refreshToken,
         userState: response.user,
       })
-      window.location.reload()
     } catch (error) {
       setError(
         error instanceof Error

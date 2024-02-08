@@ -5,7 +5,7 @@ const store = createStore<object>({
   authName: '_auth',
   authType: 'cookie',
   cookieDomain: window.location.hostname,
-  cookieSecure: true,
+  cookieSecure: window.location.protocol === 'https:',
   refresh: refreshApi,
 })
 

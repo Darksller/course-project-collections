@@ -9,11 +9,11 @@ export const CollectionSchema = z.object({
   isClosed: z.boolean(),
   likeCount: z.number().gte(0),
   user: z.string().min(1),
-  category: z.string().min(1),
+  category: z.string().min(1, { message: 'Category is required' }),
   customFields: z.array(
     z.object({
       fieldName: z.string().min(1),
-      fieldType: z.string().min(1),
+      fieldType: z.string().min(1, { message: 'One custom field is required' }),
     }),
   ),
 })

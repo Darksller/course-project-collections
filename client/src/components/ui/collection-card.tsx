@@ -16,14 +16,13 @@ export function CollectionCard({ collection }: CollectionCardProps) {
     collectionId: collection._id,
   })
   return (
-    <div className="group relative m-auto h-[250px] w-[225px] scale-95 cursor-pointer overflow-hidden rounded-md border-purple-300 transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+    <div className="group relative m-auto h-[250px] w-[225px] scale-95 cursor-pointer overflow-hidden rounded-md border-purple-300 transition-all duration-500 hover:scale-105 hover:shadow-2xl focus:border-red-700">
       <div className="absolute right-0 top-0 z-50 h-14 w-11 translate-x-[10px] translate-y-[-22px] rounded-xl border border-white/50 backdrop-blur hover:animate-pulse md:hidden">
         <InfoCircledIcon className="ml-1 mt-[26px] size-6 text-white " />
       </div>
       <Link
         to={'/collections/$collectionId'}
         params={{ collectionId: collection._id }}
-        className="group/img"
       >
         <img
           className={
@@ -36,7 +35,7 @@ export function CollectionCard({ collection }: CollectionCardProps) {
           }}
         />
         <div className="relative h-full w-full rounded-md bg-black/45 text-white opacity-0 transition-all duration-500 group-hover/img:z-[999] max-md:group-hover:opacity-100 md:group-hover/img:opacity-100">
-          <div className="relative h-[80%] max-w-[92%] pl-5 ">
+          <div className="relative h-[80%] max-w-[92%] pl-5">
             <div className="text-sm italic tracking-wide text-white transition-all duration-1000 group-hover/img:translate-y-[160%] group-hover:translate-y-[160%] group-hover/img:text-2xl group-hover:text-2xl">
               {collection.name}
             </div>

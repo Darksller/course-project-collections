@@ -19,9 +19,14 @@ export const login = async (req: express.Request, res: express.Response) => {
 			return res.status(403).json('Invalid email or password')
 
 		const _user = _.omit(user.toObject(), ['authentication'])
-		const accessToken = jwt.sign(_user, process.env.SECRET, {
-			expiresIn: +process.env.TOKEN_EXPIRATION,
-		})
+
+		const accessToken = jwt.sign(
+			{ email: _user.email, role: _user.role, username: _user.username },
+			process.env.SECRET,
+			{
+				expiresIn: +process.env.TOKEN_EXPIRATION,
+			}
+		)
 
 		const refreshToken = jwt.sign(
 			{ random: random() },
@@ -93,9 +98,13 @@ export const register = async (req: express.Request, res: express.Response) => {
 			return res.status(400).json('User with this email already exists')
 
 		const _user = { username, email, role: 'default-user' }
-		const accessToken = jwt.sign(_user, process.env.SECRET, {
-			expiresIn: +process.env.TOKEN_EXPIRATION,
-		})
+		const accessToken = jwt.sign(
+			{ email: _user.email, role: _user.role, username: _user.username },
+			process.env.SECRET,
+			{
+				expiresIn: +process.env.TOKEN_EXPIRATION,
+			}
+		)
 
 		const refreshToken = jwt.sign(
 			{ random: random() },
