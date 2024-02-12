@@ -16,11 +16,11 @@ import { FormError } from '../forms/form-error'
 import { useLoginMutation } from '@/api/authApi'
 import { useState } from 'react'
 import { FormSuccess } from '../forms/form-success'
-import useSignIn from 'react-auth-kit/hooks/useSignIn'
 import { useTranslation } from 'react-i18next'
+import { useAuthStore } from '@/store/authStore'
 
 export function LoginForm() {
-  const signIn = useSignIn()
+  const { signIn } = useAuthStore()
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
   const [login, isLoading] = useLoginMutation()
@@ -38,15 +38,7 @@ export function LoginForm() {
     try {
       const response = await login(values).unwrap()
       setSuccess(`${t('forms.successLogin')}`)
-
-      signIn({
-        auth: {
-          token: response.accessToken,
-          type: 'Bearer',
-        },
-        refresh: response.refreshToken,
-        userState: response.user,
-      })
+      signIn(response.accessToken, response.refreshToken)
     } catch (error) {
       setError(
         error instanceof Error

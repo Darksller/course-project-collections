@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
 			'Please fill a valid email address',
 		],
 	},
+	imageUrl: { type: String, select: true, default: '' },
 	role: { type: String, required: true, default: 'default_user', select: true },
 	likedCollections: [
 		{

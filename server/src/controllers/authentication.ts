@@ -18,21 +18,25 @@ export const login = async (req: express.Request, res: express.Response) => {
 		if (user.authentication.password !== expectedHash)
 			return res.status(403).json('Invalid email or password')
 
-		const _user = _.omit(user.toObject(), ['authentication'])
-
-		const accessToken = jwt.sign(
-			{ email: _user.email, role: _user.role, username: _user.username },
-			process.env.SECRET,
-			{
-				expiresIn: +process.env.TOKEN_EXPIRATION,
-			}
-		)
-
 		const refreshToken = jwt.sign(
 			{ random: random() },
 			process.env.REFRESH_SECRET,
 			{
 				expiresIn: +process.env.REFRESH_TOKEN_EXPIRATION,
+			}
+		)
+		user.authentication.refreshToken = refreshToken
+		await user.save()
+
+		const accessToken = jwt.sign(
+			{
+				email: user.email,
+				role: user.role,
+				username: user.username,
+			},
+			process.env.SECRET,
+			{
+				expiresIn: +process.env.TOKEN_EXPIRATION,
 			}
 		)
 
@@ -41,12 +45,14 @@ export const login = async (req: express.Request, res: express.Response) => {
 			secure: true,
 		})
 
-		user.authentication.refreshToken = refreshToken
-		await user.save()
 		return res
 			.status(200)
 			.json({
-				user: _user,
+				user: {
+					email: user.email,
+					role: user.role,
+					username: user.username,
+				},
 				accessToken,
 				refreshToken: refreshToken,
 			})
@@ -63,24 +69,27 @@ export const refresh = async (req: express.Request, res: express.Response) => {
 
 		if (!refreshToken) return res.sendStatus(401)
 
-		const dbUser = await getUserByRefreshToken(refreshToken).select(
+		const user = await getUserByRefreshToken(refreshToken).select(
 			'+authentication.refreshToken'
 		)
 
-		if (refreshToken === dbUser.authentication.refreshToken) {
-			const u = _.omit(dbUser.toObject(), ['authentication'])
-			const accessToken = jwt.sign(u, process.env.SECRET, {
+		if (refreshToken !== user.authentication.refreshToken)
+			return res.sendStatus(403)
+
+		const accessToken = jwt.sign(
+			{ email: user.email, role: user.role, username: user.username },
+			process.env.SECRET,
+			{
 				expiresIn: +process.env.TOKEN_EXPIRATION,
-			})
+			}
+		)
 
-			res.cookie(process.env.AUTH_COOKIE, accessToken, {
-				httpOnly: false,
-				secure: true,
-			})
+		res.cookie(process.env.AUTH_COOKIE, accessToken, {
+			httpOnly: false,
+			secure: true,
+		})
 
-			return res.status(200).json(accessToken)
-		}
-		return res.sendStatus(403)
+		return res.status(200).json(accessToken)
 	} catch (error) {
 		console.log(error)
 		return res.sendStatus(404)
@@ -129,10 +138,15 @@ export const register = async (req: express.Request, res: express.Response) => {
 				password: authentication(salt, password),
 			},
 		})
+
 		return res
 			.status(200)
 			.json({
-				user: _.omit(user, ['authentication']),
+				user: {
+					email: user.email,
+					role: user.role,
+					username: user.username,
+				},
 				accessToken,
 				refreshToken,
 			})

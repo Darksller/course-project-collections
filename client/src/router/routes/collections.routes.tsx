@@ -40,8 +40,8 @@ export const editCollectionRoute = createRoute({
   path: '/edit/$collectionId',
   component: EditCollectionPage,
   beforeLoad: async ({ context }) => {
-    console.log(context.isAuthenticated())
-    if (!context.isAuthenticated()) {
+    console.log(context.isAuthenticated)
+    if (!context.isAuthenticated) {
       context.uiStore.setIsAuthModelOpen(true)
       throw redirect({
         to: '/',
@@ -72,7 +72,7 @@ export const createCollectionsRoute = createRoute({
   path: '/create',
   component: CreateCollection,
   beforeLoad: async ({ context }) => {
-    if (!context.isAuthenticated()) {
+    if (!context.isAuthenticated) {
       context.uiStore.setIsAuthModelOpen(true)
       throw redirect({
         to: '/',

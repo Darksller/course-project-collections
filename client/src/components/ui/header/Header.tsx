@@ -9,10 +9,10 @@ import { DialogWrapper } from '../dialog-wrapper'
 import { AuthenticationForm } from '../authentication/AuthenticationForm'
 import { ProfileButton } from './profile-button'
 import { useUiStore } from '@/store/useUiStore'
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
+import { useAuthStore } from '@/store/authStore'
 
 export function Header() {
-  const isAuthenticated = useIsAuthenticated()
+  const { isAuthenticated } = useAuthStore()
   const { isAuthModelOpen, setIsAuthModelOpen } = useUiStore()
 
   const { t } = useTranslation('global')
@@ -34,7 +34,7 @@ export function Header() {
 
           <div className="flex items-center">
             <SearchBar className="mr-6 hidden sm:block" />
-            {!isAuthenticated() ? (
+            {!isAuthenticated ? (
               <DialogWrapper
                 contentClassName="w-[500px]"
                 isModalOpen={isAuthModelOpen}

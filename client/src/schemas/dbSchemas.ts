@@ -8,7 +8,6 @@ export const CollectionSchema = z.object({
   creationDate: z.date().default(new Date()),
   isClosed: z.boolean(),
   likeCount: z.number().gte(0),
-  user: z.string().min(1),
   category: z.string().min(1, { message: 'Category is required' }),
   customFields: z.array(
     z.object({
@@ -41,7 +40,6 @@ export type CollectionEdit = {
   isClosed: boolean
   likeCount: number
   items?: Item[]
-  user: string
   category: string
   customFields: CustomField[]
 }

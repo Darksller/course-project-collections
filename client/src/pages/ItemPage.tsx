@@ -10,14 +10,13 @@ import {
 import { Item, UserComment } from '@/schemas/dbSchemas'
 import dummyItemImage from '@/assets/images/dummyItemImage.jpg'
 import { Separator } from '@/components/ui/separator'
-import { useIsOwner } from '@/hooks/useIsOwner'
 import { Link } from '@tanstack/react-router'
 import { format } from 'date-fns'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
-import { PaperPlaneIcon, PersonIcon } from '@radix-ui/react-icons'
+import { PersonIcon } from '@radix-ui/react-icons'
 import { Textarea } from '@/components/ui/shadcn-ui/textarea'
 import { useEffect, useState } from 'react'
-import { joinRoom, onComment, sendComment } from '@/constants/socket'
+import { joinRoom, onComment } from '@/constants/socket'
 import { LikeButton } from '@/components/ui/like-button'
 import { useTranslation } from 'react-i18next'
 
@@ -30,16 +29,11 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
   const { t } = useTranslation('global')
   const [comments, setComments] = useState<UserComment[]>(item.comments)
   const [comment, setComment] = useState<string>('')
-  const { isItemOwner, user } = useIsOwner({ itemId: item._id })
-  const [edit, setEdit] = useState<boolean>(false)
 
   useEffect(() => {
     joinRoom(item._id)
     onComment(setComments)
   }, [])
-  function onEdit(): void {
-    setEdit(true)
-  }
 
   return (
     <ItemSheetToOpen itemId={item._id}>
@@ -51,21 +45,12 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
           <SheetHeader className="py-4">
             <SheetTitle className="flex flex-wrap items-center justify-between text-3xl uppercase  text-purple-700 md:text-6xl">
               {item.name}
-              {isItemOwner && !edit && (
-                <Button
-                  variant={'ghost'}
-                  onClick={onEdit}
-                  className="h-full rounded-xl border-[1px] border-purple-600 text-purple-700 hover:border-white hover:bg-purple-500 hover:text-white"
-                >
-                  {t('forms.edit')}
-                </Button>
-              )}
-              {edit && (
-                <div>
-                  <Button>{t('forms.cancel')}</Button>
-                  <Button>{t('forms.apply')}</Button>
-                </div>
-              )}
+              <Button
+                variant={'ghost'}
+                className="h-full rounded-xl border-[1px] border-purple-600 text-purple-700 hover:border-white hover:bg-purple-500 hover:text-white"
+              >
+                {t('forms.edit')}
+              </Button>
             </SheetTitle>
           </SheetHeader>
           <Separator className="rounded-xl border-4 border-purple-700" />
@@ -73,8 +58,8 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
             <div className="h-full ">
               <div className="flex flex-wrap justify-between  py-2">
                 <Link
-                  to="/users/$userId"
-                  params={{ userId: item.user._id || '/' }}
+                  to="/users/$username"
+                  params={{ username: item.user.username || '/' }}
                 >
                   @{item.user != null ? item.user.username : 'deleted'}
                 </Link>
@@ -104,7 +89,9 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
                   params={{ searchText: tag.name }}
                   style={{ color: `${tag.color}`, borderColor: `${tag.color}` }}
                   key={tag._id}
-                  className={`rounded-[27px] border-[1px] p-1 px-4  transition-all duration-500 ease-in-out`}
+                  className={
+                    'rounded-[27px] border-[1px] p-1 px-4  transition-all duration-500 ease-in-out'
+                  }
                 >
                   {tag.name}
                 </Link>
@@ -112,51 +99,47 @@ export function ItemPage({ item, hideCollection = true }: ItemPageProps) {
             <Separator className="py-2" />
           </div>
 
-          {user && (
-            <>
-              <div className="mt-4 grid h-20 w-full grid-cols-10 rounded-3xl border-[1px] border-purple-700 p-2 dark:border-white">
-                <div className="flex items-center justify-center border-r-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
-                  <Avatar>
-                    <AvatarImage
-                      className="size-9 rounded-full border border-purple-700 p-2 dark:border-white"
-                      src={user.imageUrl}
-                    />
-                    <AvatarFallback>
-                      <PersonIcon className="size-9 rounded-full border border-purple-700 p-2 dark:border-white" />
-                    </AvatarFallback>
-                  </Avatar>
-                </div>
-                <div className="col-span-6  overflow-y-scroll px-2 scrollbar-thin sm:col-span-8 sm:max-h-20">
-                  <Textarea
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    placeholder={t('itemPage.leaveComment')}
-                    className="h-full w-full rounded-none border-none focus:border-none"
-                  ></Textarea>
-                </div>
-                <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
-                  <Button
-                    onClick={() => {
-                      const data = {
-                        user,
-                        content: comment,
-                        creationDate: new Date(),
-                        likeCount: 0,
-                      }
-                      setComments((prev) => [...prev, data])
-                      sendComment(item._id, data)
-                    }}
-                    size={'icon'}
-                    variant={'outline'}
-                    className="border-purple-700 p-2 dark:border-white"
-                  >
-                    <PaperPlaneIcon />
-                  </Button>
-                </div>
-              </div>
-              <Separator className="py-2" />
-            </>
-          )}
+          <div className="mt-4 grid h-20 w-full grid-cols-10 rounded-3xl border-[1px] border-purple-700 p-2 dark:border-white">
+            <div className="flex items-center justify-center border-r-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
+              <Avatar>
+                <AvatarImage
+                  className="size-9 rounded-full border border-purple-700 p-2 dark:border-white"
+                  src={item.user.imageUrl}
+                />
+                <AvatarFallback>
+                  <PersonIcon className="size-9 rounded-full border border-purple-700 p-2 dark:border-white" />
+                </AvatarFallback>
+              </Avatar>
+            </div>
+            <div className="col-span-6  overflow-y-scroll px-2 scrollbar-thin sm:col-span-8 sm:max-h-20">
+              <Textarea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder={t('itemPage.leaveComment')}
+                className="h-full w-full rounded-none border-none focus:border-none"
+              ></Textarea>
+            </div>
+            <div className="flex items-center justify-center border-l-[1px] border-purple-700 p-2 dark:border-white max-sm:col-span-2">
+              {/* <Button
+                  onClick={() => {
+                    const data = {
+                      user,
+                      content: comment,
+                      creationDate: new Date(),
+                      likeCount: 0,
+                    }
+                    setComments((prev) => [...prev, data])
+                    sendComment(item._id, data)
+                  }}
+                  size={'icon'}
+                  variant={'outline'}
+                  className="border-purple-700 p-2 dark:border-white"
+                >
+                  <PaperPlaneIcon />
+                </Button> */}
+            </div>
+          </div>
+          <Separator className="py-2" />
           {comments.length > 0 && (
             <>
               <div className="pt-4">{t('itemPage.comments')}:</div>

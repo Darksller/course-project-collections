@@ -33,7 +33,6 @@ export const collectionsApi = createApi({
 
     search: build.query<{ collections: Collection[]; items: Item[] }, string>({
       query: (_id) => `/search/${_id}`,
-      keepUnusedDataFor: 0.1,
     }),
 
     deleteCollection: build.mutation<boolean, string>({
@@ -59,7 +58,6 @@ export const collectionsApi = createApi({
         url: '/collections/add/',
         method: 'POST',
         body,
-        credentials: 'include',
       }),
     }),
   }),

@@ -2,46 +2,33 @@ import {
   useAddCollectionMutation,
   useUpdateCollectionMutation,
 } from '@/api/collectionsApi'
-import { Collection, CollectionSchema, User } from '@/schemas/dbSchemas'
+import { Collection, CollectionSchema } from '@/schemas/dbSchemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useImage } from './useImage'
+import { useAuthStore } from '@/store/authStore'
+import {
+  defaultCustomFieldValues,
+  getDefaultCollectionValues,
+} from '@/constants/defaultValues'
 
 export function useCollectionForm(collection?: Collection) {
-  const user = useAuthUser<User>()
+  const user = useAuthStore((state) => state.user)
   const navigate = useNavigate()
   const { uploadImage } = useImage()
   const [addCollection] = useAddCollectionMutation()
-  const [update] = useUpdateCollectionMutation()
-
+  const [updateCollection] = useUpdateCollectionMutation()
   const form = useForm<z.infer<typeof CollectionSchema>, void>({
     resolver: zodResolver(CollectionSchema),
-    defaultValues: {
-      _id: collection?._id || '',
-      name: collection?.name || '',
-      description: collection?.description || '',
-      imageUrl: collection?.imageUrl || '',
-      likeCount: 0,
-      creationDate: collection?.creationDate || new Date(),
-      isClosed: collection?.isClosed || false,
-      category: collection?.category._id || '',
-      user: user!._id,
-      customFields: collection?.customFields || [
-        { fieldName: '', fieldType: '' },
-      ],
-    },
+    defaultValues: getDefaultCollectionValues(collection),
   })
-
   const { fields, append, remove } = useFieldArray({
     name: 'customFields',
     control: form.control,
   })
-
-  const onAppendClicked = () => append({ fieldName: '', fieldType: '' })
-
+  const onAppendClicked = () => append(defaultCustomFieldValues)
   async function submit(
     values: z.infer<typeof CollectionSchema>,
     selectedFile: File | undefined,
@@ -50,30 +37,18 @@ export function useCollectionForm(collection?: Collection) {
     if (selectedFile) {
       values.imageUrl = await uploadImage(selectedFile)
     }
-
-    let response
-    if (id) response = await update({ _id: id, body: values }).unwrap()
-    else response = await addCollection(values).unwrap()
-
-    user?.collections.push(response)
+    const response = id
+      ? await updateCollection({ _id: id, body: values }).unwrap()
+      : await addCollection(values).unwrap()
     returnToCollection(response._id)
   }
-
   function returnToCollection(collectionId?: string) {
-    if (collectionId)
-      navigate({
-        to: '/collections/$collectionId',
-        params: { collectionId },
-      })
-    else
-      navigate({
-        to: '/collections/',
-      })
+    const to = collectionId ? `/collections/${collectionId}` : '/collections/'
+    navigate({ to, params: { collectionId } })
   }
-
   return {
     form,
-    ...form,
+    register: form.register,
     fields,
     onAppendClicked,
     remove,

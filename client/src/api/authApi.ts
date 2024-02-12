@@ -24,7 +24,7 @@ export const authApi = createApi({
       }),
     }),
 
-    refresh: build.mutation<string, RefreshApiType>({
+    refresh: build.mutation({
       query: (body) => ({
         url: '/auth/refresh',
         method: 'POST',
@@ -35,9 +35,3 @@ export const authApi = createApi({
 })
 
 export const { useLoginMutation, useRegisterMutation } = authApi
-
-type RefreshApiType = {
-  authToken?: string | undefined
-  refreshToken?: string | undefined
-  authUserState: object | null
-}

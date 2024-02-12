@@ -184,7 +184,7 @@ export const addCollection = async (
 			creationDate,
 			isClosed = false,
 		} = req.body
-
+		//TODO: get user from cookie
 		if (!name || !description || !user || !category)
 			return res.status(400).json('Fields are required')
 

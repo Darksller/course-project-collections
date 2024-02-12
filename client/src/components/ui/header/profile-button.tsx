@@ -12,19 +12,13 @@ import {
   AvatarImage,
 } from '@/components/ui/shadcn-ui/avatar'
 import { PersonIcon } from '@radix-ui/react-icons'
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
-import useSignOut from 'react-auth-kit/hooks/useSignOut'
-import { User } from '@/schemas/dbSchemas'
 import { useTranslation } from 'react-i18next'
+import { useAuthStore } from '@/store/authStore'
 
 export function ProfileButton() {
   const { t } = useTranslation('global')
-  const user = useAuthUser<User>()
-  const signOut = useSignOut()
-  function onSignOut() {
-    signOut()
-    window.location.reload()
-  }
+  const { user, signOut } = useAuthStore()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -43,7 +37,7 @@ export function ProfileButton() {
           {t('profile.myCollections')}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer" onClick={onSignOut}>
+        <DropdownMenuItem className="cursor-pointer" onClick={signOut}>
           {t('profile.logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>

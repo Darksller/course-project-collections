@@ -16,11 +16,11 @@ import { FormError } from '../forms/form-error'
 import { useRegisterMutation } from '@/api/authApi'
 import { useState } from 'react'
 import { FormSuccess } from '../forms/form-success'
-import useSignIn from 'react-auth-kit/hooks/useSignIn'
 import { useTranslation } from 'react-i18next'
+import { useAuthStore } from '@/store/authStore'
 
 export function RegistrationForm() {
-  const signIn = useSignIn()
+  const { signIn } = useAuthStore()
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
   const [register, isLoading] = useRegisterMutation()
@@ -39,15 +39,7 @@ export function RegistrationForm() {
     try {
       const response = await register(values).unwrap()
       setSuccess(t('forms.successRegister'))
-      signIn({
-        auth: {
-          token: response.accessToken,
-          type: 'bearer',
-        },
-        refresh: response.refreshToken,
-        userState: response.user,
-      })
-      window.location.reload()
+      signIn(response.accessToken, response.refreshToken)
     } catch (error) {
       setError(
         error instanceof Error

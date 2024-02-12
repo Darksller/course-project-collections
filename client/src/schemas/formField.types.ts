@@ -12,7 +12,6 @@ export type CollectionField =
   | 'creationDate'
   | 'name'
   | 'isClosed'
-  | 'user'
   | 'imageUrl'
   | 'customFields'
   | 'likeCount'

@@ -9,7 +9,6 @@ import {
 import { Label } from '@/components/ui/shadcn-ui/label'
 import { LockClosedIcon, LockOpen1Icon } from '@radix-ui/react-icons'
 import dummyCollectionImage from '@/assets/images/dummyCollectionImage.jpg'
-import { LikeButton } from '@/components/ui/like-button'
 import { LanguageSelect } from '@/components/ui/header/language-select'
 import SearchBar from '@/components/ui/header/search-bar'
 import { v4 } from 'uuid'
@@ -19,20 +18,13 @@ import { DialogWrapper } from '@/components/ui/dialog-wrapper'
 import { AddItemPage } from './AddItemPage'
 import ReactMarkdown from 'react-markdown'
 import { format } from 'date-fns'
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser'
-import { User } from '@/schemas/dbSchemas'
-import { useLike } from '@/hooks/useLike'
 import { Link } from '@tanstack/react-router'
-import { useIsOwner } from '@/hooks/useIsOwner'
 import { collectionRoute } from '@/router/routes/collections.routes'
 import { useTranslation } from 'react-i18next'
 
 export function CollectionPage() {
   const { t } = useTranslation('global')
-  const user = useAuthUser<User>()
   const { collection } = collectionRoute.useLoaderData()
-  const { isCollectionOwner } = useIsOwner({ collectionId: collection?._id })
-  const { collectionLiked, onLike } = useLike({ collectionId: collection?._id })
   if (!collection) return <h1 className="text-4xl">Collection not found</h1>
   return (
     <div className="h-full px-4 py-4 ">
@@ -60,20 +52,19 @@ export function CollectionPage() {
                   <LockOpen1Icon className="ml-2 sm:size-7" />
                 )}
               </div>
-              {isCollectionOwner && (
-                <Link
-                  to={'/collections/edit/$collectionId'}
-                  params={{ collectionId: collection._id }}
-                  className="border-[1px] border-white hover:border-purple-700"
+
+              <Link
+                to={'/collections/edit/$collectionId'}
+                params={{ collectionId: collection._id }}
+                className="border-[1px] border-white hover:border-purple-700"
+              >
+                <Button
+                  variant={'ghost'}
+                  className="rounded-none border-[1px] border-purple-600 hover:border-white hover:bg-purple-500 hover:text-white "
                 >
-                  <Button
-                    variant={'ghost'}
-                    className="rounded-none border-[1px] border-purple-600 hover:border-white hover:bg-purple-500 hover:text-white "
-                  >
-                    {t('forms.edit')}
-                  </Button>
-                </Link>
-              )}
+                  {t('forms.edit')}
+                </Button>
+              </Link>
             </CardTitle>
             <div className="flex justify-between text-[14px]">
               <div>
@@ -128,7 +119,6 @@ export function CollectionPage() {
           </CardContent>
           <CardFooter className="flex items-center justify-between border-t-[1px] border-purple-700/50 py-2 dark:border-white/50  max-md:pr-0 sm:mx-6">
             <div>{format(String(collection.creationDate), 'PPP')}</div>
-            <LikeButton onChange={onLike} liked={collectionLiked} />
           </CardFooter>
         </div>
       </Card>
@@ -136,22 +126,20 @@ export function CollectionPage() {
       <div className="px-10 pt-10">
         <div className="w-full border-b-[1px] border-purple-700/50 transition-all delay-700 duration-1000 group-hover/img:w-full group-hover:w-full dark:border-white" />
         <div className="flex w-full justify-end py-2">
-          {((!collection.isClosed && user) || isCollectionOwner) && (
-            <DialogWrapper
-              className="border border-purple-700 p-4 transition-all duration-300 scrollbar-thin hover:bg-purple-400 hover:text-white"
-              contentClassName="sm:w-[50%] h-[70%] scrollbar-thin overflow-y-scrollbar overflow-y-scroll"
-              dialogTitle={t('forms.addItem')}
-              dialogDescription={t('forms.dialogDescription')}
-              dialogContent={
-                <AddItemPage
-                  collectionId={collection._id}
-                  customFields={collection.customFields}
-                />
-              }
-            >
-              {t('forms.addItem')}
-            </DialogWrapper>
-          )}
+          <DialogWrapper
+            className="border border-purple-700 p-4 transition-all duration-300 scrollbar-thin hover:bg-purple-400 hover:text-white"
+            contentClassName="sm:w-[50%] h-[70%] scrollbar-thin overflow-y-scrollbar overflow-y-scroll"
+            dialogTitle={t('forms.addItem')}
+            dialogDescription={t('forms.dialogDescription')}
+            dialogContent={
+              <AddItemPage
+                collectionId={collection._id}
+                customFields={collection.customFields}
+              />
+            }
+          >
+            {t('forms.addItem')}
+          </DialogWrapper>
         </div>
         {collection.items && collection.items.length > 0 && (
           <div>

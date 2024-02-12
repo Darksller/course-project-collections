@@ -18,6 +18,6 @@ export const usersRoute = createRoute({
 
 export const userRoute = createRoute({
   getParentRoute: () => usersLayoutRoute,
-  path: '$userId',
+  path: '$username',
   component: UserPage,
 })

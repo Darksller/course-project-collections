@@ -70,10 +70,8 @@ export function EditCollection({
     try {
       if (type !== 'edit') await submit(values, selectedFile)
       else await submit(values, selectedFile, collection?._id)
-
       setSuccess(t(`forms.${type}.success`))
     } catch (error) {
-      console.log(error)
       setError(
         error instanceof Error
           ? error.message
@@ -123,11 +121,13 @@ export function EditCollection({
               </FormFieldWrapper>
             </div>
             <Link
-              to={'/users/$userId'}
-              params={{ userId: user?._id || '/' }}
+              to={'/users/$username'}
+              params={{
+                username: collection?.user.username ?? user?.username ?? '/',
+              }}
               className="flex items-center justify-center border-[1px] border-purple-700/50 p-1 underline underline-offset-4 dark:border-white max-sm:text-base sm:p-2"
             >
-              {t('forms.author')}: {user?.username}
+              {t('forms.author')}: {collection?.user.username ?? user?.username}
             </Link>
           </div>
           <div className="grid h-[500px] grid-cols-2 gap-4 pb-4">

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { UserPayload } from './types/dto/UserPayload'
 
 export const usersApi = createApi({
   reducerPath: 'usersApi',
@@ -8,6 +9,10 @@ export const usersApi = createApi({
     credentials: 'include',
   }),
   endpoints: (build) => ({
+    getUserByAccessToken: build.query<UserPayload, string>({
+      query: (accessToken) => `/users/getUserByAccessToken/${accessToken}`,
+    }),
+
     likeCollection: build.mutation<
       boolean,
       { _id: string; collectionId: string }
@@ -32,5 +37,8 @@ export const usersApi = createApi({
   }),
 })
 
-export const { useLikeCollectionMutation, useIsCollectionLikedMutation } =
-  usersApi
+export const {
+  useLikeCollectionMutation,
+  useIsCollectionLikedMutation,
+  useLazyGetUserByAccessTokenQuery,
+} = usersApi
