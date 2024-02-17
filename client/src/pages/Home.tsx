@@ -43,10 +43,10 @@ export function Home() {
           </div>
           <Link
             to="/collections/create"
-            className="group absolute top-[70%] flex w-full max-w-3xl cursor-pointer items-center justify-center bg-white/50 px-5 backdrop-blur dark:bg-purple-500/50 lg:rounded-full"
+            className="group absolute top-[70%] flex w-full max-w-3xl cursor-pointer items-center justify-center bg-white/50 px-5 backdrop-blur dark:bg-purple-500/50 lg:rounded-full "
           >
             <SmoothArrow className="right-[85%]" />
-            <div className="flex py-2 text-4xl italic transition-all duration-300 lg:text-6xl lg:group-hover:scale-110 ">
+            <div className="flex py-2 text-4xl transition-all duration-300 lg:text-6xl lg:group-hover:scale-110 ">
               {t('main.exploreButton')}
             </div>
             <SmoothArrow className="left-[80%]" />

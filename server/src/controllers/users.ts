@@ -1,6 +1,7 @@
 import express from 'express'
 import { deleteUserById, getUserById, getUsers } from '../db/users'
 import mongoose from 'mongoose'
+import jwt from 'jsonwebtoken'
 
 export const getAllUsers = async (
 	req: express.Request,
@@ -99,4 +100,14 @@ export const isCollectionLiked = async (
 		console.log(error)
 		res.sendStatus(400)
 	}
+}
+
+export const getMe = async (req: express.Request, res: express.Response) => {
+	const accessToken = req.cookies[process.env.AUTH_COOKIE]
+	if (!accessToken) return res.status(403).json('You must be authenticated')
+	const existingUser = jwt.verify(accessToken, process.env.SECRET)
+	if (!existingUser) return res.status(403).json('You must be authenticated')
+	console.log(existingUser)
+
+	return res.status(200).json(existingUser)
 }

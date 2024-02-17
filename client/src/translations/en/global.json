@@ -2,7 +2,8 @@
   "navigation": {
     "home": "Home",
     "collections": "Collections",
-    "users": "Users"
+    "users": "Users",
+    "catalog": "Categories"
   },
   "searchBar": "Search",
   "start": "Start",

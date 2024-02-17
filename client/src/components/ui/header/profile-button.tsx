@@ -30,7 +30,7 @@ export function ProfileButton() {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>{user!.username}</DropdownMenuLabel>
+        <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem>
         <DropdownMenuItem className="cursor-pointer">

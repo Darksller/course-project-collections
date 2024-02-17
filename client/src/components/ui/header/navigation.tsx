@@ -1,4 +1,3 @@
-import { routes } from '@/router/navigation-routes'
 import { cn } from '@/lib/utils'
 import { Button } from '../shadcn-ui/button'
 import { Link } from '@tanstack/react-router'
@@ -20,19 +19,20 @@ export function Navigation({ className }: NavProps) {
 
   return (
     <nav className={cn(className)}>
-      {routes.map((route, i) => (
-        <Button
-          key={i}
-          asChild
-          variant="ghost"
-          className="h-[20px] transition-all duration-300 hover:font-bold hover:text-purple-400 dark:hover:text-white max-lg:block max-lg:px-2 max-lg:py-1 max-lg:text-lg lg:text-base lg:hover:scale-125"
-          onClick={onNavClicked}
-        >
-          <Link key={i} to={route.href}>
-            {t(`navigation.${route.label}`)}
-          </Link>
-        </Button>
-      ))}
+      <Button
+        variant="ghost"
+        className="h-[20px] transition-all duration-300 hover:font-bold hover:text-purple-400 dark:hover:text-white max-lg:block  max-lg:text-lg lg:text-base lg:hover:scale-125"
+        onClick={onNavClicked}
+      >
+        <Link to={'/collections/'}>{t('navigation.collections')}</Link>
+      </Button>
+      <Button
+        variant="ghost"
+        className="h-[20px] transition-all duration-300 hover:font-bold hover:text-purple-400 dark:hover:text-white max-lg:block  max-lg:text-lg lg:text-base lg:hover:scale-125"
+        onClick={onNavClicked}
+      >
+        <Link to={'/collections/'}>{t('navigation.catalog')}</Link>
+      </Button>
     </nav>
   )
 }

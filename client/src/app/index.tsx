@@ -1,7 +1,7 @@
 import { Outlet } from '@tanstack/react-router'
-import { Header } from './components/ui/header/Header'
-import { useLazyGetMeQuery } from './api/usersApi'
-import { useAuthStore } from './store/authStore'
+import { Header } from '@/components/ui/header/Header'
+import { useLazyGetMeQuery } from '@/api/usersApi'
+import { useAuthStore } from '@/store/authStore'
 import { useEffect } from 'react'
 
 export function App() {

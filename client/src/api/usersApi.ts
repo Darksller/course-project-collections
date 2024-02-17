@@ -9,36 +9,10 @@ export const usersApi = createApi({
     credentials: 'include',
   }),
   endpoints: (build) => ({
-    getUserByAccessToken: build.query<UserPayload, string>({
-      query: (accessToken) => `/users/getUserByAccessToken/${accessToken}`,
-    }),
-
-    likeCollection: build.mutation<
-      boolean,
-      { _id: string; collectionId: string }
-    >({
-      query: (data) => ({
-        url: `/users/likeCollection/${data._id}`,
-        method: 'PATCH',
-        body: { collectionId: data.collectionId },
-      }),
-    }),
-
-    isCollectionLiked: build.mutation<
-      boolean,
-      { _id: string; collectionId: string }
-    >({
-      query: (data) => ({
-        url: `/users/isCollectionLiked/${data._id}`,
-        method: 'POST',
-        body: { collectionId: data.collectionId },
-      }),
+    getMe: build.query<UserPayload, void>({
+      query: () => '/users/getMe/',
     }),
   }),
 })
 
-export const {
-  useLikeCollectionMutation,
-  useIsCollectionLikedMutation,
-  useLazyGetUserByAccessTokenQuery,
-} = usersApi
+export const { useLazyGetMeQuery } = usersApi
