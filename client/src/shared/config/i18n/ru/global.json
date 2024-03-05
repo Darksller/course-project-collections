@@ -1,0 +1,36 @@
+{
+  "header": {
+    "nav": {
+      "home": "Главная",
+      "menu": "Меню",
+      "about": "О нас",
+      "collections": "Коллекции",
+      "colDesc": "Список коллекций",
+      "categories": "Категории",
+      "catDesc": "Список категорий"
+    },
+    "searchBar": "Поиск",
+    "start": "Поехали",
+    "settings": {
+      "index": "Настройка",
+      "settingsDescription": "Выбрать язык и сменить тему",
+      "language": {
+        "languages": "Языки",
+        "changeLanguage": "Смена языка",
+        "ru": "Русский",
+        "en": "English"
+      },
+      "changeTheme": "Смена темы"
+    }
+  },
+  "auth": {
+    "authentication": "Аутентификация",
+    "signIn": "Вход",
+    "signUp": "Регистрация"
+  },
+
+  "forms": {
+    "login": "Логин",
+    "password": "Пароль"
+  }
+}

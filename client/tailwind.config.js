@@ -19,11 +19,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      under: 'Playfair Display',
-      muli: ['Mulish', 'sans-serif'],
-      sofiaProBold: 'SofiaProBold',
-      cgr: 'CenturyGothicRegular',
-      cgb: 'CenturyGothicBold',
+      inter: ['Inter'],
     },
     animationDelay: {
       minus: '-0.2s',
@@ -108,6 +104,10 @@ module.exports = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        open: {
+          from: { width: '0px', opacity: '0' },
+          to: { width: '150px', opacity: '1' },
+        },
         fill: {
           '0%': { color: '#fff' },
           '100%': { color: '#000' },
@@ -130,6 +130,7 @@ module.exports = {
         },
       },
       animation: {
+        open: 'open 0.4s ease-out',
         blinker: 'blinker 3s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',

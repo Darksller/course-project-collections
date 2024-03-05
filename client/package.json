@@ -39,6 +39,8 @@
     "@tanstack/react-router": "^1.2.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "cmdk": "^0.2.1",
+    "compose-function": "^3.0.3",
     "date-fns": "^3.3.1",
     "debounce": "^2.0.0",
     "embla-carousel-react": "8.0.0-rc21",
@@ -65,6 +67,8 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "@tanstack/router-vite-plugin": "^1.16.5",
+    "@types/compose-function": "^0.0.33",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.43",

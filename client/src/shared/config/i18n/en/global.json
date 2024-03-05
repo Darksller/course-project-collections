@@ -1,0 +1,38 @@
+{
+  "header": {
+    "nav": {
+      "home": "Home",
+      "menu": "Menu",
+      "about": "About",
+      "collections": "Collections",
+      "colDesc": "List of all collections",
+      "categories": "Categories",
+      "catDesc": "List of all categories"
+    },
+    "searchBar": "Search",
+    "start": "Start",
+    "settings": {
+      "index": "Settings",
+      "settingsDescription": "Choose language and change theme",
+      "language": {
+        "languages": "Languages",
+        "changeLanguage": "Language change",
+        "ru": "Русский",
+        "en": "English"
+      },
+      "changeTheme": "Theme change"
+    }
+  },
+  "auth": {
+    "authentication": "Authentication",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "forms": {
+    "login": "Login",
+    "password": "Password"
+  },
+  "home": {
+    "entranceText": "Immerse yourself in an amazing universe of collections"
+  }
+}
