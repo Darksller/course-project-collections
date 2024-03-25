@@ -1,17 +1,19 @@
+import { PersonIcon } from '@radix-ui/react-icons'
 import { useTranslation } from 'react-i18next'
-import { useAuthStore } from '../model/authStore'
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/shared/ui'
-import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar'
-import { PersonIcon } from '@radix-ui/react-icons'
+} from '@/shared/ui/shadcn-ui'
+import { useAuthStore } from '@/entities/viewer'
 
-export function ViewerAvatar() {
+export function ProfileButton() {
   const { t } = useTranslation('global')
   const { user, signOut } = useAuthStore()
 

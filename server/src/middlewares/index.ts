@@ -18,9 +18,9 @@ export const isAuthenticated = (
 ) => {
 	try {
 		const accessToken = req.cookies[process.env.AUTH_COOKIE]
-		if (!accessToken) return res.status(403).json('You must be authenticated')
-		const existingUser = jwt.verify(accessToken, process.env.SECRET)
-		if (!existingUser) return res.status(403).json('You must be authenticated')
+		if (!accessToken) return res.status(401).json('You must be authenticated')
+		const existingUser = jwt.verify(accessToken, process.env.ACCESS_SECRET)
+		if (!existingUser) return res.status(401).json('You must be authenticated')
 		merge(req, { identity: existingUser })
 		return next()
 	} catch (error) {

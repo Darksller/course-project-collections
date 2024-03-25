@@ -1,4 +1,4 @@
-import { store } from '@/shared/config/redux-toolkit'
+import { store } from '@/app/rtk/store'
 import { Provider } from 'react-redux'
 
 export const RtkProvider = (component: () => React.ReactNode) => () => (

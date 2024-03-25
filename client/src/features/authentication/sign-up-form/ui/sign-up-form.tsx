@@ -1,10 +1,10 @@
-import { useAuthStore } from '@/entities/viewer'
-import { useRegisterMutation } from '@/shared/api'
+import { useAuthStore, useRegisterMutation } from '@/entities/viewer'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import * as z from 'zod'
-import { SignUpSchema, defaultValues } from '../model'
+import { defaultValues } from '../model/defaultValues'
+import { SignUpSchema } from '../model/signUpSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Button,
@@ -32,6 +32,7 @@ export function SignUpForm() {
     resolver: zodResolver(SignUpSchema),
     defaultValues: defaultValues,
   })
+
   const onSubmit = async (values: z.infer<typeof SignUpSchema>) => {
     try {
       const response = await register(values).unwrap()

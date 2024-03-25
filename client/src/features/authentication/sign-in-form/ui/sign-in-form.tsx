@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { useLoginMutation } from '@/shared/api'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SignInSchema, defaultValues } from '../model'
-import { useAuthStore } from '@/entities/viewer'
+import { defaultValues } from '../model/defaultValues'
+import { SignInSchema } from '../model/signInSchema'
+import { useAuthStore, useLoginMutation } from '@/entities/viewer'
 import {
   Button,
   Form,
@@ -22,7 +22,6 @@ import {
 export function SignInForm() {
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
-
   const [login, isLoading] = useLoginMutation()
   const { signIn } = useAuthStore()
 

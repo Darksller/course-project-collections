@@ -1,6 +1,4 @@
-export * from './authApi'
 export * from './categoriesApi'
 export * from './collectionsApi'
 export * from './itemsApi'
 export * from './tagsApi'
-export * from './usersApi'

@@ -33,6 +33,12 @@
     "password": "Password"
   },
   "home": {
-    "entranceText": "Immerse yourself in an amazing universe of collections"
+    "entranceText": "Immerse yourself in an amazing universe of the collections!",
+    "entranceButton": "Create your first collection!",
+    "five": "Here's Five of the biggest collections!",
+    "fiveItems": "Five latest items",
+    "collectionsNotFound": "Collections was not found...",
+    "itemsNotFound": "Items was not found...",
+    "tagCloud": "Tag Cloud"
   }
 }

@@ -7,7 +7,7 @@ import { Link } from '@tanstack/react-router'
 import Logo from '/logo.svg'
 export function Header() {
   return (
-    <header className="z-[99] m-auto flex justify-between rounded-full bg-secondary/30  px-5 py-[6px] shadow-lg backdrop-blur-xl md:max-w-[700px]">
+    <header className="z-[99] m-auto flex justify-between rounded-full bg-secondary/30  px-5 py-[6px] shadow-lg backdrop-blur-xl md:max-w-[750px]">
       <MobileMenu className="sm:hidden" />
       <Link to={'/'} className="flex items-center">
         <img src={Logo} className="h-[24px] pr-2" />

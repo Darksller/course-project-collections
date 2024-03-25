@@ -1,18 +1,26 @@
-import { createUser, getUserByEmail, getUserByRefreshToken } from '../db/users'
+import {
+	createUser,
+	getUserByEmail,
+	getUserByRefreshToken,
+} from '../schemas/users'
 import express from 'express'
-import { authentication, random } from '../helpers'
+import { authentication, random } from '../utils'
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
 
 export const login = async (req: express.Request, res: express.Response) => {
 	try {
 		const { email, password } = req.body
+
 		if (!email || !password)
 			return res.status(400).json('Invalid email or password')
+
 		const user = await getUserByEmail(email).select(
 			'+authentication.salt + authentication.password + authentication.refreshToken'
 		)
+
 		if (!user) return res.status(400).json('Invalid email or password')
+
 		const expectedHash = authentication(user.authentication.salt, password)
 
 		if (user.authentication.password !== expectedHash)
@@ -58,7 +66,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 			})
 			.end()
 	} catch (error) {
-		console.log(error.message)
+		console.log(error)
 		return res.status(400).json('Something went wrong...')
 	}
 }
@@ -74,22 +82,33 @@ export const refresh = async (req: express.Request, res: express.Response) => {
 		)
 
 		if (refreshToken !== user.authentication.refreshToken)
-			return res.sendStatus(403)
+			return res.sendStatus(401)
 
 		const accessToken = jwt.sign(
 			{ email: user.email, role: user.role, username: user.username },
-			process.env.SECRET,
+			process.env.ACCESS_SECRET,
 			{
-				expiresIn: +process.env.TOKEN_EXPIRATION,
+				expiresIn: +process.env.ACCESS_TOKEN_EXPIRATION,
 			}
 		)
+
+		const newRefreshToken = jwt.sign(
+			{ random: random() },
+			process.env.REFRESH_SECRET,
+			{
+				expiresIn: +process.env.REFRESH_TOKEN_EXPIRATION,
+			}
+		)
+
+		user.authentication.refreshToken = newRefreshToken
+		await user.save()
 
 		res.cookie(process.env.AUTH_COOKIE, accessToken, {
 			httpOnly: false,
 			secure: true,
 		})
 
-		return res.status(200).json(accessToken)
+		return res.status(200).json({ accessToken, refreshToken })
 	} catch (error) {
 		console.log(error)
 		return res.sendStatus(404)
@@ -107,14 +126,14 @@ export const register = async (req: express.Request, res: express.Response) => {
 			return res.status(400).json('User with this email already exists')
 
 		const _user = { username, email, role: 'default-user' }
+
 		const accessToken = jwt.sign(
 			{ email: _user.email, role: _user.role, username: _user.username },
-			process.env.SECRET,
+			process.env.ACCESS_SECRET,
 			{
-				expiresIn: +process.env.TOKEN_EXPIRATION,
+				expiresIn: +process.env.ACCESS_TOKEN_EXPIRATION,
 			}
 		)
-
 		const refreshToken = jwt.sign(
 			{ random: random() },
 			process.env.REFRESH_SECRET,
@@ -125,12 +144,7 @@ export const register = async (req: express.Request, res: express.Response) => {
 
 		const salt = random()
 
-		res.cookie(process.env.AUTH_COOKIE, accessToken, {
-			httpOnly: false,
-			secure: true,
-		})
-
-		const user = await createUser({
+		await createUser({
 			..._user,
 			authentication: {
 				refreshToken,
@@ -139,20 +153,20 @@ export const register = async (req: express.Request, res: express.Response) => {
 			},
 		})
 
+		res.cookie(process.env.AUTH_COOKIE, accessToken, {
+			httpOnly: false,
+			secure: true,
+		})
+
 		return res
 			.status(200)
 			.json({
-				user: {
-					email: user.email,
-					role: user.role,
-					username: user.username,
-				},
 				accessToken,
 				refreshToken,
 			})
 			.end()
 	} catch (error) {
 		console.log(error.message)
-		return res.status(400).json('Something went wrong...')
+		return res.sendStatus(400)
 	}
 }

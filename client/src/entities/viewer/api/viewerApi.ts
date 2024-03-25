@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { UserPayload } from '../types/UserPayload'
 
-export const authApi = createApi({
-  reducerPath: 'authApi',
-  tagTypes: ['auth'],
+export const viewerApi = createApi({
+  reducerPath: 'viewerApi',
+  tagTypes: ['viewer'],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     credentials: 'include',
@@ -31,7 +32,12 @@ export const authApi = createApi({
         body,
       }),
     }),
+
+    fetchMe: build.query<UserPayload, void>({
+      query: () => '/users/fetchMe/',
+    }),
   }),
 })
 
-export const { useLoginMutation, useRegisterMutation } = authApi
+export const { useLoginMutation, useRegisterMutation, useLazyFetchMeQuery } =
+  viewerApi

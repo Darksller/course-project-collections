@@ -1,11 +1,11 @@
 import { create } from 'zustand'
-import { User } from '@/shared/api/types'
 import {
   getAuthCookie,
   getRefreshCookie,
   setAuthCookies,
   removeAuthCookies,
-} from '../lib/authUtils'
+} from '../../../shared/lib/authUtils'
+import { UserPayload } from '../types/UserPayload'
 
 type AuthStore = {
   isAuthenticated: boolean
@@ -13,8 +13,8 @@ type AuthStore = {
   refreshToken: string | undefined
   signIn: (accessToken: string, refreshToken: string) => void
   signOut: () => void
-  user: User | null
-  setUser: (user: User) => void
+  user: UserPayload | null
+  setUser: (user: UserPayload) => void
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
